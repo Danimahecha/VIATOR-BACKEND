@@ -2,9 +2,29 @@ const { Router } = require('express');
 const {User} = require('../db.js');
 //const axios = require('axios');
 const {requiresAuth } = require('express-openid-connect');
-const session = require('express-session')
+const session = require('express-session');
+const { default: axios } = require('axios');
 
 const router = Router();
+
+router.get('/test', (req, res) => {
+    res.send('Hello index')
+})
+
+router.get('/protected', async (req, res) => {
+    try {
+        const accessToken = req.headers.authorization.split(' '[1])
+        const response = await axios.get("https://dev-cz6i21an2opri7kv.us.auth0.com/userinfo", {
+            headers:{
+                authorization: `Bearer ${accessToken}`
+            }
+        } )
+        const userinfo = response.data
+        res.send(userinfo)
+    } catch (error) {
+        res.send(error.message)
+    }
+})
 
 router.get('/', async (req, res) =>{
     
