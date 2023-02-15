@@ -8,8 +8,39 @@ module.exports = (sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
-      name: {
+      givenName: {
         type: DataTypes.STRING,
+        defaultValue: "",
+        allowNull: false,
+      },
+      familyName: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+        allowNull: false,
+      },
+      nickname: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+        allowNull: false,
+      },
+      phone: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+        allowNull: false,
+      },
+      picture: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+        allowNull: false,
+      },
+      sub: {
+        type: DataTypes.STRING,
+        defaultValue: "",
         allowNull: false,
       },
     },

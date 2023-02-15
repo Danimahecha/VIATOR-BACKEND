@@ -1,5 +1,6 @@
 
 const express = require('express');
+const session = require('express-session')
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -23,6 +24,12 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
+
+server.use(session({
+  secret: "12345",
+  resave: true,
+  saveUninitialized: true
+}))
 
 //Middleware Auth0
 server.use(
