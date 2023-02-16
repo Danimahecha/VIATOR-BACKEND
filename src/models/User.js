@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
         defaultValue: "",
         allowNull: false,
       },
-      nickname: {
+      nickName: {
         type: DataTypes.STRING,
         defaultValue: "",
         allowNull: false,
