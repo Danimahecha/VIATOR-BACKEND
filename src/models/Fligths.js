@@ -14,8 +14,12 @@ sequelize.define('Fligths',{
         allowNull: false
     },
     datesFligths:{
-        type: DataTypes.DATE(),
+        type: DataTypes.DATE,
         allowNull:false
+    },
+    urlImg:{
+       type: DataTypes.STRING,
+       allowNull: false
     }
 })
 }

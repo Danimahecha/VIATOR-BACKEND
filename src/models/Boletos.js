@@ -39,7 +39,7 @@ aeroLine:{
 class: {
     type:DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'E'
+    defaultValue: 'turista'
 }
     })
 }
