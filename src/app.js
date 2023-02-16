@@ -8,8 +8,11 @@ const bodyParser = require('body-parser');
 const axios = require('axios')
 const morgan = require('morgan');
 const cors = require('cors')
+
 //const { auth } = require('express-openid-connect');
-const {auth} = require('express-oauth2-jwt-bearer')
+
+//const {auth} = require('express-oauth2-jwt-bearer')
+
 const routes = require('./routes/index.js');
 
 require('./db.js');
@@ -26,11 +29,15 @@ require('./db.js');
 //   algorithms: ['RS256'],
 // })
 
-const jwtCheck = auth({
+/* const jwtCheck = auth({
+  secret: '7h92P5guwTCGsDRBqHbC392uAcXMLsE1',
   audience: 'this is a unique identifier viator',
-  issuerBaseURL: 'https://dev-cz6i21an2opri7kv.us.auth0.com/',
-  tokenSigningAlg: 'RS256'
-});
+  issuerBaseURL: 'https://dev-kvjr54lumq4827tu.us.auth0.com/',
+  tokenSigningAlg: 'HS256',
+}); */
+
+//issuerBaseURL: 'https://dev-kvjr54lumq4827tu.us.auth0.com/', mia,
+//issuerBaseURL: 'https://dev-cz6i21an2opri7kv.us.auth0.com/' , //fabi
 
 const server = express();
 
@@ -38,19 +45,19 @@ server.name = 'API';
 
 server.use(cors())
 //server.use(verifyJwt)
-server.use(jwtCheck)
+//server.use(jwtCheck)
 
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.json({ limit: '50mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));
-server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
-});
+// server.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+//   next();
+// });
 
 server.use(session({
   secret: "12345",
