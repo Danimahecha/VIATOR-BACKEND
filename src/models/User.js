@@ -1,22 +1,22 @@
 const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
     // defino el modelo
-    sequelize.define('model', {
+    sequelize.define('User', {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.STRING,
+        defaultValue: "",
         allowNull: false,
         primaryKey: true,
       },
       givenName: {
         type: DataTypes.STRING,
         defaultValue: "",
-        allowNull: false,
+        allowNull: true,
       },
       familyName: {
         type: DataTypes.STRING,
         defaultValue: "",
-        allowNull: false,
+        allowNull: true,
       },
       nickName: {
         type: DataTypes.STRING,
@@ -38,11 +38,7 @@ module.exports = (sequelize) => {
         defaultValue: "",
         allowNull: false,
       },
-      sub: {
-        type: DataTypes.STRING,
-        defaultValue: "",
-        allowNull: false,
-      },
+    
     },
     {
       timestamps: false
