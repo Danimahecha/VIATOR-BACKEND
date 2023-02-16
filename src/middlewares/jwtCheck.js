@@ -14,6 +14,7 @@ const {auth, requiredScopes} = require('express-oauth2-jwt-bearer')
         issuerBaseURL: 'https://dev-kvjr54lumq4827tu.us.auth0.com/',
         tokenSigningAlg: 'RS256'
       }); */
+      
   module.exports = {
     jwtCheck,
     checkScopes,

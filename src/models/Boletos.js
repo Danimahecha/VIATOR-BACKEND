@@ -6,7 +6,6 @@ type: DataTypes.INTEGER,
 unique: true,
 autoIncrement: true,
 primaryKey: true,
-defaultValue: 0,
 },
 namePassanger:{
     type: DataTypes.STRING,

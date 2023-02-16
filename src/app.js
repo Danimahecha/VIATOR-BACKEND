@@ -9,43 +9,15 @@ const axios = require('axios')
 const morgan = require('morgan');
 const cors = require('cors')
 
-//const { auth } = require('express-openid-connect');
-
-//const {auth} = require('express-oauth2-jwt-bearer')
-
 const routes = require('./routes/index.js');
 
 require('./db.js');
-
-// const verifyJwt = jwt({
-//   secret: jwks.expressJwtSecret({
-//     cache: true,
-//     rateLimit: true,
-//     jwksRequestsPerMinute: 5,
-//     jwksUri: ''
-//   }),
-//   audience: 'this is a unique identifier viator',
-//   issuer: 'https://dev-cz6i21an2opri7kv.us.auth0.com/',
-//   algorithms: ['RS256'],
-// })
-
-/* const jwtCheck = auth({
-  secret: '7h92P5guwTCGsDRBqHbC392uAcXMLsE1',
-  audience: 'this is a unique identifier viator',
-  issuerBaseURL: 'https://dev-kvjr54lumq4827tu.us.auth0.com/',
-  tokenSigningAlg: 'HS256',
-}); */
-
-//issuerBaseURL: 'https://dev-kvjr54lumq4827tu.us.auth0.com/', mia,
-//issuerBaseURL: 'https://dev-cz6i21an2opri7kv.us.auth0.com/' , //fabi
 
 const server = express();
 
 server.name = 'API';
 
 server.use(cors())
-//server.use(verifyJwt)
-//server.use(jwtCheck)
 
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.json({ limit: '50mb' }));
@@ -65,18 +37,6 @@ server.use(session({
   saveUninitialized: true
 }))
 
-//Middleware Auth0
-
-// server.use(
-//   auth({
-//     issuerBaseURL: process.env.ISSUER_BASE_URL,
-//     baseURL: process.env.BASE_URL,
-//     clientID: process.env.CLIENT_ID,
-//     secret: process.env.SECRET,
-//     idpLogout: true,
-//   })
-// );
-
 server.use('/', routes);
 
 // Error catching endware.
@@ -86,7 +46,6 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.error(err);
   res.status(status).send(message);
 });
-// test
 
 module.exports = server;
 

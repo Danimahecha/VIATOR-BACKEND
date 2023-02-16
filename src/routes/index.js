@@ -6,7 +6,7 @@ const session = require('express-session');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
 
 const router = Router();
-//MAIN TEST modifi
+
 router.get('/test', (req, res) => {
     res.send('Hello index')
 })
