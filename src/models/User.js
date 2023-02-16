@@ -23,10 +23,24 @@ module.exports = (sequelize) => {
         defaultValue: "",
         allowNull: false,
       },
+      birthdate:{
+        type: DataTypes.DATEONLY,
+        allowNull: true,
+      },
+      country:{
+        type: DataTypes.STRING,
+        defaultValue: "",
+        allowNull: true,
+      },
+      city:{
+        type: DataTypes.STRING,
+        defaultValue: "",
+        allowNull: true,
+      },
       phone: {
         type: DataTypes.STRING,
         defaultValue: "",
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,
