@@ -1,6 +1,7 @@
-const{DataTypes} = require('sequelize')
+const { DataTypes } = require("sequelize")
+
 module.exports = (sequelize)=>{
-    sequelize.define('Boletos', {
+    sequelize.define('Aerolineas', {
         id:{
             type: DataTypes.INTEGER,
             unique: true,
@@ -8,9 +9,13 @@ module.exports = (sequelize)=>{
             primaryKey: true,
             defaultValue: 0
             },
-            seat: {
+            name: {
                 type: DataTypes.STRING,
                 allowNull: false
+            },
+            info_contact:{
+                type: DataTypes.INTEGER
             }
+           
     })
 }
