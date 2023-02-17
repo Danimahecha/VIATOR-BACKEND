@@ -56,33 +56,16 @@ router.get("/profile" ,jwtCheck , checkScopes , async (req, res) => {
 
 router.post('/register', jwtCheck , checkScopes, async (req, res) => {
 
-    const sub = await req.body.sub.split("|")[0]
+    //const sub = await req.body.sub.split("|")[0]
 
     try {
-        if(sub === "auth0"){
-            
-             await User.create({
-                id:req.body.sub,
-                nickname: req.body.nickname,
-                picture: req.body.picture,
-                email: req.body.email,
-            }) 
-
-            res.status(200).send("Usuario creado con exito")
-
-        }if(sub === "google-oauth2"){
-            
-            await User.create({
-                givenName: req.body.given_name,
-                familyName: req.body.family_name,
-                id:req.body.sub,
-                nickname: req.body.nickname,
-                picture: req.body.picture,
-                email: req.body.email,
-            })
-            res.status(200).send("Usuario creado con exito")
-        }
-    } catch (error) {
+        await User.create({
+            id:req.body.sub,
+            email: req.body.email,
+            picture: req.body.picture,
+        })
+        res.status(200).send("Usuario creado con exito")
+    }catch (error) {
         res.status(500).send(error.message)
     }
 })
