@@ -50,51 +50,41 @@ router.post('/login', async (req, res) =>{
 
 })
 
+router.get("/profile" ,jwtCheck , checkScopes , async (req, res) => {
+    //funcion perfil necesita useParamas para implementar
+})
+
 router.post('/register', jwtCheck , checkScopes, async (req, res) => {
 
-    const sub = await req.body.sub.split("|")[0]
+    //const sub = await req.body.sub.split("|")[0]
 
     try {
-        if(sub === "auth0"){
-            
-             await User.create({
-                id:req.body.sub,
-                nickname: req.body.nickname,
-                picture: req.body.picture,
-                email: req.body.email,
-            }) 
-
-            res.status(200).send("Usuario creado con exito")
-
-        }if(sub === "google-oauth2"){
-            
-            await User.create({
-                givenName: req.body.given_name,
-                familyName: req.body.family_name,
-                id:req.body.sub,
-                nickname: req.body.nickname,
-                picture: req.body.picture,
-                email: req.body.email,
-            })
-            res.status(200).send("Usuario creado con exito")
-        }
-    } catch (error) {
+        await User.create({
+            id:req.body.sub,
+            email: req.body.email,
+            picture: req.body.picture,
+        })
+        res.status(200).send("Usuario creado con exito")
+    }catch (error) {
         res.status(500).send(error.message)
     }
 })
 
 router.put('/setInfo', jwtCheck , checkScopes, async(req, res) => {
-    const {given_name, family_name, nickname, email, phone, picture, id} = req.body
+    const {names, lastNames, nickname,DateOfBirth,phoneNumber,country,city,picture, email, idSubAuth0} = req.body
 
-    const user = await User.findByPk(id)
+    const user = await User.findByPk(idSubAuth0)
    
     try {
         await user.update({
-            givenName: given_name,
-            familyName: family_name,
+            givenName: names,
+            familyName: lastNames,
             nickName: nickname,
-            phone: phone,
+            phone: phoneNumber,
             email: email,
+            country: country,
+            city:city,
+            birthdate: DateOfBirth,
             picture: picture
         })
     
