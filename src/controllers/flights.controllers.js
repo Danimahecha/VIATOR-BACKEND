@@ -1,4 +1,4 @@
-import { flight } from '../models/Flight.js';
+const { flight } =require('../models/Flight.js');
 
 export const getFlights = async (req, res) => {
     try {
@@ -48,7 +48,7 @@ export const updateFlight = async (req, res ) =>{
         const { id } = req.params;
         const {origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice}= req.body;
         
-    const flight = await Flight.findByPk(id)
+    const flight = await flight.findByPk(id)
     flight.origin = origin,
     flight.destiny = destiny,
     flight.dateTimeArrival= dateTimeArrival,
@@ -66,3 +66,18 @@ export const updateFlight = async (req, res ) =>{
     
     
 };
+export const deleteFligth =async(req, res)=>{
+    const{id}= req.params;
+    if(!id) res.status(404).send('you did not enter id') 
+    else{
+        await flight.destroy({
+            where: {
+                id
+            }
+        })
+        .then(()=> res.status(299).send('successfully deleted'))
+        .catch(e=> res.satus(400).json({message: e.message}))
+    }
+
+
+}
