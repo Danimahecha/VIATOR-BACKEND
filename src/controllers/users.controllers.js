@@ -1,4 +1,4 @@
-import { User } from "../models/User.js";
+const { User } =require("../models/User.js");
 //import { flight } from "../models/Flight.js";
 
 export const getUsers =async(req, res) => {

@@ -3,7 +3,8 @@ const {User} = require('../db.js');
 const {requiresAuth } = require('express-openid-connect');
 const session = require('express-session');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
-
+const {fligths} = require('../routes/fligths');
+const {users} = require('../routes/users');
 const router = Router();
 
 router.get('/', async (req, res) => {
@@ -94,4 +95,6 @@ router.put('/setInfo', jwtCheck , checkScopes, async(req, res) => {
         res.status(500).send(error)
     }
 })
+router.use('/fligths', fligths )
+router.use('/users', users)
 module.exports = router;
