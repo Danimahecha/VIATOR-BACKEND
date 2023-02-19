@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     res.status(200).send("Ruta publica")
 })
 
-router.get('/protected', jwtCheck , checkScopes, async (req, res) => {
+router.get('/protected', jwtCheck , async (req, res) => {
 
     res.send("Ruta protegida por middleware: jwCheck y scopes")
 
@@ -50,11 +50,11 @@ router.post('/login', async (req, res) =>{
 
 })
 
-router.get("/profile" ,jwtCheck , checkScopes , async (req, res) => {
+router.get("/profile" ,jwtCheck , async (req, res) => {
     //funcion perfil necesita useParamas para implementar
 })
 
-router.post('/register', jwtCheck , checkScopes, async (req, res) => {
+router.post('/register', jwtCheck , async (req, res) => {
 
     //const sub = await req.body.sub.split("|")[0]
 
@@ -70,7 +70,7 @@ router.post('/register', jwtCheck , checkScopes, async (req, res) => {
     }
 })
 
-router.put('/setInfo', jwtCheck , checkScopes, async(req, res) => {
+router.put('/setInfo', jwtCheck , async(req, res) => {
     const {names, lastNames, nickname,DateOfBirth,phoneNumber,country,city,picture, email, idSubAuth0} = req.body
 
     const user = await User.findByPk(idSubAuth0)
