@@ -2,24 +2,39 @@ const { DataTypes } = require("sequelize")
 
 module.exports= (sequelize)=>{
 sequelize.define('Fligths',{
-    id: {
-        type: DataTypes.UUID,
+    id:{
+        type:DataTypes.INTEGER,
+        autoIncrement:true,
+        allowNull:false,
+        primaryKey:true,
+    },
+    origin:{
+        type:DataTypes.STRING,
+        allowNull:false,
+    },
+    destiny:{
+    type:DataTypes.STRING,
+    allowNull:false,
+    },
+    dateTimeDeparture:{
+        type:DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+        },
+    
+    dateTimeArrival:{
+        type:DataTypes.DATE,
+        allowNull: false,
+    },
 
+    seatsAvailable:{
+        type:DataTypes.INTEGER,
+        
     },
-    nameFromOrTO:{
-        type: DataTypes.STRING,
-        allowNull: false
+    ticketPrice:{
+        type:DataTypes.STRING,
+        }
     },
-    datesFligths:{
-        type: DataTypes.DATE,
-        allowNull:false
-    },
-    urlImg:{
-       type: DataTypes.STRING,
-       allowNull: false
-    }
+    {
+    timestamps: false,
 })
-}
+};
