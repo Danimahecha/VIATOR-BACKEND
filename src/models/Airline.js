@@ -2,26 +2,30 @@ const { DataTypes } = require("sequelize")
 
 module.exports = (sequelize)=>{
     sequelize.define('Airline', {
-        id:{
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            autoIncrement: true,
-            primaryKey: true
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
             },
             name: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                defaultValue: "",
+              type: DataTypes.STRING,
+              allowNull: false,
+              defaultValue: ""
             },
-            info_contact:{
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                defaultValue: 0,
-            },
-           points:{
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: 0,
-           }
-    })
+            infoContact:{
+              type: DataTypes.STRING,
+              defaultValue: ""
+      
+          },
+          rating:{
+            type: DataTypes.ENUM('1', '2', '3', '4', '5'),
+            allowNull: true
+        },
+       
+          },
+          {
+            timestamps: false
+          }
+      );
 }

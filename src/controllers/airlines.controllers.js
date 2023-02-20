@@ -13,7 +13,8 @@ const get_airline = async(req,res) =>{
 const get_id_airline = async(req,res) =>{
     try {
         const {id} = req.params;
-        let idAirline = Airline.findByPk(id)
+        let idAirline = await Airline.findByPk(id)
+        console.log(idAirline)
         if (idAirline) {
             res.json(idAirline)
         }else{
@@ -22,16 +23,18 @@ const get_id_airline = async(req,res) =>{
     } catch (error) {
         res.status(400).json({message:error.message})
     }
-}
+} 
 
-const create_airline = async(req,res) =>{
-    const {name,info_contact} = req.body
+ const create_airline = async(req,res) =>{
+    const {name,infoContact,rating} = req.body
     try {
-        if (!name ||!info_contact) {
+        if (!name ||!infoContact ||!rating) {
             res.status(404).json({message:'Oops some of the fields are empty'})
         } else {
             const newAirline = await Airline.create({
-                name:name,info_contact:info_contact
+                name:name,
+                infoContact:infoContact,
+                rating:rating
             })
             res.json(newAirline)
         }
@@ -40,14 +43,32 @@ const create_airline = async(req,res) =>{
     }
 }
 
+/*  export const  createAirline = async(req,res) =>{
+    try {
+        const { name, infoContact,rating} = req.body;
+        const newAirline = await Airline.create({
+
+            name,
+            infoContact,
+            rating
+
+        });
+        res.status(200).json(newAirline); 
+    } catch (error) {
+        return res.status (400).json({message: error.message})
+
+}
+};  */
+
 const update_airline = async(req,res) => {
     try {
         const {id} = req.params;
-        const {name,info_contact} = req.body
+        const {name,infoContact,rating} = req.body
 
         await Airline.update({
             name: name,
-            info_contact:info_contact
+            infoContact:infoContact,
+            rating:rating
         },{
             where:{
                 id:id
@@ -62,6 +83,6 @@ const update_airline = async(req,res) => {
 module.exports = {
     get_airline,
     get_id_airline,
-    create_airline,
+   create_airline,
     update_airline,
   };

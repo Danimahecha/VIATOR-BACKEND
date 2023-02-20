@@ -17,7 +17,7 @@ const getUser = async (req, res) => {
         const user = await user.findOne({
             where: { id }
         })
-        if(!user)return res.status(404).json({massage:'Users not exist'})
+        if(!user)return res.status(404).json({message:'Users not exist'})
         res.json(user);
     } catch (error) {
         return res.status(400).json({message: error.message});

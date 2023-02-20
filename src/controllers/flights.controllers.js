@@ -1,5 +1,5 @@
 //import { flight } from '../models/Flight.js';
-const {Flight} = require('../db.js');
+const {Flight, Airline} = require('../db.js');
 
 const getFlights = async (req, res) => {
     try {
@@ -13,7 +13,11 @@ const getFlight = async (req, res) => {
     try {
         const {id} = req.params;
         const flight = await Flight.findOne({
-            where: {id}
+            where: {id},
+            include: [{
+                model: Airline,
+                attributes: ['name','infoContact','rating']
+            }]
         })
         if(!flight)return res.status(404).json({massage:'flight not exist'})
         res.json(flight);
@@ -23,20 +27,21 @@ const getFlight = async (req, res) => {
 };
 
 const  createFlight = async(req,res) =>{
-    const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice } = req.body;
+    const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice,AirlineId } = req.body;
     
     try {
         const newFlight = await Flight.create({
-            
-            origin,
-            destiny,
-            dateTimeDeparture,
-            dateTimeArrival,
-            seatsAvailable,
-            ticketPrice,
-           
-            
+    
+            origin:origin,
+            destiny: destiny,
+            dateTimeDeparture: dateTimeDeparture,
+            dateTimeArrival: dateTimeArrival,
+            seatsAvailable: seatsAvailable,
+            ticketPrice: ticketPrice,
+            AirlineId: AirlineId,
+        
         });
+
         res.json (newFlight); 
     } catch (error) {
         return res.status (400).json({message: error.message})   
@@ -68,9 +73,25 @@ const updateFlight = async (req, res ) =>{
     
 };
 
+const deleteFlight = async (req, res ) =>{
+    try {
+        const { id } = req.params
+    await flight.destroy({
+        where:{
+            id,
+        }
+    })
+    res.status(200).send('deleted successfully')
+
+    } catch (error) {
+        return res.status (400).json({message: error.message})
+    }
+}
+
 module.exports = {
     getFlights,
     getFlight,
     createFlight,
     updateFlight,
+    deleteFlight
   };
