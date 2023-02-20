@@ -4,7 +4,9 @@ const {requiresAuth } = require('express-openid-connect');
 const session = require('express-session');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
 const {createUser} = require('../controllers/users.controllers.js');
-const {create_airline} = require('../controllers/airline.controllers.js')
+const { get_airline, get_id_airline, create_airline, update_airline} = require('../controllers/airlines.controllers.js');
+const {getFlights, getFlight, createFlight, updateFlight, deleteFlight} = require('../controllers/flights.controllers.js');
+const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
 
 const router = Router();
 
@@ -17,25 +19,26 @@ router.get('/protected', jwtCheck , async (req, res) => {
     res.send("Ruta protegida por middleware: jwCheck y scopes")
 
 })
+
 router.post('/createUser', createUser)
-router.post('/createAirline', create_airline)
 
-/* router.get('/login/:id', async (req, res) =>{
-    const {id} = req.params
-    try {
-        if(id){
-            const user = await User.findByPk(id)
-            if(user){
-                res.status(200).send("Usuario autentificado")
-            }else{
-                res.status(404).send("Usuario no encontrado")
-            }
-        }
-    } catch (error) {
-        res.send(error.message)
-    }
+router.get('/api/airlines',get_airline)
+router.post('/api/airlines',create_airline)
+router.put('/api/airlines/:id',update_airline)
+//router.delete('/api/airlines/:id',delete_airline)
+router.get('/api/airlines/:id',get_id_airline)
 
-}) */
+router.get('/api/flights', getFlights);
+router.post('/api/flights', createFlight);
+router.put('/api/flights/:id',updateFlight);
+router.delete('/api/flights/:id',deleteFlight);
+router.get('/api/flights/:id',getFlight );
+
+router.get('/api/tickets', getTickets);
+router.post('/api/tickets', createTicket);
+router.put('/api/tickets/:id',updateTicket);
+router.delete('/api/tickets/:id',deleteTicket);
+router.get('/api/tickets/:id',getTicket );
 
 router.post('/filterFrom', async(req, res) => {
     const {from} =req.body
