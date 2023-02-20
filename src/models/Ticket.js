@@ -1,12 +1,11 @@
 const{DataTypes} = require('sequelize')
 module.exports = (sequelize)=>{
-    sequelize.define('Boletos', {
+    sequelize.define('Ticket', {
         id:{
             type: DataTypes.INTEGER,
-            unique: true,
+            allowNull: true,
             autoIncrement: true,
-            primaryKey: true,
-            defaultValue: 0
+            primaryKey: true
             },
             seat: {
                 type: DataTypes.STRING,

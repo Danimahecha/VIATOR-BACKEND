@@ -1,8 +1,10 @@
 const { Router } = require('express');
-const {User} = require('../db.js');
+const {User, Fligth} = require('../db.js');
 const {requiresAuth } = require('express-openid-connect');
 const session = require('express-session');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
+const {createUser} = require('../controllers/users.controllers.js');
+const {create_airline} = require('../controllers/airline.controllers.js')
 
 const router = Router();
 
@@ -15,6 +17,8 @@ router.get('/protected', jwtCheck , async (req, res) => {
     res.send("Ruta protegida por middleware: jwCheck y scopes")
 
 })
+router.post('/createUser', createUser)
+router.post('/createAirline', create_airline)
 
 /* router.get('/login/:id', async (req, res) =>{
     const {id} = req.params
@@ -32,6 +36,19 @@ router.get('/protected', jwtCheck , async (req, res) => {
     }
 
 }) */
+
+router.post('/filterFrom', async(req, res) => {
+    const {from} =req.body
+
+    try {
+        if(Fligth.findAll().length > 0){
+            const fligth = Fligth.findOne({ where: { from: from } })
+            res.status(200).send(fligth)
+        }
+    } catch (error) {
+        res.send(error.message)
+    }
+})
 
 router.post('/login', async (req, res) =>{
     const {id} = req.body

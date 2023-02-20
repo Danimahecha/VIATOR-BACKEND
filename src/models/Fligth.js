@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize")
 
 module.exports= (sequelize)=>{
-sequelize.define('Fligths',{
+sequelize.define('Fligth',{
     id:{
         type: DataTypes.INTEGER,
         unique: true,
