@@ -1,17 +1,18 @@
-import { flight } from '../models/Flight.js';
+//import { flight } from '../models/Flight.js';
+const {Flight} = require('../db.js');
 
-export const getFlights = async (req, res) => {
+const getFlights = async (req, res) => {
     try {
-        const flights = await flight.findAll()
+        const flights = await Flight.findAll()
         res.json(flights);
         } catch (error) {
         return res.status (400).json({message: error.message})
         }
 };
-export const getFlight = async (req, res) => {
+const getFlight = async (req, res) => {
     try {
         const {id} = req.params;
-        const flight = await flight.findOne({
+        const flight = await Flight.findOne({
             where: {id}
         })
         if(!flight)return res.status(404).json({massage:'flight not exist'})
@@ -21,11 +22,11 @@ export const getFlight = async (req, res) => {
     }
 };
 
-export const  createFlight = async(req,res) =>{
+const  createFlight = async(req,res) =>{
     const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice } = req.body;
     
     try {
-        const newFlight = await flight.create({
+        const newFlight = await Flight.create({
             
             origin,
             destiny,
@@ -43,7 +44,7 @@ export const  createFlight = async(req,res) =>{
 }
 };
 
-export const updateFlight = async (req, res ) =>{
+const updateFlight = async (req, res ) =>{
     try {
         const { id } = req.params;
         const {origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice}= req.body;
@@ -66,3 +67,10 @@ export const updateFlight = async (req, res ) =>{
     
     
 };
+
+module.exports = {
+    getFlights,
+    getFlight,
+    createFlight,
+    updateFlight,
+  };

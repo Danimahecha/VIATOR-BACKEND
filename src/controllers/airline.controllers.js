@@ -1,6 +1,7 @@
-import {Airline} from '../models/'
+//import {Airline} from '../models/'
+const {Airline} = require('../db.js');
 
-export const get_airline = async(req,res) =>{
+const get_airline = async(req,res) =>{
     try {
         const airlineBD = Airline.findAll()
         res.json(airlineBD)
@@ -9,7 +10,7 @@ export const get_airline = async(req,res) =>{
     }
 }
 
-export const get_id_airline = async(req,res) =>{
+const get_id_airline = async(req,res) =>{
     try {
         const {id} = req.params;
         let idAirline = Airline.findByPk(id)
@@ -23,14 +24,14 @@ export const get_id_airline = async(req,res) =>{
     }
 }
 
-export const create_airline = async(req,res) =>{
+const create_airline = async(req,res) =>{
     const {name,info_contact} = req.body
     try {
-        if (!name_airline || !score || !info_contact) {
+        if (!name ||!info_contact) {
             res.status(404).json({message:'Oops some of the fields are empty'})
         } else {
             const newAirline = await Airline.create({
-                name,info_contact
+                name:name,info_contact:info_contact
             })
             res.json(newAirline)
         }
@@ -39,7 +40,7 @@ export const create_airline = async(req,res) =>{
     }
 }
 
-export const update_airline = async(req,res) => {
+const update_airline = async(req,res) => {
     try {
         const {id} = req.params;
         const {name,info_contact} = req.body
@@ -57,3 +58,10 @@ export const update_airline = async(req,res) => {
         return res.status(400).json({message:error.message})
     }
 }
+
+module.exports = {
+    get_airline,
+    get_id_airline,
+    create_airline,
+    update_airline,
+  };
