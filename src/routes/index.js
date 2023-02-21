@@ -8,6 +8,7 @@ const { get_airline, get_id_airline, create_airline, update_airline} = require('
 const {getFlights, getFlight, createFlight, updateFlight, deleteFlight} = require('../controllers/flights.controllers.js');
 const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
 
+
 const router = Router();
 
 router.get('/', async (req, res) => {
@@ -114,4 +115,6 @@ router.put('/setInfo', jwtCheck , async(req, res) => {
         res.status(500).send(error)
     }
 })
+router.use('/fligths', fligths )
+router.use('/users', users)
 module.exports = router;

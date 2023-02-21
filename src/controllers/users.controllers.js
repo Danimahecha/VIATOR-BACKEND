@@ -1,4 +1,3 @@
-//import { User } from "../models/User.js";
 const {User} = require('../db.js');
 
 const getUsers =async(req, res) => {

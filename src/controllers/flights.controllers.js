@@ -1,4 +1,3 @@
-//import { flight } from '../models/Flight.js';
 const {Flight, Airline} = require('../db.js');
 
 const getFlights = async (req, res) => {
@@ -54,7 +53,7 @@ const updateFlight = async (req, res ) =>{
         const { id } = req.params;
         const {origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice}= req.body;
         
-    const flight = await Flight.findByPk(id)
+    const flight = await flight.findByPk(id)
     flight.origin = origin,
     flight.destiny = destiny,
     flight.dateTimeArrival= dateTimeArrival,
@@ -95,3 +94,4 @@ module.exports = {
     updateFlight,
     deleteFlight
   };
+
