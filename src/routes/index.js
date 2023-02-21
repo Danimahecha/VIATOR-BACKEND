@@ -115,6 +115,6 @@ router.put('/setInfo', jwtCheck , async(req, res) => {
         res.status(500).send(error)
     }
 })
-router.use('/fligths', fligths )
-router.use('/users', users)
+/* router.use('/fligths', fligths )
+router.use('/users', users) */
 module.exports = router;
