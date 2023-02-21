@@ -1,3 +1,5 @@
+
+
 const { flight } =require('../models/Flight.js');
 
 export const getFlights = async (req, res) => {
@@ -22,7 +24,7 @@ export const getFlight = async (req, res) => {
 };
 
 export const  createFlight = async(req,res) =>{
-    const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice } = req.body;
+    const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice, idAirline } = req.body;
     
     try {
         const newFlight = await flight.create({
@@ -33,7 +35,10 @@ export const  createFlight = async(req,res) =>{
             dateTimeArrival,
             seatsAvailable,
             ticketPrice,
-           
+           foreingnKey:{
+            name: 'Aereolineas_id',
+            value: idAirline
+           }
             
         });
         res.json (newFlight); 
