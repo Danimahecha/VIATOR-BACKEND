@@ -61,7 +61,7 @@ router.post('/login', async (req, res) =>{
             if(user){
                 res.status(200).send("True")
             }else{
-                res.status(404).send("False")
+                res.status(200).send("False")
             }
         }
     } catch (error) {
