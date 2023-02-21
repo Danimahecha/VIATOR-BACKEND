@@ -1,7 +1,6 @@
-const { User } =require("../models/User.js");
-//import { flight } from "../models/Flight.js";
+const {User} = require('../db.js');
 
-export const getUsers =async(req, res) => {
+const getUsers =async(req, res) => {
     try {
     const users = await User.findAll()
     res.json(users);
@@ -11,25 +10,26 @@ export const getUsers =async(req, res) => {
 
 };
 
-export const getUser = async (req, res) => {
+const getUser = async (req, res) => {
     try {
         const {id} = req.params;
         const user = await user.findOne({
             where: { id }
         })
-        if(!user)return res.status(404).json({massage:'Users not exist'})
+        if(!user)return res.status(404).json({message:'Users not exist'})
         res.json(user);
     } catch (error) {
         return res.status(400).json({message: error.message});
     }
 };
 
-export const createUser =async(req,res)=>{
-    const { name }= req.body;
+const createUser = async(req,res)=>{
+    const { id, givenName }= req.body;
     
     try {
         const newUser = await User.create({
-            name
+            id:id,
+            givenName:givenName,
         
         });
         res.json (newUser); 
@@ -39,7 +39,7 @@ export const createUser =async(req,res)=>{
 }
 };
 
-export const updateUser = async (req, res ) =>{
+const updateUser = async (req, res ) =>{
     try {
         const { id } = req.params;
         const { name }= req.body
@@ -57,7 +57,7 @@ export const updateUser = async (req, res ) =>{
     
 };
 
-export const deleteUser = async (req, res ) =>{
+const deleteUser = async (req, res ) =>{
     try {
         const { id } = req.params
     await User.destroy({
@@ -71,3 +71,11 @@ export const deleteUser = async (req, res ) =>{
         return res.status (400).json({message: error.message})
     }
 }
+
+module.exports = {
+    getUser,
+    getUsers,
+    createUser,
+    updateUser,
+    deleteUser
+  };

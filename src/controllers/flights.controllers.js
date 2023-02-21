@@ -1,18 +1,22 @@
-const { flight } =require('../models/Flight.js');
+const {Flight, Airline} = require('../db.js');
 
-export const getFlights = async (req, res) => {
+const getFlights = async (req, res) => {
     try {
-        const flights = await flight.findAll()
+        const flights = await Flight.findAll()
         res.json(flights);
         } catch (error) {
         return res.status (400).json({message: error.message})
         }
 };
-export const getFlight = async (req, res) => {
+const getFlight = async (req, res) => {
     try {
         const {id} = req.params;
-        const flight = await flight.findOne({
-            where: {id}
+        const flight = await Flight.findOne({
+            where: {id},
+            include: [{
+                model: Airline,
+                attributes: ['name','infoContact','rating']
+            }]
         })
         if(!flight)return res.status(404).json({massage:'flight not exist'})
         res.json(flight);
@@ -21,21 +25,22 @@ export const getFlight = async (req, res) => {
     }
 };
 
-export const  createFlight = async(req,res) =>{
-    const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice } = req.body;
+const  createFlight = async(req,res) =>{
+    const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice,AirlineId } = req.body;
     
     try {
-        const newFlight = await flight.create({
-            
-            origin,
-            destiny,
-            dateTimeDeparture,
-            dateTimeArrival,
-            seatsAvailable,
-            ticketPrice,
-           
-            
+        const newFlight = await Flight.create({
+    
+            origin:origin,
+            destiny: destiny,
+            dateTimeDeparture: dateTimeDeparture,
+            dateTimeArrival: dateTimeArrival,
+            seatsAvailable: seatsAvailable,
+            ticketPrice: ticketPrice,
+            AirlineId: AirlineId,
+        
         });
+
         res.json (newFlight); 
     } catch (error) {
         return res.status (400).json({message: error.message})   
@@ -43,7 +48,7 @@ export const  createFlight = async(req,res) =>{
 }
 };
 
-export const updateFlight = async (req, res ) =>{
+const updateFlight = async (req, res ) =>{
     try {
         const { id } = req.params;
         const {origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice}= req.body;
@@ -66,18 +71,27 @@ export const updateFlight = async (req, res ) =>{
     
     
 };
-export const deleteFligth =async(req, res)=>{
-    const{id}= req.params;
-    if(!id) res.status(404).send('you did not enter id') 
-    else{
-        await flight.destroy({
-            where: {
-                id
-            }
-        })
-        .then(()=> res.status(299).send('successfully deleted'))
-        .catch(e=> res.satus(400).json({message: e.message}))
+
+const deleteFlight = async (req, res ) =>{
+    try {
+        const { id } = req.params
+    await flight.destroy({
+        where:{
+            id,
+        }
+    })
+    res.status(200).send('deleted successfully')
+
+    } catch (error) {
+        return res.status (400).json({message: error.message})
     }
-
-
 }
+
+module.exports = {
+    getFlights,
+    getFlight,
+    createFlight,
+    updateFlight,
+    deleteFlight
+  };
+

@@ -1,38 +1,58 @@
 const { Router } = require('express');
-const {User} = require('../db.js');
+const {User, Fligth} = require('../db.js');
 const {requiresAuth } = require('express-openid-connect');
 const session = require('express-session');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
-const {fligths} = require('../routes/fligths');
-const {users} = require('../routes/users');
+const {createUser} = require('../controllers/users.controllers.js');
+const { get_airline, get_id_airline, create_airline, update_airline} = require('../controllers/airlines.controllers.js');
+const {getFlights, getFlight, createFlight, updateFlight, deleteFlight} = require('../controllers/flights.controllers.js');
+const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
+
+
 const router = Router();
 
 router.get('/', async (req, res) => {
     res.status(200).send("Ruta publica")
 })
 
-router.get('/protected', jwtCheck , checkScopes, async (req, res) => {
+router.get('/protected', jwtCheck , async (req, res) => {
 
     res.send("Ruta protegida por middleware: jwCheck y scopes")
 
 })
 
-/* router.get('/login/:id', async (req, res) =>{
-    const {id} = req.params
+router.post('/createUser', createUser)
+
+router.get('/api/airlines',get_airline)
+router.post('/api/airlines',create_airline)
+router.put('/api/airlines/:id',update_airline)
+//router.delete('/api/airlines/:id',delete_airline)
+router.get('/api/airlines/:id',get_id_airline)
+
+router.get('/api/flights', getFlights);
+router.post('/api/flights', createFlight);
+router.put('/api/flights/:id',updateFlight);
+router.delete('/api/flights/:id',deleteFlight);
+router.get('/api/flights/:id',getFlight );
+
+router.get('/api/tickets', getTickets);
+router.post('/api/tickets', createTicket);
+router.put('/api/tickets/:id',updateTicket);
+router.delete('/api/tickets/:id',deleteTicket);
+router.get('/api/tickets/:id',getTicket );
+
+router.post('/filterFrom', async(req, res) => {
+    const {from} =req.body
+
     try {
-        if(id){
-            const user = await User.findByPk(id)
-            if(user){
-                res.status(200).send("Usuario autentificado")
-            }else{
-                res.status(404).send("Usuario no encontrado")
-            }
+        if(Fligth.findAll().length > 0){
+            const fligth = Fligth.findOne({ where: { from: from } })
+            res.status(200).send(fligth)
         }
     } catch (error) {
         res.send(error.message)
     }
-
-}) */
+})
 
 router.post('/login', async (req, res) =>{
     const {id} = req.body
@@ -42,7 +62,7 @@ router.post('/login', async (req, res) =>{
             if(user){
                 res.status(200).send("True")
             }else{
-                res.status(404).send("False")
+                res.status(200).send("False")
             }
         }
     } catch (error) {
@@ -51,11 +71,11 @@ router.post('/login', async (req, res) =>{
 
 })
 
-router.get("/profile" ,jwtCheck , checkScopes , async (req, res) => {
+router.get("/profile" ,jwtCheck , async (req, res) => {
     //funcion perfil necesita useParamas para implementar
 })
 
-router.post('/register', jwtCheck , checkScopes, async (req, res) => {
+router.post('/register', jwtCheck , async (req, res) => {
 
     //const sub = await req.body.sub.split("|")[0]
 
@@ -71,7 +91,7 @@ router.post('/register', jwtCheck , checkScopes, async (req, res) => {
     }
 })
 
-router.put('/setInfo', jwtCheck , checkScopes, async(req, res) => {
+router.put('/setInfo', jwtCheck , async(req, res) => {
     const {names, lastNames, nickname,DateOfBirth,phoneNumber,country,city,picture, email, idSubAuth0} = req.body
 
     const user = await User.findByPk(idSubAuth0)

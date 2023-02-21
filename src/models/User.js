@@ -24,7 +24,8 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       birthdate:{
-        type: DataTypes.DATEONLY,
+        type: DataTypes.STRING,
+        defaultValue: "",
         allowNull: true,
       },
       country:{
@@ -38,8 +39,8 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       phone: {
-        type: DataTypes.STRING,
-        defaultValue: "",
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
         allowNull: true,
       },
       email: {
