@@ -106,15 +106,6 @@ const {Flight, Airline} = require('../db.js');
 
             return res.status (400).json({message: error.message})
 
-<<<<<<< HEAD
-const deleteFlight = async (req, res ) =>{
-    try {
-        const { id } = req.params
-    await Flight.destroy({
-        where:{
-            id,
-=======
->>>>>>> 6cdda8191d1f9c3ae20d172fddd9d1552759fa14
         }
     }
 

@@ -34,19 +34,19 @@ const {User, Ticket, Flight, Airline} = sequelize.models;
 
 // Aca vendrian las relaciones
 
-Flight.hasOne(Ticket);
-Ticket.belongsTo(Flight);
+// Flight.hasOne(Ticket);
+// Ticket.belongsTo(Flight);
 
 /* User.belongsToMany(Ticket,{through:'UserTickets'} );
 Ticket.belongsToMany(User,{through:'UserTickets'} ); */
 
-User.hasMany(Ticket);
-Ticket.belongsTo(User);
+// User.hasMany(Ticket);
+// Ticket.belongsTo(User);
 
-Airline.hasOne(Flight);
-Flight.belongsTo(Airline);
+// Airline.hasOne(Flight);
+// Flight.belongsTo(Airline);
 
-/* User.hasMany(Ticket,{
+User.hasMany(Ticket,{
   foreignKey: "user_id",
   sourceKey: "id"
 })
@@ -72,7 +72,7 @@ Flight.belongsTo(Airline,{
   targetKey:"id"
 })   
 
-*/
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
