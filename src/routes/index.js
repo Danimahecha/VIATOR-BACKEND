@@ -41,4 +41,5 @@ router.post('/register', jwtCheck, postRegister)
 router.post('/login', jwtCheck, postLogin)
 router.put('/setInfo', jwtCheck , putSetInfo)
 
+//Profile
 module.exports = router;
