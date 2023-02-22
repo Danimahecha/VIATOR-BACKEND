@@ -76,7 +76,7 @@ const updateFlight = async (req, res ) =>{
 const deleteFlight = async (req, res ) =>{
     try {
         const { id } = req.params
-    await flight.destroy({
+    await Flight.destroy({
         where:{
             id,
         }
