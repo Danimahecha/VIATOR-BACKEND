@@ -30,7 +30,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const {User, Boletos, Fligth, Aereolineas} = sequelize.models;
+const {User, Boletos, Fligths, Aerolineas} = sequelize.models;
 
 // Aca vendrian las relaciones
 User.hasMany(Boletos,{
@@ -41,19 +41,19 @@ Boletos.belongsTo(User,{
   foreignKey: "user_id",
   targetKey:"id"
 })
-Fligth.hasMany(Boletos,{
+Fligths.hasMany(Boletos,{
   foreignKey: "Fligths_id",
   sourceKey: "id"
 })
-Boletos.belongsTo(Fligth,{
+Boletos.belongsTo(Fligths,{
   foreignKey: "Fligths_id",
   targetKey:"id"
 })
-Aereolineas.hasMany(Fligth,{
+Aerolineas.hasMany(Fligths,{
   foreignKey: "Aereolineas_id",
   sourceKey: "id"
 })
-Fligth.belongsTo(Aereolineas,{
+Fligths.belongsTo(Aerolineas,{
   foreignKey: "Aereolineas_id",
   targetKey:"id"
 })

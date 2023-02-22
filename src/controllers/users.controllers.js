@@ -1,7 +1,7 @@
 const { User } =require("../models/User.js");
 //import { flight } from "../models/Flight.js";
 
-export const getUsers =async(req, res) => {
+ const getUsers =async(req, res) => {
     try {
     const users = await User.findAll()
     res.json(users);
@@ -11,7 +11,7 @@ export const getUsers =async(req, res) => {
 
 };
 
-export const getUser = async (req, res) => {
+ const getUser = async (req, res) => {
     try {
         const {id} = req.params;
         const user = await user.findOne({
@@ -24,7 +24,7 @@ export const getUser = async (req, res) => {
     }
 };
 
-export const createUser =async(req,res)=>{
+ const createUser =async(req,res)=>{
     const { name }= req.body;
     
     try {
@@ -39,7 +39,7 @@ export const createUser =async(req,res)=>{
 }
 };
 
-export const updateUser = async (req, res ) =>{
+ const updateUser = async (req, res ) =>{
     try {
         const { id } = req.params;
         const { name }= req.body
@@ -57,7 +57,7 @@ export const updateUser = async (req, res ) =>{
     
 };
 
-export const deleteUser = async (req, res ) =>{
+ const deleteUser = async (req, res ) =>{
     try {
         const { id } = req.params
     await User.destroy({
@@ -71,3 +71,4 @@ export const deleteUser = async (req, res ) =>{
         return res.status (400).json({message: error.message})
     }
 }
+module.exports={getUser,getUsers,createUser,updateUser,deleteUser}

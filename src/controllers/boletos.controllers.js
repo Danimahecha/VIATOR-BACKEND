@@ -1,6 +1,6 @@
 const {Boletos} = require('../models/Boletos')
 
-export const getBoletos= async(req, res)=>{
+ const getBoletos= async(req, res)=>{
     const{id}= req.query.id;
   await Boletos.findAll({
     where:{
@@ -13,7 +13,7 @@ export const getBoletos= async(req, res)=>{
 .then((BoletosUser)=> res.json(BoletosUser))
 .catch(e=> res.satus(400).json({message: e.message}))
 }
-export const postBoleto=async(req, res)=>{
+ const postBoleto=async(req, res)=>{
 const{seat, idFligth,idUser}= req.body
 await Boletos.bulkCreate({
     seat,
@@ -30,3 +30,4 @@ await Boletos.bulkCreate({
 .catch(e=> res.status(400).json({message: e.message}))
 
 }
+module.exports={postBoleto, getBoletos}

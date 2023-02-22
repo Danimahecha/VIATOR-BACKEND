@@ -6,3 +6,4 @@ Route.get('/:id', getFlight);
 Route.post('/', createFlight);
 Route.put('/:id', updateFlight);
 Route.delete('/:id', deleteFligth);
+module.exports= Route;
