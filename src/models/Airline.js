@@ -3,10 +3,10 @@ const { DataTypes } = require("sequelize")
 module.exports = (sequelize)=>{
     sequelize.define('Airline', {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false,
-            primaryKey: true,
+          type:DataTypes.INTEGER,
+          autoIncrement:true,
+          allowNull:false,
+          primaryKey:true,
             },
             name: {
               type: DataTypes.STRING,
@@ -18,11 +18,11 @@ module.exports = (sequelize)=>{
               defaultValue: ""
       
           },
-          rating:{
-            type: DataTypes.ENUM('1', '2', '3', '4', '5'),
-            allowNull: true
-        },
-        
+          rating: {
+            type: DataTypes.ENUM("1", "2", "3", "4", "5"),
+            defaultValue: "1",
+          },
+          
           },
           {
             timestamps: false

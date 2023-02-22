@@ -2,7 +2,7 @@ const {Airline} = require('../db.js');
 
     const get_airline = async(req,res) =>{
         try {
-            const airlineBD = Airline.findAll()
+            const airlineBD = await Airline.findAll()
             res.json(airlineBD)
         } catch (error) {
             res.status(400).json({message:error.message})
