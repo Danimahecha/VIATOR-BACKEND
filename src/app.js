@@ -1,11 +1,6 @@
-
 const express = require('express');
-const session = require('express-session')
 const cookieParser = require('cookie-parser');
-const jwt = require('express-jwt');
-const jwks = require('jwks-rsa');
 const bodyParser = require('body-parser');
-const axios = require('axios')
 const morgan = require('morgan');
 const cors = require('cors')
 
@@ -31,12 +26,6 @@ server.use(morgan('dev'));
 //   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
 //   next();
 // });
-
-server.use(session({
-  secret: "12345",
-  resave: true,
-  saveUninitialized: true
-}))
 
 server.use('/', routes);
 

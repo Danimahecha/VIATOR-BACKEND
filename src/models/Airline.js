@@ -22,7 +22,7 @@ module.exports = (sequelize)=>{
             type: DataTypes.ENUM('1', '2', '3', '4', '5'),
             allowNull: true
         },
-       
+        
           },
           {
             timestamps: false
