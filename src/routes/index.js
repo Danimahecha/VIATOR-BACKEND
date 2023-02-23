@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
 const {getUser, getUsers, createUser, updateUser, deleteUser} = require('../controllers/users.controllers.js');
-const { get_airline, get_id_airline, create_airline, update_airline} = require('../controllers/airlines.controllers.js');
+const { get_airline, get_id_airline, create_airline, update_airline, addAirport} = require('../controllers/airlines.controllers.js');
 const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, addAirline} = require('../controllers/airports.controllers.js');
 const {getFlights, getFlight, createFlight, updateFlight, deleteFlight} = require('../controllers/flights.controllers.js');
 const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
@@ -32,6 +32,7 @@ router.post('/api/airlines', create_airline)
 router.put('/api/airlines/:id', update_airline)
 //router.delete('/api/airlines/:id, delete_airline)
 router.get('/api/airlines/:id', get_id_airline)
+router.post('/api/addAirport/:id', addAirport)
 
 //Flights
 router.get('/api/flights', getFlights);

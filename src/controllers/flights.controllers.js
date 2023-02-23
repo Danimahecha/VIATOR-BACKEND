@@ -1,4 +1,4 @@
-const {Flight, Airline} = require('../db.js');
+const {Flight, Airline, Airport} = require('../db.js');
 
     const getFlights = async (req, res) => {
         try {
@@ -23,7 +23,10 @@ const {Flight, Airline} = require('../db.js');
                 where: {id},
                 include: [{
                     model: Airline,
-                    attributes: ['name','infoContact','rating']
+                    attributes: ['name','infoContact','rating'],
+                    include: [
+                        {model: Airport, attributes: ['name']}
+                    ]
                 }]
             })
 
