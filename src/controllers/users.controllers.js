@@ -24,12 +24,13 @@ const getUser = async (req, res) => {
 };
 
 const createUser = async(req,res)=>{
-    const { id, givenName }= req.body;
+    const { id, givenName, email }= req.body;
     
     try {
         const newUser = await User.create({
             id:id,
             givenName:givenName,
+            email:email,
         
         });
         res.json (newUser); 
