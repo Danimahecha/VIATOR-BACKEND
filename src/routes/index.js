@@ -6,7 +6,7 @@ const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, add
 const {getFlights, getFlight, createFlight, updateFlight, deleteFlight} = require('../controllers/flights.controllers.js');
 const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
 const {postLogin, postRegister, putSetInfo} = require('../controllers/login.controllers.js');
-const {getAirportsByInput} = require('../controllers/searchs.controllers.js');
+const {getAirportsByInput, getFlightsByQuery} = require('../controllers/searchs.controllers.js');
 const getRecommendedFlights = require('../controllers/flights.recomend.js');
 
 const router = Router();
@@ -32,7 +32,7 @@ router.post('/api/airlines', create_airline)
 router.put('/api/airlines/:id', update_airline)
 //router.delete('/api/airlines/:id, delete_airline)
 router.get('/api/airlines/:id', get_id_airline)
-router.post('/api/addAirport/:id', addAirport)
+router.post('/api/addAirport', addAirport)
 
 //Flights
 router.get('/api/flights', getFlights);
@@ -58,6 +58,7 @@ router.put('/setInfo',jwtCheck, putSetInfo)
 
 //Searchs
 router.get('/getAirportsByInput/:input', getAirportsByInput);
+router.get('/getFlightsByQuery', getFlightsByQuery);
 
 //Profile
 module.exports = router;
