@@ -5,7 +5,7 @@ const { get_airline, get_id_airline, create_airline, update_airline, addAirport}
 const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, addAirline} = require('../controllers/airports.controllers.js');
 const {getFlights, getFlight, createFlight, updateFlight, deleteFlight} = require('../controllers/flights.controllers.js');
 const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
-const {postLogin, postRegister, putSetInfo} = require('../controllers/login.controllers.js');
+const {postLogin, postRegister, getIsRegistered, putSetInfo} = require('../controllers/login.controllers.js');
 const {getAirportsByInput, getFlightsByQuery} = require('../controllers/searchs.controllers.js');
 const getRecommendedFlights = require('../controllers/flights.recomend.js');
 
@@ -52,6 +52,7 @@ router.delete('/api/tickets/:id', deleteTicket);
 router.get('/api/tickets/:id', getTicket);
 
 //Login - Register
+router.get('/isRegistered', getIsRegistered)
 router.post('/register',jwtCheck, postRegister)
 router.post('/login',jwtCheck, postLogin)
 router.put('/setInfo',jwtCheck, putSetInfo)
