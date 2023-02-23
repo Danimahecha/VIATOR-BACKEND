@@ -42,13 +42,19 @@ const {Flight, Airline, Airport} = require('../db.js');
 
     const  createFlight = async(req,res) =>{
 
-        const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice,AirlineId } = req.body;
+        const { airportOriginId,airportDestinyId,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice, AirlineId } = req.body;
+
+       const airportOrigin = await Airport.findByPk(airportOriginId)
+       const airportDestiny = await Airport.findByPk(airportDestinyId)
+
+       console.log(await airportOrigin.getAirlines())
 
         try {
             const newFlight = await Flight.create({
             
-                origin:origin,
-                destiny: destiny,
+                //solo ciudad
+                origin:airportOrigin.name + airportOrigin.city,
+                destiny: airportDestiny.name,
                 dateTimeDeparture: dateTimeDeparture,
                 dateTimeArrival: dateTimeArrival,
                 seatsAvailable: seatsAvailable,
