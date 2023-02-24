@@ -42,12 +42,9 @@ const {Flight, Airline, Airport} = require('../db.js');
 
     const  createFlight = async(req,res) =>{
 
-        const { airportOriginId,airportDestinyId,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice, AirlineId } = req.body;
-
+       const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice,AirlineId,scale } = req.body;
        const airportOrigin = await Airport.findByPk(airportOriginId)
        const airportDestiny = await Airport.findByPk(airportDestinyId)
-
-       console.log(await airportOrigin.getAirlines())
 
         try {
             const newFlight = await Flight.create({
@@ -58,6 +55,7 @@ const {Flight, Airline, Airport} = require('../db.js');
                 dateTimeArrival: dateTimeArrival,
                 seatsAvailable: seatsAvailable,
                 ticketPrice: ticketPrice,
+                scale:scale,
                 AirlineId: AirlineId,
             
             });
@@ -75,7 +73,7 @@ const {Flight, Airline, Airport} = require('../db.js');
         
         try {
             const { id } = req.params;
-            const {origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice}= req.body;
+            const {origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice,scale}= req.body;
 
             const flight = await Flight.findByPk(id)
             //Metodo Update?
@@ -85,6 +83,7 @@ const {Flight, Airline, Airport} = require('../db.js');
             flight.dateTimeDeparture = dateTimeDeparture,
             flight.seatsAvailable= seatsAvailable,
             flight.ticketPrice = ticketPrice,
+            flight.scale = scale
             
             await flight.save()
 

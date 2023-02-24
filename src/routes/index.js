@@ -8,7 +8,7 @@ const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = requir
 const {postLogin, postRegister, getIsRegistered, putSetInfo} = require('../controllers/login.controllers.js');
 const {getAirportsByInput, getFlightsByQuery} = require('../controllers/searchs.controllers.js');
 const getRecommendedFlights = require('../controllers/flights.recomend.js');
-
+const {getFlightsScale} =require('../controllers/flightScale');
 const router = Router();
 
 //Users
@@ -45,6 +45,9 @@ router.post('/api/flights', createFlight);
 router.put('/api/flights/:id',updateFlight);
 router.delete('/api/flights/:id',deleteFlight);
 router.get('/api/flights/:id',getFlight );
+
+//scale
+router.get('/api/ScaleFlights',getFlightsScale);
 
 //recommended Flights
 router.get('/api/recommended', getRecommendedFlights);

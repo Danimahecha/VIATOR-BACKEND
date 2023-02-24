@@ -30,12 +30,17 @@ sequelize.define('Flight',{
     seatsAvailable:{
         type:DataTypes.INTEGER,
         defaultValue: 0,
-
       },
     ticketPrice:{
         type:DataTypes.STRING,
-        defaultValue: "",
+        defaultValue: 0,
       },
+      scale:{
+        type: DataTypes.ENUM('0', '1', '2'),
+        allowNull: false,
+        //defaultValue: 0,
+    },
+   
 
     }, {
     timestamps: false,
