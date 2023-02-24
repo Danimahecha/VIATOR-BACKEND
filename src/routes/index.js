@@ -29,7 +29,7 @@ router.put('/updateAirport/:id', updateAirport);
 router.delete('/deleteAirport/:id', deleteAirport);
 router.get('/getAirport/:id', getAirport);
 router.post('/addAirline', addAirline);
-router.get('/getAirportByCountry', getAirportByCountry)
+router.get('/getAirportsByCountry', getAirportBycountry);
 
 //Airlines
 router.get('/api/airlines', get_airline);
