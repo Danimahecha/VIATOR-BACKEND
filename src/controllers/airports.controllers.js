@@ -14,7 +14,7 @@ const {Op}= require('sequelize')
         }
     };
     const getAirportBycountry=async(req, res)=>{
-try{const {airLine, country}= req.body;
+try{const {airLine, country}= req.query;
 const aereoLinea=await Airline.findOne({
     include:[{model: Airport}],
     where:{
