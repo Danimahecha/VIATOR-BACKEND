@@ -42,16 +42,29 @@ const {User, Flight, Ticket} = require('../db.js');
     };
 
     const updateUser = async (req, res ) =>{
+        
+        const { id } = req.params;
+        const { names, lastNames, nickname, phoneNumber, email, country, city, DateOfBirth, picture }= req.body
+        
         try {
-            const { id } = req.params;
-            const { name }= req.body
 
-        const user = await User.findByPk(id)
-        user.name = name
-        await user.save()
+            const user = await User.findByPk(id)
+            await user.update({
+                givenName: names,
+                familyName: lastNames,
+                nickName: nickname,
+                phone: phoneNumber,
+                email: email,
+                country: country,
+                city:city,
+                birthdate: DateOfBirth,
+                picture: picture
+            })
+            await user.save()
 
-        res.status(200).send('successfully modified')
+            res.status(200).send('successfully modified')
         } catch (error) {
+
             return res.status (400).json({message: error.message})
 
         }
@@ -86,6 +99,27 @@ const {User, Flight, Ticket} = require('../db.js');
             await user.addFlight(flight)
 
             res.status(200).send("Vuelo agregado correctamente"); 
+
+        }catch(error) {
+
+            return res.status(400).send({message: error.message})   
+
+        }
+    };
+
+    const  deleteFlight = async (req, res) => {
+
+        const {  userId } = req.body;
+
+        try {
+
+            await Flight.destroy({
+                where: {
+                  UserId: userId
+                }
+              });
+
+            res.status(200).send("Vuelo desagregado correctamente"); 
 
         }catch(error) {
 
@@ -170,6 +204,7 @@ module.exports = {
     updateUser,
     deleteUser,
     addFlight,
+    deleteFlight,
     getUserFlights,
     addTicket,
     getUserTickets,
