@@ -59,7 +59,7 @@ const moment = require('moment');
                       [Op.between]: [dateTimeArrivalStart, dateTimeArrivalEnd]
                     }
                   },
-                  { seatsAvailable: { [Op.eq]: passengers } },
+                  { seatsAvailable: { [Op.gte]: passengers } },
                 ]
               }
             })

@@ -49,8 +49,8 @@ const {Flight, Airline, Airport} = require('../db.js');
         try {
             const newFlight = await Flight.create({
             
-                origin: `${airportOrigin.name}, ${airportOrigin.city}`,
-                destiny: `${airportDestiny.name}, ${airportDestiny.city}`,
+                origin: `${airportOrigin.name}, ${airportOrigin.city}, ${airportOrigin.country}`,
+                destiny: `${airportDestiny.name}, ${airportDestiny.city}, ${airportDestiny.country}`,
                 dateTimeDeparture: dateTimeDeparture,
                 dateTimeArrival: dateTimeArrival,
                 seatsAvailable: seatsAvailable,
