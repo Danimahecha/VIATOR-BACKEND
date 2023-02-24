@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
-const {getUser, getUsers, createUser, updateUser, deleteUser} = require('../controllers/users.controllers.js');
+const {getUser, getUsers, createUser, updateUser, deleteUser, addFlight, getUserFlights, addTicket, getUserTickets} = require('../controllers/users.controllers.js');
 const { get_airline, get_id_airline, create_airline, update_airline, addAirport} = require('../controllers/airlines.controllers.js');
 const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, addAirline} = require('../controllers/airports.controllers.js');
 const {getFlights, getFlight, createFlight, updateFlight, deleteFlight} = require('../controllers/flights.controllers.js');
@@ -12,11 +12,15 @@ const getRecommendedFlights = require('../controllers/flights.recomend.js');
 const router = Router();
 
 //Users
-router.get('/getUsers', getUsers);
-router.post('/createUser', createUser);
-router.put('/updateUser/:id',updateUser);
-router.delete('/deleteUser/:id',deleteUser);
-router.get('/getUser/:id',getUser );
+router.get('/User/getUsers', getUsers);
+router.post('/User/createUser', createUser);
+router.put('/User/updateUser/:id',updateUser);
+router.delete('/User/deleteUser/:id',deleteUser);
+router.get('/User/getUser/:id',getUser );
+router.post('/User/addFlight', addFlight);
+router.get('/User/getUserFlights', getUserFlights);
+router.post('/User/addTicket', addTicket);
+router.get('/User/getUserTickets', getUserTickets);
 
 //Airports
 router.get('/getAirports', getAirports);
@@ -27,12 +31,12 @@ router.get('/getAirport/:id', getAirport);
 router.post('/addAirline', addAirline);
 
 //Airlines
-router.get('/api/airlines', get_airline)
-router.post('/api/airlines', create_airline)
-router.put('/api/airlines/:id', update_airline)
+router.get('/api/airlines', get_airline);
+router.post('/api/airlines', create_airline);
+router.put('/api/airlines/:id', update_airline);
 //router.delete('/api/airlines/:id, delete_airline)
-router.get('/api/airlines/:id', get_id_airline)
-router.post('/api/addAirport', addAirport)
+router.get('/api/airlines/:id', get_id_airline);
+router.post('/api/addAirport', addAirport);
 
 //Flights
 router.get('/api/flights', getFlights);
@@ -42,7 +46,7 @@ router.delete('/api/flights/:id',deleteFlight);
 router.get('/api/flights/:id',getFlight );
 
 //recommended Flights
-router.get('/api/recommended', getRecommendedFlights)
+router.get('/api/recommended', getRecommendedFlights);
 
 //Tickets
 router.get('/api/tickets', getTickets);
@@ -52,10 +56,10 @@ router.delete('/api/tickets/:id', deleteTicket);
 router.get('/api/tickets/:id', getTicket);
 
 //Login - Register
-router.get('/isRegistered', getIsRegistered)
-router.post('/register',jwtCheck, postRegister)
-router.post('/login',jwtCheck, postLogin)
-router.put('/setInfo',jwtCheck, putSetInfo)
+router.get('/isRegistered', getIsRegistered);
+router.post('/register',jwtCheck, postRegister);
+router.post('/login',jwtCheck, postLogin);
+router.put('/setInfo',jwtCheck, putSetInfo);
 
 //Searchs
 router.get('/getAirportsByInput/:input', getAirportsByInput);
