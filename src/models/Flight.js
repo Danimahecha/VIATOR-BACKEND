@@ -36,7 +36,10 @@ sequelize.define('Flight',{
         type:DataTypes.STRING,
         defaultValue: "",
       },
-
+      scale:{
+        type:DataTypes.ENUM("0","1","2"),
+        allowNull: false,
+      }
     }, {
     timestamps: false,
 
