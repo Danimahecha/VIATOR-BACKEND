@@ -47,7 +47,7 @@ const moment = require('moment');
                         { destiny: { [Op.like]: `%${destiny}%` } },
                         { dateTimeDeparture: { [Op.eq]: ConvertedDateTimeDeparture} },
                         { dateTimeArrival: { [Op.eq]: ConvertedDateTimeArrival} },
-                        { seatsAvailable: { [Op.eq]: passengers } },
+                        { seatsAvailable: { [Op.gte]: passengers } },
                       ]
                     }
                   })

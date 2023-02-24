@@ -125,6 +125,32 @@ const {Airport, Airline} = require('../db.js');
         }
     }
 
+    const getAirportByCountry = async (req, res) => {
+
+        const {airlineName, country} = req.query;
+
+        try {
+
+            const airline = await Airline.findOne({
+                where: {name: airlineName},
+                include: [{
+                    model: Airport,
+                    attributes: ['country']
+                }]
+            })
+
+            if(!airline) return res.status(404).send({massage:'The airport does not exist'})
+
+            const airports = await airline.getAirports({where:{ country : country}})
+            res.status(200).send(airports);
+
+        }catch(error){
+
+            return res.status(400).send({message: error.message});
+
+        }
+    };
+
 module.exports = {
     getAirports,
     createAirport,
@@ -132,4 +158,5 @@ module.exports = {
     deleteAirport,
     getAirport,
     addAirline,
+    getAirportByCountry,
   };

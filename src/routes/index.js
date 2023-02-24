@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
 const {getUser, getUsers, createUser, updateUser, deleteUser, addFlight, getUserFlights, addTicket, getUserTickets} = require('../controllers/users.controllers.js');
 const { get_airline, get_id_airline, create_airline, update_airline, addAirport} = require('../controllers/airlines.controllers.js');
-const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, addAirline} = require('../controllers/airports.controllers.js');
+const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, addAirline, getAirportByCountry} = require('../controllers/airports.controllers.js');
 const {getFlights, getFlight, createFlight, updateFlight, deleteFlight} = require('../controllers/flights.controllers.js');
 const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
 const {postLogin, postRegister, getIsRegistered, putSetInfo} = require('../controllers/login.controllers.js');
@@ -29,6 +29,7 @@ router.put('/updateAirport/:id', updateAirport);
 router.delete('/deleteAirport/:id', deleteAirport);
 router.get('/getAirport/:id', getAirport);
 router.post('/addAirline', addAirline);
+router.get('/getAirportByCountry', getAirportByCountry)
 
 //Airlines
 router.get('/api/airlines', get_airline);
