@@ -17,6 +17,25 @@ const {User} = require('../db.js');
         }
     }
 
+    const getIsRegistered = async (req, res) => {
+
+        const {id} = req.query
+
+        try {
+            if(id){
+                const user = await User.findByPk(id)
+                if(user.email === "No registrado"){
+                    res.status(200).send("Usuario no registrado")
+                }else{
+                    res.status(200).send("Usuario registrado")
+                }
+            }
+        }catch (error) {
+
+            res.send(error.message)
+        }
+    }
+
     const postRegister = async (req, res) => {
         const {sub, email, picture} = req.body
 
@@ -61,4 +80,5 @@ module.exports = {
     postLogin,
     postRegister,
     putSetInfo,
+    getIsRegistered
   };

@@ -1,4 +1,4 @@
-const {Flight, Airline} = require('../db.js');
+const {Flight, Airline, Airport} = require('../db.js');
 
     const getFlights = async (req, res) => {
         try {
@@ -23,7 +23,10 @@ const {Flight, Airline} = require('../db.js');
                 where: {id},
                 include: [{
                     model: Airline,
-                    attributes: ['name','infoContact','rating']
+                    attributes: ['name','infoContact','rating'],
+                    include: [
+                        {model: Airport, attributes: ['name']}
+                    ]
                 }]
             })
 
@@ -39,13 +42,15 @@ const {Flight, Airline} = require('../db.js');
 
     const  createFlight = async(req,res) =>{
 
-        const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice,AirlineId,scale } = req.body;
+       const { origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice,AirlineId,scale } = req.body;
+       const airportOrigin = await Airport.findByPk(airportOriginId)
+       const airportDestiny = await Airport.findByPk(airportDestinyId)
 
         try {
             const newFlight = await Flight.create({
             
-                origin:origin,
-                destiny: destiny,
+                origin: `${airportOrigin.name}, ${airportOrigin.city}`,
+                destiny: `${airportDestiny.name}, ${airportDestiny.city}`,
                 dateTimeDeparture: dateTimeDeparture,
                 dateTimeArrival: dateTimeArrival,
                 seatsAvailable: seatsAvailable,

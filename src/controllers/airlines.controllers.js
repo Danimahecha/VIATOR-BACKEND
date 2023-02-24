@@ -1,4 +1,4 @@
-const {Airline} = require('../db.js');
+const {Airline, Airport} = require('../db.js');
 
     const get_airline = async(req,res) =>{
         try {
@@ -10,12 +10,20 @@ const {Airline} = require('../db.js');
     }
 
     const get_id_airline = async(req,res) =>{
+        
+        const {id} = req.params;
+
         try {
-            const {id} = req.params;
-            let idAirline = await Airline.findByPk(id)
-            console.log(idAirline)
-            if (idAirline) {
-                res.json(idAirline)
+            const airline = await Airline.findOne({
+                where: {id},
+                include: [{
+                    model: Airport,
+                    attributes: ['name', 'country', 'city']
+                }]
+            })
+
+            if (airline) {
+                res.json(airline)
             }else{
                 res.status(404).json({message:'Id not found'})
             }
@@ -62,9 +70,30 @@ const {Airline} = require('../db.js');
         }
     }
 
+    const  addAirport = async (req, res) => {
+
+        const {  airlineId , airportId} = req.body;
+
+        try {
+            const airline = await Airline.findByPk(airlineId)
+
+            const airport = await Airport.findByPk(airportId)
+
+            await airline.addAirport(airport)
+            
+            res.status(200).send("Aeropuerto agregado correctamente"); 
+
+        }catch(error) {
+
+            return res.status(400).send({message: error.message})   
+
+        }
+    };
+
 module.exports = {
     get_airline,
     get_id_airline,
-   create_airline,
+    create_airline,
     update_airline,
+    addAirport
   };

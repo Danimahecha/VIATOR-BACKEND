@@ -30,49 +30,25 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const {User, Ticket, Flight, Airline} = sequelize.models;
+const {User, Ticket, Flight, Airline, Airport} = sequelize.models;
 
 // Aca vendrian las relaciones
+
+User.hasMany(Ticket, { timestamps: false });
+Ticket.belongsTo(User, { timestamps: false });
 
 Flight.hasOne(Ticket);
 Ticket.belongsTo(Flight);
 
-/* User.belongsToMany(Ticket,{through:'UserTickets'} );
-Ticket.belongsToMany(User,{through:'UserTickets'} ); */
+Airline.belongsToMany(Airport,{through:'AirlineAirport',  timestamps: false } )
+Airport.belongsToMany(Airline,{through:'AirlineAirport',  timestamps: false } )
 
-User.hasMany(Ticket);
-Ticket.belongsTo(User);
+User.belongsToMany(Flight,{through:'UserFlight',  timestamps: false } )
+Flight.belongsToMany(User,{through:'UserFlight',  timestamps: false } )
 
+//La relacion esta bien?
 Airline.hasOne(Flight);
 Flight.belongsTo(Airline);
-
-/* User.hasMany(Ticket,{
-  foreignKey: "user_id",
-  sourceKey: "id"
-})
-Ticket.belongsTo(User,{
-  foreignKey: "user_id",
-  targetKey:"id"
-})
-Flight.hasMany(Ticket,{
-  foreignKey: "Fligths_id",
-  sourceKey: "id"
-})
-Ticket.belongsTo(Flight,{
-  foreignKey: "Fligths_id",
-  targetKey:"id"
-})
- Airline.hasMany(Flight,{
-  foreignKey: "Aereolineas_id",
-  sourceKey: "id"
-}) 
-
-Flight.belongsTo(Airline,{
-  foreignKey: "Aereolineas_id",
-  targetKey:"id"
-})   
-
-*/
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
