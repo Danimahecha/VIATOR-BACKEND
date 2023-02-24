@@ -1,5 +1,4 @@
 const {Airport, Airline} = require('../db.js');
-const {Op}= require('sequelize')
 
     const getAirports = async (req, res) => {
         try {
@@ -13,27 +12,6 @@ const {Op}= require('sequelize')
 
         }
     };
-    const getAirportBycountry=async(req, res)=>{
-try{const {airLine, country}= req.body;
-const aereoLinea=await Airline.findOne({
-    include:[{model: Airport}],
-    where:{
-        name: {[Op.like]: `%${airLine}%`}
-    }
-})
-
-
-if(aereoLinea){ 
- const  airportByCountry= aereoLinea.Airports.filter(airport=>airport.country=== country)
-    res.json(airportByCountry)
-}
-else{
-res.status(400).json('no se encontraron resultados')
-}}
-catch(error){
-    res.status(400).json({message: error.message })  
-}
-    }
 
     const getAirport = async (req, res) => {
 
@@ -154,5 +132,4 @@ module.exports = {
     deleteAirport,
     getAirport,
     addAirline,
-    getAirportBycountry
   };
