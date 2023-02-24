@@ -65,7 +65,7 @@ const flightSchedule =async(req,res) =>{
         }else if (ida && !vuelta) {
             res.json({ida:vuelosOfDayIda})
         }else if (!ida && !vuelta) {
-            res.status(400).send("Debes agregar una fecha ya sea salida o llegada")
+            res.status(400).send("Debes agregar una fecha ya sea salida o llegada !Please")
         }
         
 
