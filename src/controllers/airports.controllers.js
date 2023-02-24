@@ -180,7 +180,7 @@ module.exports = {
     deleteAirport,
     getAirport,
     addAirline,
-    getAirportByCountry,
-    getAirportBycountry2
+    getAirportBycountry,
+    getAirportByCountry2
     
   };
