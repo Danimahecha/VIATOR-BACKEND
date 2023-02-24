@@ -1,4 +1,4 @@
-const {Ticket, Flight} = require('../db.js');
+const {Ticket, Flight, User} = require('../db.js');
 
     const getTickets = async (req, res) => {
 
@@ -38,24 +38,26 @@ const {Ticket, Flight} = require('../db.js');
 
     const  createTicket = async (req,res) =>{
 
-        const { namePassanger,from,to,boardingTime,seat,gate,aeroLine, clase,FlightId} = req.body;
+        const { seat, flightId, userId} = req.body;
+
+        const user = await User.findByPk(userId)
+
+        const flight = await Flight.findByPk(flightId)
 
         try {
 
             const newTicket = await Ticket.create({
 
-                namePassanger,
-                from,
-                to,
-                boardingTime,
-                seat,
-                gate,
-                aeroLine,
-                clase,
-                FlightId,
+                namePassanger: `${user.givenName} ${user.familyName}`,
+                from: flight.origin,
+                to: flight.destiny,
+                boardingTime: flight.dateTimeDeparture,
+                seat: seat,
+                UserId: userId,
+                FlightId: flightId
             });
 
-            res.json (newTicket); 
+            res.status(200).send(newTicket); 
 
         }catch(error) {
 
