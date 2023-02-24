@@ -1,4 +1,5 @@
 const {Airport, Airline} = require('../db.js');
+const {Op}= require('sequelize')
 
     const getAirports = async (req, res) => {
         try {
@@ -12,6 +13,27 @@ const {Airport, Airline} = require('../db.js');
 
         }
     };
+    const getAirportBycountry=async(req, res)=>{
+try{const {airLine, country}= req.query;
+const aereoLinea=await Airline.findOne({
+    include:[{model: Airport}],
+    where:{
+        name: {[Op.like]: `%${airLine}%`}
+    }
+})
+
+
+if(aereoLinea){ 
+ const  airportByCountry= aereoLinea.Airports.filter(airport=>airport.country=== country)
+    res.json(airportByCountry)
+}
+else{
+res.status(400).json('no se encontraron resultados')
+}}
+catch(error){
+    res.status(400).json({message: error.message })  
+}
+    }
 
     const getAirport = async (req, res) => {
 
@@ -125,6 +147,32 @@ const {Airport, Airline} = require('../db.js');
         }
     }
 
+   const getAirportByCountry2 = async (req, res) => {
+
+        const {airlineName, country} = req.query;
+
+        try {
+
+            const airline = await Airline.findOne({
+                where: {name: airlineName},
+                include: [{
+                    model: Airport,
+                    attributes: ['country']
+                }]
+            })
+
+            if(!airline) return res.status(404).send({massage:'The airport does not exist'})
+
+            const airports = await airline.getAirports({where:{ country : country}})
+            res.status(200).send(airports);
+
+        }catch(error){
+
+            return res.status(400).send({message: error.message});
+
+        }
+    };
+
 module.exports = {
     getAirports,
     createAirport,
@@ -132,4 +180,7 @@ module.exports = {
     deleteAirport,
     getAirport,
     addAirline,
+    getAirportBycountry,
+    getAirportByCountry2
+    
   };
