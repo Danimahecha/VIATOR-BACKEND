@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 const {Flight, Airline} = require('../db.js');
 
 function fechaConversion(date) {
-    let fechaDivide = date.split('/')
+    let fechaDivide = date.split('-')
     let año = fechaDivide[0]
     let mes = fechaDivide[1]
     let dia = fechaDivide[2]
