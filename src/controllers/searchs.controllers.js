@@ -33,25 +33,45 @@ const moment = require('moment');
 
         const {origin, destiny, dateTimeDeparture, dateTimeArrival, passengers} = req.query
 
-        const dateFormat = 'YYYY-MM-DD HH:mm:ss'
-
+       /*  const dateFormat = 'YYYY-MM-DD HH:mm:ss'
         const ConvertedDateTimeDeparture = moment(dateTimeDeparture).format(dateFormat)
-        const ConvertedDateTimeArrival = moment(dateTimeArrival).format(dateFormat)
+        const ConvertedDateTimeArrival = moment(dateTimeArrival).format(dateFormat) */
+        const ConvertedDateTimeDeparture = new Date(dateTimeDeparture)
+        const ConvertedDateTimeArrival = new Date(dateTimeArrival)
 
+        console.log(dateTimeDeparture)
+        console.log(dateTimeArrival)
+
+        console.log(ConvertedDateTimeDeparture)
+        console.log(ConvertedDateTimeArrival)
         try {
             if(origin && destiny && passengers){
-                const flights = await Flight.findAll({
-                    where: {
-                      [Op.and]: [
-                        { origin: { [Op.like]: `%${origin}%` } },
-                        { destiny: { [Op.like]: `%${destiny}%` } },
-                        { dateTimeDeparture: { [Op.eq]: ConvertedDateTimeDeparture} },
-                        { dateTimeArrival: { [Op.eq]: ConvertedDateTimeArrival} },
-                        { seatsAvailable: { [Op.gte]: passengers } },
-                      ]
-                    }
-                  })
-
+              const thirtyMinutes = 30 * 60 * 1000; // 30 minutos en milisegundos
+              const dateTimeDepartureStart = new Date(ConvertedDateTimeDeparture.getTime() - thirtyMinutes);
+              const dateTimeDepartureEnd = new Date(ConvertedDateTimeDeparture.getTime() + thirtyMinutes);
+              const dateTimeArrivalStart = new Date(ConvertedDateTimeArrival.getTime() - thirtyMinutes);
+              const dateTimeArrivalEnd = new Date(ConvertedDateTimeArrival.getTime() + thirtyMinutes);
+              
+              const flights = await Flight.findAll({
+                where: {
+                  [Op.and]: [
+                    { origin: { [Op.like]: `%${origin}%` } },
+                    { destiny: { [Op.like]: `%${destiny}%` } },
+                    {
+                      dateTimeDeparture: {
+                        [Op.between]: [dateTimeDepartureStart, dateTimeDepartureEnd]
+                      }
+                    },
+                    {
+                      dateTimeArrival: {
+                        [Op.between]: [dateTimeArrivalStart, dateTimeArrivalEnd]
+                      }
+                    },
+                    { seatsAvailable: { [Op.eq]: passengers } },
+                  ]
+                }
+              })
+              console.log(flights.toString());
                   res.status(200).send(flights)
             }
         } catch (error) {

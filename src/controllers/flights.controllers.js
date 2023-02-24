@@ -47,8 +47,10 @@ const {Flight, Airline, Airport} = require('../db.js');
        const airportOrigin = await Airport.findByPk(airportOriginId)
        const airportDestiny = await Airport.findByPk(airportDestinyId)
 
-       console.log(await airportOrigin.getAirlines())
-
+       const fecha = new Date(dateTimeDeparture)
+       console.log(dateTimeDeparture)
+       console.log(fecha)
+        console.log(fecha.toLocaleDateString())
         try {
             const newFlight = await Flight.create({
             
