@@ -31,45 +31,72 @@ const moment = require('moment');
 
     const getFlightsByQuery = async (req, res) => {
 
-      const {origin, destiny, dateTimeDeparture, dateTimeArrival, passengers} = req.query
+      const {roundTrip,origin, destiny, dateTimeDeparture, dateTimeReturn, passengers} = req.query
 
       const ConvertedDateTimeDeparture = new Date(dateTimeDeparture)
-      const ConvertedDateTimeArrival = new Date(dateTimeArrival)
+      const ConvertedDateTimeReturn = new Date(dateTimeReturn)
+      
+      const thirtyMinutes = 30 * 60 * 1000; // 30 minutos en milisegundos
 
-      try {
-          if(origin && destiny && passengers){
-            const thirtyMinutes = 30 * 60 * 1000; // 30 minutos en milisegundos
-            const dateTimeDepartureStart = new Date(ConvertedDateTimeDeparture.getTime() - thirtyMinutes);
-            const dateTimeDepartureEnd = new Date(ConvertedDateTimeDeparture.getTime() + thirtyMinutes);
-            const dateTimeArrivalStart = new Date(ConvertedDateTimeArrival.getTime() - thirtyMinutes);
-            const dateTimeArrivalEnd = new Date(ConvertedDateTimeArrival.getTime() + thirtyMinutes);
-            
-            const flights = await Flight.findAll({
-              where: {
-                [Op.and]: [
-                  { origin: { [Op.like]: `%${origin}%` } },
-                  { destiny: { [Op.like]: `%${destiny}%` } },
-                  {
-                    dateTimeDeparture: {
-                      [Op.between]: [dateTimeDepartureStart, dateTimeDepartureEnd]
-                    }
-                  },
-                  {
-                    dateTimeArrival: {
-                      [Op.between]: [dateTimeArrivalStart, dateTimeArrivalEnd]
-                    }
-                  },
-                  { seatsAvailable: { [Op.gte]: passengers } },
-                ]
-              }
-            })
-            console.log(flights.toString());
-                res.status(200).send(flights)
+      const dateTimeDepartureStart = new Date(ConvertedDateTimeDeparture.getTime() - thirtyMinutes);
+      const dateTimeDepartureEnd = new Date(ConvertedDateTimeDeparture.getTime() + thirtyMinutes);
+      const dateTimeReturnStart = new Date(ConvertedDateTimeReturn.getTime() - thirtyMinutes);
+      const dateTimeReturnEnd = new Date(ConvertedDateTimeReturn.getTime() + thirtyMinutes);
+
+      if(roundTrip === "false"){
+
+        try {
+            if(origin && destiny && passengers){
+
+              const normalFlights = await Flight.findAll({
+                where: {
+                  [Op.and]: [
+                    { roundTrip: { [Op.eq]: false } },
+                    { origin: { [Op.like]: `%${origin}%` } },
+                    { destiny: { [Op.like]: `%${destiny}%` } },
+                    {
+                      dateTimeDeparture: {
+                        [Op.between]: [dateTimeDepartureStart, dateTimeDepartureEnd]
+                      }
+                    },
+                    { seatsAvailable: { [Op.gte]: passengers } },
+                  ]
+                }
+              })
+
+                  res.status(200).send(normalFlights)
+            }else{
+              res.status(404).send({message: "Datos no encontrados"})
+            }
+        } catch (error) {
+  
+          return res.status(400).send({message: error.message});
+  
+        }
+      }else{
+
+        const roundTripFlights = await Flight.findAll({
+          where: {
+            [Op.and]: [
+              { roundTrip: { [Op.eq]: true } },
+              { origin: { [Op.like]: `%${origin}%` } },
+              { destiny: { [Op.like]: `%${destiny}%` } },
+              {
+                dateTimeDeparture: {
+                  [Op.between]: [dateTimeDepartureStart, dateTimeDepartureEnd]
+                }
+              },
+              {
+                dateTimeReturn: {
+                  [Op.between]: [dateTimeReturnStart, dateTimeReturnEnd]
+                }
+              },
+              { seatsAvailable: { [Op.gte]: passengers } },
+            ]
           }
-      } catch (error) {
+        })
 
-        return res.status(400).send({message: error.message});
-
+        res.status(200).send(roundTripFlights)
       }
   }
 
