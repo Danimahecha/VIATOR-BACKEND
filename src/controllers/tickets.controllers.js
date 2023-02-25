@@ -49,9 +49,6 @@ const {Ticket, Flight, User} = require('../db.js');
             const newTicket = await Ticket.create({
 
                 namePassanger: `${user.givenName} ${user.familyName}`,
-                from: flight.origin,
-                to: flight.destiny,
-                boardingTime: flight.dateTimeDeparture,
                 seat: seat,
                 UserId: userId,
                 FlightId: flightId

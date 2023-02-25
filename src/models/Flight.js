@@ -53,10 +53,6 @@ sequelize.define('Flight',{
         allowNull: false,
       }
 
-   
-    },
-
-
     }, {
     timestamps: false,
 
