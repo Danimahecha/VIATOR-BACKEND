@@ -48,11 +48,10 @@ sequelize.define('Flight',{
         defaultValue: 0,
       },
       scale:{
-        type: DataTypes.ENUM('0', '1', '2'),
+      
+        type:DataTypes.ENUM("0","1","2"),
         allowNull: false,
-        //defaultValue: 0,
-    },
-
+      }
 
     }, {
     timestamps: false,

@@ -86,8 +86,8 @@ const {Flight, Airline, Airport} = require('../db.js');
             flight.dateTimeDeparture = dateTimeDeparture,
             flight.seatsAvailable= seatsAvailable,
             flight.ticketPrice = ticketPrice,
-            flight.scale = scale
-            
+            flight.scale=scale,
+
             await flight.save()
 
             res.status(200).send('successfully modified')

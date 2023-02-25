@@ -11,18 +11,6 @@ module.exports = (sequelize)=>{
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            from: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            to:{
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            boardingTime:{
-                type: DataTypes.DATE,
-                allowNull: false,
-            },
             seat: {
                 type: DataTypes.STRING,
                 allowNull: false

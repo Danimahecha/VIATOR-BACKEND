@@ -3,7 +3,9 @@ const {Flight}= require('../db')
 const getFlightsScale = async (req, res,) => {
     const {scale} = req.query;
     try {
+
         const flightScale = await Flight.findAll({where:{scale}});
+
         const scaleFlight = flightScale.filter(value => value.scale === scale);
         
         if(!scaleFlight.length)throw Error("Not found")
