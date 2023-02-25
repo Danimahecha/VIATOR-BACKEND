@@ -20,58 +20,53 @@ function sumarUnDiaAFechaISO(fechaISO) {
     }
 
 const flightSchedule =async(req,res) =>{
-    // el tipo de formato que deben tener las 2 propiedades en req.body es asi YY/MM/DD >> 2023/02/22
+    // el tipo de formato que deben tener las 2 propiedades en req.body es asi YY-MM-DD >> 2023-02-22
     // que incluyan un 0 antes los numeros del 1 al 9
     const {ida,vuelta,origen,destino} = req.body;
-    let timeIda = fechaConversion(ida)
-    let timeVuelta="";
-    if (vuelta === "") {
-        timeVuelta = ""
-    }else{
-        timeVuelta = fechaConversion(vuelta)
+    let timeIda = fechaConversion(ida);
+    let timeVuelta;
+    if (vuelta !== null) {
+        timeVuelta = fechaConversion(vuelta) 
     }
+    
     try {
-        const vuelosOfDayIda = await Flight.findAll({
-            where:{
-                origin:origen,
-                destiny:destino,
-                dateTimeDeparture:{
-                    [Op.gte] : timeIda,
-                    [Op.lt] : sumarUnDiaAFechaISO(timeIda)
-                }
-            }
-        })
-
-        if (timeIda && timeVuelta) {
-            const vuelosOfDayVuelta = await Flight.findAll({
+        
+        
+        if (ida && vuelta === null) {
+            //la vuelta debe poner null en el front si es solo ida
+            const vuelosOfDayIda = await Flight.findAll({
                 where:{
-                    origin:destino,
-                    destiny:origen,
+                    origin:origen,
+                    destiny:destino,
                     dateTimeDeparture:{
-                        [Op.gte] : timeVuelta,
-                        [Op.lt] : sumarUnDiaAFechaISO(timeVuelta)
-                    }
+                        [Op.gte] : timeIda,
+                        [Op.lt] : sumarUnDiaAFechaISO(timeIda)
+                    },
+                    roundTrip:false
                 }
             })
-
-            let fligth = []
-            for (let i = 0; i < vuelosOfDayIda.length; i++) {
-                for (let j = 0; j < vuelosOfDayVuelta.length; j++) {
-                    const llegada = new Date(vuelosOfDayIda[i].dateTimeArrival)
-                    const salida = new Date(vuelosOfDayVuelta[j].dateTimeDeparture)
-                    const llegadaIntervalo = llegada.setHours(llegada.getHours() + 3)
-                    if (llegada < salida && llegadaIntervalo < salida) {
-                        fligth = [...fligth,{ida:vuelosOfDayIda[i],vuelta:vuelosOfDayVuelta[j]}]
-                    }                    
+            res.json(vuelosOfDayIda)
+        }else if (ida && vuelta) {
+            const vuelosOfDayIdaVuelta = await Flight.findAll({
+                where:{
+                    origin:origen,
+                    destiny:destino,
+                    dateTimeDeparture:{
+                        [Op.gte] : timeIda,
+                        [Op.lt] : sumarUnDiaAFechaISO(timeIda)
+                    },
+                    dateTimeReturn:{
+                        [Op.gte] : timeVuelta,
+                        [Op.lt] : sumarUnDiaAFechaISO(timeVuelta)
+                    },
+                    roundTrip:true
                 }
-            }
-            res.json(fligth)
-        }else if (timeIda && timeVuelta === "") {
-            res.json({ida:vuelosOfDayIda})
-        }else if (!timeIda && timeVuelta === "") {
+            })
+            res.json(vuelosOfDayIdaVuelta)
+        }else{
+            res.status(400).send({error: "Debe rellanar al menos el de ida"})
         }
         
-
     } catch (error) {
         res.status(400).json({message: error.message})
     }
