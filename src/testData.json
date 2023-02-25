@@ -1,7 +1,7 @@
 
 
 
-  ["aerepuertos",
+  ["aerepuertos ingresarlos en el siguiente orden",
     {
     "name":"Aereopuerto Internacional el Dorado",
     "country": "Colombia",
@@ -32,7 +32,7 @@
     "country": "Peru",
     "city": "Callao" 
 },
-"aereolineas",
+"aereolineas ingresarlas en el siguiente orden",
 {
     "name":"LATAM",
     "infoContact":"contactlatam@latam.com",
