@@ -1,0 +1,236 @@
+
+
+
+  ["aerepuertos",
+    {
+    "name":"Aereopuerto Internacional el Dorado",
+    "country": "Colombia",
+    "city": "Bogota D.C"
+},
+{
+    "name":"Aereopuerto Internacional Rafael Nuñes",
+    "country": "Colombia",
+    "city": "Cali"
+},
+{
+    "name":"Aeropuerto Internacional de Ezeiza",
+    "country": "Argentina",
+    "city": "Buenos Aires"
+},
+{
+    "name":"Aeroparque Internacional Jorge Newbery",
+    "country": "Argentina",
+    "city": "Buenos Aires"
+},
+{
+    "name":"Aeropuerto Internacional Rodríguez Ballón",
+    "country": "Peru",
+    "city": "Arequipa" 
+},
+{
+    "name":"Aeropuerto Internacional Jorge Chávez",
+    "country": "Peru",
+    "city": "Callao" 
+},
+"aereolineas",
+{
+    "name":"LATAM",
+    "infoContact":"contactlatam@latam.com",
+    "rating":""
+},
+{
+    "name":"Avianca",
+    "infoContact":"servicioavianca@avianca.com",
+    "rating":""
+},
+{
+    "name":"Gol Linhas",
+    "infoContact":"contactenos@voegol.com.br",
+    "rating":""
+},
+{
+    "name":"Volaris",
+    "infoContact":"tuexperiencia@volaris.com",
+    "rating":""
+},
+"relaciones ",
+{
+"airportId": 1,
+"airlineId":1
+},
+{
+"airportId": 1,
+"airlineId":2
+},
+{
+"airportId": 1,
+"airlineId":3
+},
+{
+"airportId": 1,
+"airlineId":4
+},
+{
+"airportId": 2,
+"airlineId":1
+},
+{
+"airportId": 2,
+"airlineId":2
+},
+{
+"airportId": 2,
+"airlineId":3  
+},
+{
+"airportId": 2,
+"airlineId":4
+},
+{
+"airportId": 3,
+"airlineId":1
+ },
+ {
+    "airportId": 3,
+    "airlineId":2 
+ },
+{
+"airportId": 3,
+"airlineId":3
+},
+{
+    "airportId": 3,
+    "airlineId":4 
+},
+{
+    "airportId": 4,
+    "airlineId":1
+},
+{
+    "airportId": 4,
+    "airlineId":2 
+ },
+{
+"airportId": 4,
+"airlineId":3
+},
+{
+    "airportId": 4,
+    "airlineId":4 
+},
+{
+    "airportId": 5,
+    "airlineId":1
+},
+{
+    "airportId": 5,
+    "airlineId":2 
+ },
+{
+"airportId": 5,
+"airlineId":4
+},
+{
+    "airportId": 5,
+    "airlineId":4 
+},
+{
+    "airportId": 6,
+    "airlineId":1
+},
+{
+    "airportId": 6,
+    "airlineId":2 
+ },
+{
+"airportId": 6,
+"airlineId":4
+},
+{
+    "airportId": 6,
+    "airlineId":4 
+},
+
+"vuelos",
+{
+    
+    "roundTrip":"false",
+    "airportOriginId":1,
+    "airportDestinyId":6,
+    "dateTimeDeparture":"2023-03-22 10:40",
+    "dateTimeArrival1":"2023-03-22 18:30",
+    "dateTimeReturn":null,
+    "dateTimeArrival2":null,
+    "seatsAvailable":146,
+    "ticketPrice":"$288",
+    "scale":"1",
+    "AirlineId":1
+},
+{
+    "roundTrip":"true",
+    "airportOriginId":1,
+    "airportDestinyId":6,
+    "dateTimeDeparture":"2023-03-22 10:40",
+    "dateTimeArrival1":"2023-03-22 18:30",
+    "dateTimeReturn":"2023-04-10 13:00",
+    "dateTimeArrival2":"2023-04-10 21:20",
+    "seatsAvailable":146,
+    "ticketPrice":"$288",
+    "scale":"1",
+    "AirlineId":1
+},
+{
+    "roundTrip":"false",
+    "airportOriginId":1,
+    "airportDestinyId":5,
+    "dateTimeDeparture":"2023-03-15 7:30",
+    "dateTimeArrival1":"2023-03-15 10:50",
+    "dateTimeReturn":null,
+    "dateTimeArrival2":null,
+    "seatsAvailable":146,
+    "ticketPrice":"$152",
+    "scale":"0",
+    "AirlineId":2
+},
+{
+    "roundTrip":"true",
+    "airportOriginId":1,
+    "airportDestinyId":5,
+    "dateTimeDeparture":"2023-03-16 7:30",
+    "dateTimeArrival1":"2023-03-16 10:50",
+    "dateTimeReturn":"2023-04-5 20:00",
+    "dateTimeArrival2":"2023-04-523:20",
+    "seatsAvailable":146,
+    "ticketPrice":"$152",
+    "scale":"0",
+    "AirlineId":2  
+},
+{
+    "roundTrip":"false",
+    "airportOriginId":1,
+    "airportDestinyId":3,
+    "dateTimeDeparture":"2023-03-10 15:10",
+    "dateTimeArrival1":"2023-03-10 21:50",
+    "dateTimeReturn":null,
+    "dateTimeArrival2":null,
+    "seatsAvailable":146,
+    "ticketPrice":"$617",
+    "scale":"0",
+    "AirlineId": 4  
+},
+{
+    "roundTrip":"true",
+    "airportOriginId":1,
+    "airportDestinyId":4,
+    "dateTimeDeparture":"2023-03-10 8:00",
+    "dateTimeArrival1":"2023-03-10 14:50",
+    "dateTimeReturn":null,
+    "dateTimeArrival2":null,
+    "seatsAvailable":146,
+    "ticketPrice":"$556",
+    "scale":"0",
+    "AirlineId": 1  
+}
+
+
+]
