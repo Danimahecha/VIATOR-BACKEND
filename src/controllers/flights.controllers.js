@@ -42,20 +42,20 @@ const {Flight, Airline, Airport} = require('../db.js');
 
     const  createFlight = async(req,res) =>{
 
-        const { airportOriginId,airportDestinyId,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice, AirlineId } = req.body;
-
+       const { roundTrip,airportOriginId,airportDestinyId,dateTimeDeparture,dateTimeArrival1,dateTimeReturn,dateTimeArrival2,seatsAvailable,ticketPrice,scale,AirlineId } = req.body;
        const airportOrigin = await Airport.findByPk(airportOriginId)
        const airportDestiny = await Airport.findByPk(airportDestinyId)
-
-       console.log(await airportOrigin.getAirlines())
 
         try {
             const newFlight = await Flight.create({
             
-                origin: `${airportOrigin.name}, ${airportOrigin.city}`,
-                destiny: `${airportDestiny.name}, ${airportDestiny.city}`,
+                roundTrip:roundTrip,
+                origin: `${airportOrigin.name}, ${airportOrigin.city}, ${airportOrigin.country}`,
+                destiny: `${airportDestiny.name}, ${airportDestiny.city}, ${airportDestiny.country}`,
                 dateTimeDeparture: dateTimeDeparture,
-                dateTimeArrival: dateTimeArrival,
+                dateTimeArrival1: dateTimeArrival1,
+                dateTimeReturn: dateTimeReturn,
+                dateTimeArrival2: dateTimeArrival2,
                 seatsAvailable: seatsAvailable,
                 ticketPrice: ticketPrice,
                 scale:scale,
@@ -87,6 +87,7 @@ const {Flight, Airline, Airport} = require('../db.js');
             flight.seatsAvailable= seatsAvailable,
             flight.ticketPrice = ticketPrice,
             flight.scale=scale,
+
             await flight.save()
 
             res.status(200).send('successfully modified')
