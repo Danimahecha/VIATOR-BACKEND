@@ -36,12 +36,12 @@ const moment = require('moment');
       const ConvertedDateTimeDeparture = new Date(dateTimeDeparture)
       const ConvertedDateTimeReturn = new Date(dateTimeReturn)
       
-      const thirtyMinutes = 30 * 60 * 1000; // 30 minutos en milisegundos
+      const day = 24 *60 * 60 * 1000; // 1 dia en minutos
 
-      const dateTimeDepartureStart = new Date(ConvertedDateTimeDeparture.getTime() - thirtyMinutes);
-      const dateTimeDepartureEnd = new Date(ConvertedDateTimeDeparture.getTime() + thirtyMinutes);
-      const dateTimeReturnStart = new Date(ConvertedDateTimeReturn.getTime() - thirtyMinutes);
-      const dateTimeReturnEnd = new Date(ConvertedDateTimeReturn.getTime() + thirtyMinutes);
+      const dateTimeDepartureStart = new Date(ConvertedDateTimeDeparture);//prob
+      const dateTimeDepartureEnd = new Date(ConvertedDateTimeDeparture.getTime() + day);
+      const dateTimeReturnStart = new Date(ConvertedDateTimeReturn);
+      const dateTimeReturnEnd = new Date(ConvertedDateTimeReturn.getTime() + day);
 
       if(roundTrip === "false"){
 
