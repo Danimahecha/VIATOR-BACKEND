@@ -23,9 +23,13 @@ const flightSchedule =async(req,res) =>{
     // el tipo de formato que deben tener las 2 propiedades en req.body es asi YY/MM/DD >> 2023/02/22
     // que incluyan un 0 antes los numeros del 1 al 9
     const {ida,vuelta,origen,destino} = req.body;
-    const timeIda = fechaConversion(ida)
-    const timeVuelta = fechaConversion(vuelta)
-    
+    let timeIda = fechaConversion(ida)
+    let timeVuelta="";
+    if (vuelta === "") {
+        timeVuelta = ""
+    }else{
+        timeVuelta = fechaConversion(vuelta)
+    }
     try {
         const vuelosOfDayIda = await Flight.findAll({
             where:{
@@ -38,18 +42,18 @@ const flightSchedule =async(req,res) =>{
             }
         })
 
-        const vuelosOfDayVuelta = await Flight.findAll({
-            where:{
-                origin:destino,
-                destiny:origen,
-                dateTimeDeparture:{
-                    [Op.gte] : timeVuelta,
-                    [Op.lt] : sumarUnDiaAFechaISO(timeVuelta)
+        if (timeIda && timeVuelta) {
+            const vuelosOfDayVuelta = await Flight.findAll({
+                where:{
+                    origin:destino,
+                    destiny:origen,
+                    dateTimeDeparture:{
+                        [Op.gte] : timeVuelta,
+                        [Op.lt] : sumarUnDiaAFechaISO(timeVuelta)
+                    }
                 }
-            }
-        })
+            })
 
-        if (ida && vuelta) {
             let fligth = []
             for (let i = 0; i < vuelosOfDayIda.length; i++) {
                 for (let j = 0; j < vuelosOfDayVuelta.length; j++) {
@@ -62,10 +66,9 @@ const flightSchedule =async(req,res) =>{
                 }
             }
             res.json(fligth)
-        }else if (ida && !vuelta) {
+        }else if (timeIda && timeVuelta === "") {
             res.json({ida:vuelosOfDayIda})
-        }else if (!ida && !vuelta) {
-            res.status(400).send("Debes agregar una fecha ya sea salida o llegada !Please")
+        }else if (!timeIda && timeVuelta === "") {
         }
         
 
