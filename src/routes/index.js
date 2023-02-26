@@ -51,7 +51,7 @@ router.get('/api/flights/:id',getFlight );
 //Flights Schedule
 router.post('/api/flights/schedule',flightSchedule );
 //Scale
-router.get('api/scaleFlight',getFlightsScale)
+router.get('/api/scaleFlight',getFlightsScale)
 
 //recommended Flights
 router.get('/api/recommended', getRecommendedFlights);
