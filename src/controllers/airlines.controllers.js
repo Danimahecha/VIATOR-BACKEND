@@ -78,25 +78,66 @@ const {Airline, Airport} = require('../db.js');
         }
     }
 
-    const  addAirport = async (req, res) => {
+    const  addAirportToAirline = async (req, res) => {
 
-        const {  airlineId , airportId} = req.body;
+        const {  airlineId , airportsId} = req.body;
 
         try {
+
             const airline = await Airline.findByPk(airlineId)
 
-            const airport = await Airport.findByPk(airportId)
+            if(airportsId.length >= 1){
+                airportsId.map( async (airportId) => {
+                   let airport = await Airport.findByPk(airportId)
+                   await airline.addAirport(airport)
+                  })
 
-            await airline.addAirport(airport)
-            
-            res.status(200).send("Aeropuerto agregado correctamente"); 
+                res.status(200).send("Aeropuertos agregados correctamente"); 
+            }else{
 
+                const airport = await Airport.findByPk(airportsId)
+                await airline.addAirport(airport)
+
+                res.status(200).send("Aeropuerto agregado correctamente"); 
+            }
+           
         }catch(error) {
 
             return res.status(400).send({message: error.message})   
 
         }
     };
+
+    const  deleteAirportToAirline = async (req, res) => {
+
+        const {  airlineId , airportsId} = req.body;
+
+        try {
+
+            const airline = await Airline.findByPk(airlineId)
+
+            if(airportsId.length >= 1){
+                airportsId.map( async (airportId) => {
+                   let airport = await Airport.findByPk(airportId)
+                   await airline.removeAirport(airport)
+                  })
+
+                res.status(200).send("Aeropuertos eliminados correctamente"); 
+            }else{
+
+                const airport = await Airport.findByPk(airportsId)
+                await airline.removeAirport(airport)
+
+                res.status(200).send("Aeropuerto eliminado correctamente"); 
+            }
+           
+        }catch(error) {
+
+            return res.status(400).send({message: error.message})   
+
+        }
+    };
+
     const defuseAirline = async(req, res)=>{
         const {id, state}= req.body;
         try {
@@ -110,11 +151,13 @@ const {Airline, Airport} = require('../db.js');
             res.status(400).json({message: error.message});
         }
         };
+
 module.exports = {
     get_airline,
     get_id_airline,
     create_airline,
     update_airline,
-    addAirport,
+    addAirportToAirline,
+    deleteAirportToAirline,
     defuseAirline
   };
