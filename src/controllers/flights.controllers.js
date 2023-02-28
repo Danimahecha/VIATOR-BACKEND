@@ -119,10 +119,39 @@ const {Flight, Airline, Airport} = require('../db.js');
         }
     }
 
+    const getFlightByAirline = async (req, res) => {
+
+        const {airlineName} = req.query;
+
+        try {
+
+            const flights = await Flight.findAll({
+                include: [{
+                    model: Airline,
+                    attributes: ['name']
+                }]
+            })
+
+            if(!flights) return res.status(404).send({massage:'The airline does not exist'})
+
+            //const flightsByAirlines = await flights.getAirline({where:{ name : airlineName}})
+            const flightsByAirlines = flights.filter((flight) => flight.Airline.name === airlineName);
+
+            res.status(200).send(flightsByAirlines);
+
+        }catch(error){
+
+            return res.status(400).send({message: error.message});
+
+        }
+    };
+
+
 module.exports = {
     getFlights,
     getFlight,
     createFlight,
     updateFlight,
-    deleteFlight
+    deleteFlight,
+    getFlightByAirline
   };

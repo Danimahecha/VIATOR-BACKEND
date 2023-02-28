@@ -3,7 +3,7 @@ const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
 const {getUser, getUsers, createUser, updateUser, deleteUser, addFlight, getUserFlights, addTicket, getUserTickets} = require('../controllers/users.controllers.js');
 const { get_airline, get_id_airline, create_airline, update_airline, addAirport} = require('../controllers/airlines.controllers.js');
 const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, addAirline, getAirportBycountry} = require('../controllers/airports.controllers.js');
-const {getFlights, getFlight, createFlight, updateFlight, deleteFlight} = require('../controllers/flights.controllers.js');
+const {getFlights, getFlight, createFlight, updateFlight, deleteFlight, getFlightByAirline} = require('../controllers/flights.controllers.js');
 const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
 const {postLogin, postRegister, getIsRegistered, putSetInfo} = require('../controllers/login.controllers.js');
 const {getAirportsByInput, getFlightsByQuery} = require('../controllers/searchs.controllers.js');
@@ -47,6 +47,7 @@ router.post('/api/flights', createFlight);
 router.put('/api/flights/:id',updateFlight);
 router.delete('/api/flights/:id',deleteFlight);
 router.get('/api/flights/:id',getFlight );
+router.get('/api/getFlightByAirline', getFlightByAirline)
 
 //Flights Schedule
 router.post('/api/flights/schedule',flightSchedule );

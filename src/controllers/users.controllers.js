@@ -14,7 +14,7 @@ const emailer = require ("../utils/emailer.js")
     const getUser = async (req, res) => {
         try {
             const {id} = req.params;
-            const user = await user.findOne({
+            const user = await User.findOne({
                 where: { id }
             })
             if(!user)return res.status(404).json({message:'Users not exist'})
