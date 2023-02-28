@@ -22,6 +22,11 @@ module.exports = (sequelize)=>{
             type: DataTypes.ENUM("1", "2", "3", "4", "5"),
             defaultValue: "1",
           },
+          state:{
+            type: DataTypes.BOOLEAN,
+            allowNull:false,
+            defaultValue: true
+        },
           
           },
           {

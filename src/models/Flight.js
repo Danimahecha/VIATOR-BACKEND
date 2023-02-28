@@ -51,7 +51,12 @@ sequelize.define('Flight',{
       
         type:DataTypes.ENUM("0","1","2"),
         allowNull: false,
-      }
+      },
+      state:{
+        type: DataTypes.BOOLEAN,
+        allowNull:false,
+        defaultValue: true
+    },
 
     }, {
     timestamps: false,
