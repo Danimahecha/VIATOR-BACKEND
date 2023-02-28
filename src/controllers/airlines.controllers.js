@@ -1,8 +1,13 @@
+
 const {Airline, Airport} = require('../db.js');
 
     const get_airline = async(req,res) =>{
         try {
-            const airlineBD = await Airline.findAll()
+            const airlineBD = await Airline.findAll({
+                where:{
+                    state:true
+                }
+            })
             res.json(airlineBD)
         } catch (error) {
             res.status(400).json({message:error.message})
@@ -18,7 +23,10 @@ const {Airline, Airport} = require('../db.js');
                 where: {id},
                 include: [{
                     model: Airport,
-                    attributes: ['name', 'country', 'city']
+                    attributes: ['name', 'country', 'city'],
+                    where:{
+                    state: true
+                    }
                 }]
             })
 
@@ -130,6 +138,19 @@ const {Airline, Airport} = require('../db.js');
         }
     };
 
+    const defuseAirline = async(req, res)=>{
+        const {id, state}= req.body;
+        try {
+            const airline= await Airline.findByPk(id)
+             await airline.update({
+                state: state
+             })
+           await airline.save()
+           res.send("Aereolinea actualizada")
+        } catch (error) {
+            res.status(400).json({message: error.message});
+        }
+        };
 
 module.exports = {
     get_airline,
@@ -137,5 +158,6 @@ module.exports = {
     create_airline,
     update_airline,
     addAirportToAirline,
-    deleteAirportToAirline
+    deleteAirportToAirline,
+    defuseAirline
   };

@@ -4,7 +4,11 @@ const {Op}= require('sequelize')
     const getAirports = async (req, res) => {
         try {
 
-            const airports = await Airport.findAll()
+            const airports = await Airport.findAll({
+                where:{
+                    state: true
+                }
+            })
             res.status(200).send(airports);
 
         }catch(error){
@@ -45,7 +49,11 @@ catch(error){
                 where: {id},
                 include: [{
                     model: Airline,
-                    attributes: ['name','infoContact','rating']
+                    attributes: ['name','infoContact','rating'],
+                    where:{
+                    state: true
+                    }
+                
                 }]
             })
 
@@ -77,7 +85,7 @@ catch(error){
 
         }catch(error) {
 
-            return res.status(400).send({message: error.message})   
+            return res.status(400).send({error})   
 
         }
     };
@@ -153,6 +161,19 @@ catch(error){
 
         }
     };
+    const defuseAirport = async(req, res)=>{
+        const {id, state}= req.body;
+        try {
+            const airport= await Airport.findByPk(id)
+             await airport.update({
+                state: state
+             })
+           await airport.save()
+           res.send("Aereopuerto actualizado")
+        } catch (error) {
+            res.status(400).json({message: error.message});
+        }
+        };
 
     const  addAirlineToAirport = async (req, res) => {
 
@@ -223,5 +244,6 @@ module.exports = {
     getAirportBycountry,
     getAirportByCountry2,
     addAirlineToAirport,
-    deleteAirlineToAirport
+    deleteAirlineToAirport,
+    defuseAirport
   };
