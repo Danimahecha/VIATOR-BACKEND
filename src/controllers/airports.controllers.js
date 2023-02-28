@@ -82,26 +82,6 @@ catch(error){
         }
     };
 
-    const  addAirline = async (req, res) => {
-
-        const { airportId ,airlineId } = req.body;
-
-        try {
-            const airport = await Airport.findByPk(airportId)
-
-            const airline = await Airline.findByPk(airlineId)
-
-            await airport.addAirline(airline)
-            
-            res.status(200).send("Aerolinea agregada correctamente"); 
-
-        }catch(error) {
-
-            return res.status(400).send({message: error.message})   
-
-        }
-    };
-
     const updateAirport = async (req, res) => {
         
         const { id } = req.params;
@@ -174,14 +154,74 @@ catch(error){
         }
     };
 
+    const  addAirlineToAirport = async (req, res) => {
+
+        const {  airportId , airlinesId} = req.body;
+
+        try {
+
+            const airport = await Airport.findByPk(airportId)
+
+            if(airlinesId.length >= 1){
+                airlinesId.map( async (airlineId) => {
+                   let airLine = await Airline.findByPk(airlineId)
+                   await airport.addAirline(airLine)
+                  })
+
+                res.status(200).send("Aerolineas agregadas correctamente"); 
+            }else{
+
+                const airline = await Airline.findByPk(airlinesId)
+                await airport.addAirline(airline)
+
+                res.status(200).send("Aerolinea agregada correctamente"); 
+            }
+           
+        }catch(error) {
+
+            return res.status(400).send({message: error.message})   
+
+        }
+    };
+
+    const  deleteAirlineToAirport = async (req, res) => {
+
+        const {  airportId , airlinesId} = req.body;
+
+        try {
+
+            const airport = await Airport.findByPk(airportId)
+
+            if(airlinesId.length >= 1){
+                airlinesId.map( async (airlineId) => {
+                   let airLine = await Airline.findByPk(airlineId)
+                   await airport.removeAirline(airLine)
+                  })
+
+                res.status(200).send("Aerolineas removidas correctamente"); 
+            }else{
+
+                const airline = await Airline.findByPk(airlinesId)
+                await airport.removeAirline(airline)
+
+                res.status(200).send("Aerolinea removida correctamente"); 
+            }
+           
+        }catch(error) {
+
+            return res.status(400).send({message: error.message})   
+
+        }
+    };
+
 module.exports = {
     getAirports,
     createAirport,
     updateAirport,
     deleteAirport,
     getAirport,
-    addAirline,
     getAirportBycountry,
-    getAirportByCountry2
-    
+    getAirportByCountry2,
+    addAirlineToAirport,
+    deleteAirlineToAirport
   };

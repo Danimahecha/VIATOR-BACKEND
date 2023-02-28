@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
 const {getUser, getUsers, createUser, updateUser, deleteUser, addFlight, getUserFlights, addTicket, getUserTickets} = require('../controllers/users.controllers.js');
-const { get_airline, get_id_airline, create_airline, update_airline, addAirport} = require('../controllers/airlines.controllers.js');
-const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, addAirline, getAirportBycountry} = require('../controllers/airports.controllers.js');
+const { get_airline, get_id_airline, create_airline, update_airline, addAirportToAirline, deleteAirportToAirline} = require('../controllers/airlines.controllers.js');
+const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, getAirportBycountry, addAirlineToAirport, deleteAirlineToAirport} = require('../controllers/airports.controllers.js');
 const {getFlights, getFlight, createFlight, updateFlight, deleteFlight, getFlightByAirline} = require('../controllers/flights.controllers.js');
 const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
 const {postLogin, postRegister, getIsRegistered, putSetInfo} = require('../controllers/login.controllers.js');
@@ -30,8 +30,9 @@ router.post('/createAirport', createAirport);
 router.put('/updateAirport/:id', updateAirport);
 router.delete('/deleteAirport/:id', deleteAirport);
 router.get('/getAirport/:id', getAirport);
-router.post('/addAirline', addAirline);
 router.get('/getAirportsByCountry', getAirportBycountry);
+router.post('/addAirlineToAirport', addAirlineToAirport);
+router.post('/deleteAirlineToAirport', deleteAirlineToAirport);
 
 //Airlines
 router.get('/api/airlines', get_airline);
@@ -39,7 +40,8 @@ router.post('/api/airlines', create_airline);
 router.put('/api/airlines/:id', update_airline);
 //router.delete('/api/airlines/:id, delete_airline)
 router.get('/api/airlines/:id', get_id_airline);
-router.post('/api/addAirport', addAirport);
+router.post('/api/addAirportToAirline', addAirportToAirline);
+router.post('/api/deleteAirportToAirline', deleteAirportToAirline);
 
 //Flights
 router.get('/api/flights', getFlights);
