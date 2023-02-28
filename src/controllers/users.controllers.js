@@ -1,4 +1,5 @@
 const {User, Flight, Ticket} = require('../db.js');
+const emailer = require ("../utils/emailer.js")
 
     const getUsers =async(req, res) => {
         try {
@@ -24,16 +25,19 @@ const {User, Flight, Ticket} = require('../db.js');
     };
 
     const createUser = async(req,res)=>{
-        const { id, givenName, familyName, email }= req.body;
+        const { id, givenName, familyName, email, }= req.body;
+     
 
         try {
             const newUser = await User.create({
+               
                 id: id,
                 givenName: givenName,
                 familyName: familyName,
                 email: email,
-            
+               
             });
+            emailer.sendMail(newUser);
             res.status(200).send(newUser); 
         } catch (error) {
             return res.status (400).json({message: error.message})   
