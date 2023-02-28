@@ -164,6 +164,7 @@ catch(error){
             if(!airline) return res.status(404).send({massage:'The airport does not exist'})
 
             const airports = await airline.getAirports({where:{ country : country}})
+
             res.status(200).send(airports);
 
         }catch(error){
