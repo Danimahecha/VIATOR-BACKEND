@@ -50,7 +50,7 @@ router.put('/api/flights/:id',updateFlight);
 router.delete('/api/flights/:id',deleteFlight);
 router.get('/api/flights/:id',getFlight );
 router.get('/api/getFlightByAirline', getFlightByAirline);
-router.put('/api/setStateFlights',defuseFlights);
+
 
 //Flights Schedule
 router.post('/api/flights/schedule',flightSchedule );

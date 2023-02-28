@@ -41,16 +41,29 @@ const {Airline, Airport} = require('../db.js');
     } 
 
      const create_airline = async(req,res) =>{
-        const {name,infoContact,rating} = req.body
+        const {name,infoContact,rating, idAirport} = req.body
         try {
             if (!name ||!infoContact ||!rating) {
                 res.status(404).json({message:'Oops some of the fields are empty'})
-            } else {
+            } else if(name && infoContact&& rating&&!idAirport){
+                
                 const newAirline = await Airline.create({
                     name:name,
                     infoContact:infoContact,
                     rating:rating
                 })
+        
+                res.json(newAirline)
+            }
+            
+            else if(name && infoContact&& rating&&idAirport){
+                const airport= await Airport.findByPk(idAirport)
+                const newAirline = await Airline.create({
+                    name:name,
+                    infoContact:infoContact,
+                    rating:rating
+                })
+                await newAirline.addAirport(airport)
                 res.json(newAirline)
             }
         } catch (error) {
