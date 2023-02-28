@@ -3,7 +3,11 @@ const {Flight, Airline, Airport} = require('../db.js');
     const getFlights = async (req, res) => {
         try {
 
-            const flights = await Flight.findAll()
+            const flights = await Flight.findAll({
+                where:{
+                    state:true
+                }
+            })
             res.json(flights);
 
         }catch(error){
@@ -20,23 +24,22 @@ const {Flight, Airline, Airport} = require('../db.js');
             const {id} = req.params;
 
             const flight = await Flight.findOne({
-                where: {id},
+                where: {
+                    id:id,
+                           state: true   },
                 include: [{
                     model: Airline,
                     attributes: ['name','infoContact','rating'],
-                    include: [
-                        {model: Airport, attributes: ['name']},
-                        {
-                            where:{
-                                state: true
-                            }
-                        }
-                    ]
-                },
-                {
                     where:{
-                        state: true
-                    }
+                    state:true
+                    },
+                    include: [{
+
+                         model: Airport, attributes: ['name'],
+                         where:{
+                        state:true
+                         }
+                        }]
                 }]
             })
 
