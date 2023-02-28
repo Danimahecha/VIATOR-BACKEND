@@ -25,8 +25,18 @@ const {Flight, Airline, Airport} = require('../db.js');
                     model: Airline,
                     attributes: ['name','infoContact','rating'],
                     include: [
-                        {model: Airport, attributes: ['name']}
+                        {model: Airport, attributes: ['name']},
+                        {
+                            where:{
+                                state: true
+                            }
+                        }
                     ]
+                },
+                {
+                    where:{
+                        state: true
+                    }
                 }]
             })
 
@@ -145,6 +155,19 @@ const {Flight, Airline, Airport} = require('../db.js');
 
         }
     };
+    const defuseFlights = async(req, res)=>{
+        const {id, state}= req.body;
+        try {
+            const flight= await Flight.findByPk(id)
+             await flight.update({
+                state: state
+             })
+           await flight.save()
+           res.send("vuelo seteado")
+        } catch (error) {
+            res.status(400).json({message: error.message});
+        }
+        };
 
 
 module.exports = {
@@ -153,5 +176,6 @@ module.exports = {
     createFlight,
     updateFlight,
     deleteFlight,
-    getFlightByAirline
+    getFlightByAirline,
+    defuseFlights
   };

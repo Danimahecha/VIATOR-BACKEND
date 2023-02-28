@@ -23,6 +23,11 @@ module.exports = (sequelize)=>{
             allowNull: false,
             defaultValue: "",
         },
+        state:{
+            type: DataTypes.BOOLEAN,
+            allowNull:false,
+            defaultValue: true
+        },
         },
         {
             timestamps: false
