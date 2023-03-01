@@ -15,75 +15,74 @@ const {createOrder, captureOrder, cancelOrder} = require('../controllers/payment
 const router = Router();
 
 //Users
-router.get('/User/getUsers', getUsers);
-router.post('/User/createUser', createUser);
-router.put('/User/updateUser/:id',updateUser);
-router.delete('/User/deleteUser/:id',deleteUser);
-router.get('/User/getUser/:id',getUser );
-router.post('/User/addFlight', addFlight);
-router.get('/User/getUserFlights', getUserFlights);
-router.post('/User/addTicket', addTicket);
-router.get('/User/getUserTickets', getUserTickets);
+router.get("/User/getUsers", getUsers);
+router.post("/User/createUser", createUser);
+router.put("/User/updateUser/:id", updateUser);
+router.delete("/User/deleteUser/:id", deleteUser);
+router.get("/User/getUser/:id", getUser);
+router.post("/User/addFlight", addFlight);
+router.get("/User/getUserFlights", getUserFlights);
+router.post("/User/addTicket", addTicket);
+router.get("/User/getUserTickets", getUserTickets);
 
 //Airports
-router.get('/getAirports', getAirports);
-router.post('/createAirport', createAirport);
-router.put('/updateAirport/:id', updateAirport);
-router.delete('/deleteAirport/:id', deleteAirport);
-router.get('/getAirport/:id', getAirport);
-router.get('/getAirportsByCountry', getAirportBycountry);
-router.post('/addAirlineToAirport', addAirlineToAirport);
-router.post('/deleteAirlineToAirport', deleteAirlineToAirport);
-router.put('/setStateAirport', defuseAirport);
-
+router.get("/getAirports", getAirports);
+router.post("/createAirport", createAirport);
+router.put("/updateAirport/:id", updateAirport);
+router.delete("/deleteAirport/:id", deleteAirport);
+router.get("/getAirport/:id", getAirport);
+router.get("/getAirportsByCountry", getAirportBycountry);
+router.post("/addAirlineToAirport", addAirlineToAirport);
+router.post("/deleteAirlineToAirport", deleteAirlineToAirport);
+router.put("/setStateAirport", defuseAirport);
 
 //Airlines
-router.get('/api/airlines', get_airline);
-router.post('/api/airlines', create_airline);
-router.put('/api/airlines/:id', update_airline);
+router.get("/api/airlines", get_airline);
+router.post("/api/airlines", create_airline);
+router.put("/api/airlines/:id", update_airline);
 //router.delete('/api/airlines/:id, delete_airline)
-router.get('/api/airlines/:id', get_id_airline);
-router.post('/api/addAirportToAirline', addAirportToAirline);
-router.post('/api/deleteAirportToAirline', deleteAirportToAirline);
-router.put('/Api/setStateAirline', defuseAirline)
+router.get("/api/airlines/:id", get_id_airline);
+router.post("/api/addAirportToAirline", addAirportToAirline);
+router.post("/api/deleteAirportToAirline", deleteAirportToAirline);
+router.put("/Api/setStateAirline", defuseAirline);
 
 //Flights
-router.get('/api/flights', getFlights);
-router.post('/api/flights', createFlight);
-router.put('/api/flights/:id',updateFlight);
-router.delete('/api/flights/:id',deleteFlight);
-router.get('/api/flights/:id',getFlight );
-router.get('/api/getFlightByAirline', getFlightByAirline);
-router.put('/api/setStateFlights',defuseFlights);
+router.get("/api/flights", getFlights);
+router.post("/api/flights", createFlight);
+router.put("/api/flights/:id", updateFlight);
+router.delete("/api/flights/:id", deleteFlight);
+router.get("/api/flights/:id", getFlight);
+router.get("/api/getFlightByAirline", getFlightByAirline);
+router.put("/api/setStateFlights", defuseFlights);
 
 //Flights Schedule
-router.post('/api/flights/schedule',flightSchedule );
+router.post("/api/flights/schedule", flightSchedule);
 //Scale
-router.get('/api/scaleFlight',getFlightsScale)
+router.get("/api/scaleFlight", getFlightsScale);
 
 //recommended Flights
-router.get('/api/recommended', getRecommendedFlights);
+router.get("/api/recommended", getRecommendedFlights);
 
 //Tickets
-router.get('/api/tickets', getTickets);
-router.post('/api/tickets', createTicket);
-router.put('/api/tickets/:id', updateTicket);
-router.delete('/api/tickets/:id', deleteTicket);
-router.get('/api/tickets/:id', getTicket);
+router.get("/api/tickets", getTickets);
+router.post("/api/tickets", createTicket);
+router.put("/api/tickets/:id", updateTicket);
+router.delete("/api/tickets/:id", deleteTicket);
+router.get("/api/tickets/:id", getTicket);
 
 //Login - Register
-router.get('/isRegistered', getIsRegistered);
-router.post('/register',jwtCheck, postRegister);
-router.post('/login',jwtCheck, postLogin);
-router.put('/setInfo',jwtCheck, putSetInfo);
+router.get("/isRegistered", getIsRegistered);
+router.post("/register", jwtCheck, postRegister);
+router.post("/login", postLogin);
+router.put("/setInfo", jwtCheck, putSetInfo);
 
 //Searchs
-router.get('/getAirportsByInput/:input', getAirportsByInput);
-router.get('/getFlightsByQuery', getFlightsByQuery);
+router.get("/getAirportsByInput/:input", getAirportsByInput);
+router.get("/getFlightsByQuery", getFlightsByQuery);
 
 //Payment
-router.get('/createOrder', createOrder);
-router.get('/capture-order', captureOrder);
-router.get('/cancel-payment', cancelOrder);
+router.get("/createOrder", createOrder);
+router.get("/capture-order", captureOrder);
+router.get("/cancel-payment", cancelOrder);
 
 module.exports = router;
