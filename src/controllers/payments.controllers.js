@@ -77,7 +77,8 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
         
         console.log(response.data);
         
-        res.send("/pagina red");
+        res.redirect("http://localhost:3000/myTickets");
+        
       } catch (error) {
 
         console.log(error.message);
