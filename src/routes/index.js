@@ -10,6 +10,7 @@ const {getAirportsByInput, getFlightsByQuery} = require('../controllers/searchs.
 const getRecommendedFlights = require('../controllers/flights.recomend.js');
 const {flightSchedule} = require('../controllers/flightSchedule.controllers.js')
 const {getFlightsScale} = require('../controllers/flightScale');
+const {createOrder, captureOrder, cancelOrder} = require('../controllers/payments.controllers.js');
 
 const router = Router();
 
@@ -80,5 +81,9 @@ router.put('/setInfo',jwtCheck, putSetInfo);
 router.get('/getAirportsByInput/:input', getAirportsByInput);
 router.get('/getFlightsByQuery', getFlightsByQuery);
 
-//Profile
+//Payment
+router.get('/createOrder', createOrder);
+router.get('/capture-order', captureOrder);
+router.get('/cancel-payment', cancelOrder);
+
 module.exports = router;
