@@ -2,7 +2,7 @@ const nodemailer = require ('nodemailer');
 const nodemailerSendgrid = require('nodemailer-sendgrid');
 require('dotenv').config();
 const {  SENDGRID_API_KEY} = process.env;
-
+const htmlTemplate = require ('../Template/htmlTemplate.js')
 
 const createTrans = () =>{
     //const transport = nodemailer.createTransport({
@@ -28,7 +28,7 @@ const sendMail = async (user) => {
         from:'"Viator " <viator.contact@gmail.com>',
         to:`${user.email}`,
         subject: `Hola ${user.givenName},Bienvenido a VIATOR`,
-        html:"<b>¡Gracias por unirte a VIATOR!<b>",
+        html:htmlTemplate,
     });
     console.log("message send :%s", info.messageId);
     return
