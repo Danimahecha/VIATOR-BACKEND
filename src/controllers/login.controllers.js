@@ -65,6 +65,7 @@ const putSetInfo = async (req, res) => {
     idSubAuth0,
   } = req.body;
 
+
   const user = await User.findByPk(idSubAuth0);
 
   try {

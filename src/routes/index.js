@@ -1,72 +1,16 @@
-const { Router } = require("express");
-const { jwtCheck, checkScopes } = require("../middlewares/jwtCheck.js");
-const {
-  getUser,
-  getUsers,
-  createUser,
-  updateUser,
-  deleteUser,
-  addFlight,
-  getUserFlights,
-  addTicket,
-  getUserTickets,
-} = require("../controllers/users.controllers.js");
-const {
-  get_airline,
-  get_id_airline,
-  create_airline,
-  update_airline,
-  addAirportToAirline,
-  deleteAirportToAirline,
-  defuseAirline,
-} = require("../controllers/airlines.controllers.js");
-const {
-  getAirports,
-  createAirport,
-  updateAirport,
-  deleteAirport,
-  getAirport,
-  getAirportBycountry,
-  addAirlineToAirport,
-  deleteAirlineToAirport,
-  defuseAirport,
-} = require("../controllers/airports.controllers.js");
-const {
-  getFlights,
-  getFlight,
-  createFlight,
-  updateFlight,
-  deleteFlight,
-  getFlightByAirline,
-  defuseFlights,
-} = require("../controllers/flights.controllers.js");
-const {
-  getTickets,
-  getTicket,
-  createTicket,
-  updateTicket,
-  deleteTicket,
-} = require("../controllers/tickets.controllers.js");
-const {
-  postLogin,
-  postRegister,
-  getIsRegistered,
-  putSetInfo,
-} = require("../controllers/login.controllers.js");
-const {
-  getAirportsByInput,
-  getFlightsByQuery,
-} = require("../controllers/searchs.controllers.js");
-const getRecommendedFlights = require("../controllers/flights.recomend.js");
-const {
-  flightSchedule,
-} = require("../controllers/flightSchedule.controllers.js");
-const { getFlightsScale } = require("../controllers/flightScale");
-const {
-  createOrder,
-  captureOrder,
-  cancelOrder,
-} = require("../controllers/payments.controllers.js");
+const { Router } = require('express');
+const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
+const {getUser, getUsers, createUser, updateUser, deleteUser, addFlight, getUserFlights, addTicket, getUserTickets} = require('../controllers/users.controllers.js');
+const { get_airline, get_id_airline, create_airline, update_airline, addAirportToAirline, deleteAirportToAirline, defuseAirline} = require('../controllers/airlines.controllers.js');
+const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, getAirportBycountry, addAirlineToAirport, deleteAirlineToAirport, defuseAirport} = require('../controllers/airports.controllers.js');
+const {getFlights, getFlight, createFlight, updateFlight, deleteFlight, getFlightByAirline, defuseFlights} = require('../controllers/flights.controllers.js');
+const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
+const {postLogin, postRegister, getIsRegistered, putSetInfo} = require('../controllers/login.controllers.js');
+const {getAirportsByInput, getFlightsByQuery} = require('../controllers/searchs.controllers.js');
+const getRecommendedFlights = require('../controllers/flights.recomend.js');
+const {flightSchedule} = require('../controllers/flightSchedule.controllers.js')
+const {getFlightsScale} = require('../controllers/flightScale');
+const {createOrder, captureOrder, cancelOrder} = require('../controllers/payments.controllers.js');
 
 const router = Router();
 
