@@ -1,3 +1,4 @@
+const emailer = require ("../utils/emailer.js")
 const {User} = require('../db.js');
 
     const postLogin = async (req, res) => {
@@ -45,6 +46,11 @@ const {User} = require('../db.js');
                 email: email,
                 picture: picture,
             })
+
+            const user =  await User.findByPk(id) 
+
+            emailer.sendMail(user);
+
             res.status(200).send("Usuario creado exitosamente")
         }catch (error) {
             res.status(500).send(error.message)
