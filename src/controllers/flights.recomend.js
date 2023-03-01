@@ -6,6 +6,8 @@ const getRecommendedFlights = async (req, res)=>{
 
     let random=FligthRandom(vuelos)
     
+    
+    
     res.json(random)
 
 

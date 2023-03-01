@@ -1,13 +1,17 @@
 function FligthRandom(vuelos){
     let arrFlights=[]
-    let RecommendedFlights=[]
+    let recomend=[]
+    let i= 0
     for (const vuelo of vuelos) arrFlights.push(vuelo)
-    while(RecommendedFlights.length<3) {
-         RecommendedFlights.push(arrFlights[Math.ceil(Math.random()*arrFlights.length)])
-        }
-        let result =  RecommendedFlights.filter((item,index)=>{
-            return RecommendedFlights.indexOf(item) === index;
-          })
-    return result
+    arrFlights.sort(() => Math.random() - 0.5);
+    while (i<3) {
+        recomend.push(arrFlights[i])
+        i++
+    }
+  return recomend;
+
+
+    
+    
 }
 module.exports= FligthRandom
