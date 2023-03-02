@@ -8,10 +8,8 @@ function FligthRandom(vuelos){
         recomend.push(arrFlights[i])
         i++
     }
-  return recomend;
-
-
     
+  return recomend; 
     
 }
 module.exports= FligthRandom

@@ -37,9 +37,11 @@ const emailer = require ("../utils/emailer.js")
                 email: email,
                
             });
-            emailer.sendMail(newUser);
-            res.status(200).send(newUser); 
-        } catch (error) {
+     //     emailer.sendMail(newUser);
+
+        res.status(200).send(newUser);  
+        
+    } catch (error) {
             return res.status (400).json({message: error.message})   
         
     }

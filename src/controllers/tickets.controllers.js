@@ -21,10 +21,10 @@ const {Ticket, Flight, User} = require('../db.js');
 
             const ticketId = await Ticket.findOne({
                 where: {id},
-                include: [{
-                    model: Flight,
-                    //attributes: ['name','infoContact','rating', 'AirlineId']
-                }]
+                include: [
+                    { model: User },
+                    { model: Flight }
+                  ]
             })
 
             if(!ticketId)return res.status(404).json({massage:'Ticket not exist'})

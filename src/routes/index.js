@@ -81,7 +81,7 @@ router.get("/getAirportsByInput/:input", getAirportsByInput);
 router.get("/getFlightsByQuery", getFlightsByQuery);
 
 //Payment
-router.get("/createOrder", createOrder);
+router.post("/createOrder", createOrder);
 router.get("/capture-order", captureOrder);
 router.get("/cancel-payment", cancelOrder);
 
