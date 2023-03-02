@@ -1,14 +1,15 @@
 
 
 
-  ["aerepuertos ingresarlos en el siguiente orden",
-    {
+{ 
+     "aereopuertos":[ 
+{
     "name":"Aereopuerto Internacional el Dorado",
     "country": "Colombia",
     "city": "Bogota D.C"
 },
 {
-    "name":"Aereopuerto Internacional Rafael Nuñes",
+    "name":"Aereopuerto Internacional  Alfonso Bonilla Aragon",
     "country": "Colombia",
     "city": "Cali"
 },
@@ -32,127 +33,124 @@
     "country": "Peru",
     "city": "Callao" 
 },
-"aereolineas ingresarlas en el siguiente orden",
+{
+    "name":"Aeropuerto Internacional General Heriberto Jara",
+    "country": "Mexico",
+    "city": "Veracruz" 
+},
+{
+    "name":"Aeropuerto Internacional Cancún",
+    "country": "Mexico",
+    "city": "Cancún" 
+},
+{
+    "name":"Aeropuerto Internacional Adolfo Suárez",
+    "country": "España",
+    "city": "Madrid" 
+},
+{
+    "name":"Aeropuerto Internacional Malaga-Costa del Sol",
+    "country": "España",
+    "city": "Malaga" 
+}
+],
+
+"aereolineas":[
 {
     "name":"LATAM",
     "infoContact":"contactlatam@latam.com",
-    "rating":""
+    "rating":1
 },
 {
     "name":"Avianca",
     "infoContact":"servicioavianca@avianca.com",
-    "rating":""
+    "rating":1
 },
 {
     "name":"Gol Linhas",
     "infoContact":"contactenos@voegol.com.br",
-    "rating":""
+    "rating":1
 },
 {
     "name":"Volaris",
     "infoContact":"tuexperiencia@volaris.com",
-    "rating":""
-},
-"relaciones ",
-{
-"airportId": 1,
-"airlineId":1
+    "rating":1
 },
 {
-"airportId": 1,
-"airlineId":2
+    "name":"Turkish Airlines",
+    "infoContact":"Turkish Airlines Facebook",
+    "rating":1
 },
 {
-"airportId": 1,
-"airlineId":3
-},
-{
-"airportId": 1,
-"airlineId":4
-},
-{
-"airportId": 2,
-"airlineId":1
-},
-{
-"airportId": 2,
-"airlineId":2
-},
-{
-"airportId": 2,
-"airlineId":3  
-},
-{
-"airportId": 2,
-"airlineId":4
-},
-{
-"airportId": 3,
-"airlineId":1
- },
- {
-    "airportId": 3,
-    "airlineId":2 
- },
-{
-"airportId": 3,
-"airlineId":3
-},
-{
-    "airportId": 3,
-    "airlineId":4 
-},
-{
-    "airportId": 4,
-    "airlineId":1
-},
-{
-    "airportId": 4,
-    "airlineId":2 
- },
-{
-"airportId": 4,
-"airlineId":3
-},
-{
-    "airportId": 4,
-    "airlineId":4 
-},
-{
-    "airportId": 5,
-    "airlineId":1
-},
-{
-    "airportId": 5,
-    "airlineId":2 
- },
-{
-"airportId": 5,
-"airlineId":4
-},
-{
-    "airportId": 5,
-    "airlineId":4 
-},
-{
-    "airportId": 6,
-    "airlineId":1
-},
-{
-    "airportId": 6,
-    "airlineId":2 
- },
-{
-"airportId": 6,
-"airlineId":4
-},
-{
-    "airportId": 6,
-    "airlineId":4 
-},
+    "name":"Iberia",
+    "infoContact":"info@iberia.es",
+    "rating":1
+}
+],
 
-"vuelos",
+"relaciones":{
+    "aereopuertos":[{
+"airlineId": 1,
+"airportsId":[1,2,3,4,5,6,7,8,9,10]
+},
 {
+    "airlineId": 2,
+    "airportsId":[1,2,3,4,5,6,7,8,9,10]
+    },
+    {
+        "airlineId": 3,
+        "airportsId":[1,2,3,4,5,6,7,8,9,10]
+        },
+        {
+            "airlineId": 4,
+            "airportsId":[1,2,3,4,5,6,7,8,9,10]
+            },
+            {
+                "airlineId": 5,
+                "airportsId":[1,2,3,4,5,6,7,8,9,10]
+                },
+                {
+                    "airlineId": 6,
+                    "airportsId":[1,2,3,4,5,6,7,8,9,10]
+                    }
+],
+"aereolineas":[
+    {
+        "airportId": 1,
+        "airlinesId":[1,2,3,4,5,6]  
+    },
+    {
+        "airportId": 2,
+        "airlinesId":[1,2,3,4,5,6]  
+    }, {
+        "airportId": 3,
+        "airlinesId":[1,2,3,4,5,6]  
+    }, {
+        "airportId": 4,
+        "airlinesId":[1,2,3,4,5,6]  
+    }, {
+        "airportId": 5,
+        "airlinesId":[1,2,3,4,5,6]  
+    }, {
+        "airportId": 6,
+        "airlinesId":[1,2,3,4,5,6]  
+    }, {
+        "airportId": 7,
+        "airlinesId":[1,2,3,4,5,6]  
+    }, {
+        "airportId": 8,
+        "airlinesId":[1,2,3,4,5,6]  
+    }, {
+        "airportId": 9,
+        "airlinesId":[1,2,3,4,5,6]  
+    }, {
+        "airportId": 10,
+        "airlinesId":[1,2,3,4,5,6]  
+    }
+]},
+
+"vuelos":
+[{
     
     "roundTrip":"false",
     "airportOriginId":1,
@@ -230,7 +228,46 @@
     "ticketPrice":"$556",
     "scale":"0",
     "AirlineId": 1  
+},
+{
+    "roundTrip":"true",
+    "airportOriginId":9,
+    "airportDestinyId":3,
+    "dateTimeDeparture":"2023-03-18 00:10",
+    "dateTimeArrival1":"2023-03-18 21:10",
+    "dateTimeReturn":"2023-04-12 05:20",
+    "dateTimeArrival2":"2023-04-13 1:10",
+    "seatsAvailable":146,
+    "ticketPrice":"$1285",
+    "scale":"1",
+    "AirlineId": 2
+},
+{
+    "roundTrip":"false",
+    "airportOriginId":8,
+    "airportDestinyId":1,
+    "dateTimeDeparture":"2023-03-20 12:10",
+    "dateTimeArrival1":"2023-03-20 17:00",
+    "dateTimeReturn":null,
+    "dateTimeArrival2":null,
+    "seatsAvailable":146,
+    "ticketPrice":"$175",
+    "scale":"0",
+    "AirlineId": 6 
+},
+{
+    "roundTrip":"true",
+    "airportOriginId":5,
+    "airportDestinyId":10,
+    "dateTimeDeparture":"2023-03-28 15:30",
+    "dateTimeArrival1":"2023-03-30 12:00",
+    "dateTimeReturn":"2023-04-12 2:00",
+    "dateTimeArrival2":"2023-04-14 00:20",
+    "seatsAvailable":146,
+    "ticketPrice":"$1418",
+    "scale":"2",
+    "AirlineId": 6 
+}
+]
 }
 
-
-]

@@ -103,7 +103,7 @@ const {Airline, Airport} = require('../db.js');
            
         }catch(error) {
 
-            return res.status(400).send({message: error.message})   
+            res.status(400).send({message: error.message})   
 
         }
     };
