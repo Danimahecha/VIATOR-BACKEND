@@ -11,4 +11,4 @@ conn.sync({ force: true}).then(() => {
     CreateModels()
     console.log(`%s listening at port ${port}`); // eslint-disable-line no-console
   });
-}); 
+});
