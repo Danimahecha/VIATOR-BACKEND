@@ -54,6 +54,13 @@ const {Ticket, Flight, User} = require('../db.js');
                 FlightId: flightId
             });
 
+            await Flight.update({
+                seatsAvailable:flight.seatsAvailable - seat
+            },{
+                where:{
+                    id:flightId,
+                }
+            })
             res.status(200).send(newTicket); 
 
         }catch(error) {
@@ -69,7 +76,6 @@ const {Ticket, Flight, User} = require('../db.js');
         const {namePassanger,from,to,boardingTime,seat,gate, aeroLine, clase}= req.body;
         
         try {
-
             const ticketnew = await Tickets.findByPk(id)
             //Metodo Update?
             ticketnew.namePassanger = namePassanger,
@@ -95,6 +101,21 @@ const {Ticket, Flight, User} = require('../db.js');
     const deleteTicket= async (req, res ) =>{
         try {
             const { id } = req.params
+
+            const ticketId = await Ticket.findOne({
+                where: {id},
+                include: [{
+                    model: Flight,
+                }]
+            })
+
+            await Flight.update({
+                seatsAvailable:ticketId.Flight.seatsAvailable + ticketId.seat
+            },{
+                where:{
+                    id:ticketId.Flight.id
+                }
+            }) 
 
             await Ticket.destroy({
                 where:{
