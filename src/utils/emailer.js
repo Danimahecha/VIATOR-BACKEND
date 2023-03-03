@@ -33,5 +33,16 @@ const sendMail = async (user) => {
   console.log("message send :%s", info.messageId);
   return;
 };
+const sendMailTransfer= async (userE, userR)=>{
+  const transporter = createTrans()
+  const info= await transporter.sendMail({
+    from: '"Viator " <viator.contact@gmail.com>',
+    to: `${userE.email}`,
+    subject: `Hola ${userE.givenName}, su transferencia de ticket al usuario "${userR.givenName}"${userR.email} ha sido exitosa`,
+    html: htmlTemplate,
+  })
+}
 
-exports.sendMail = (user) => sendMail(user);
+module.exports={
+  sendMail, sendMailTransfer
+}
