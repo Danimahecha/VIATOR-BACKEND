@@ -41,15 +41,15 @@ const {Airline, Airport} = require('../db.js');
     } 
 
      const create_airline = async(req,res) =>{
-        const {name,infoContact,rating} = req.body
+        const {name,infoContact,rating, urlImg} = req.body
         try {
-            if (!name ||!infoContact ||!rating) {
+            if (!name ||!infoContact ||!rating||!urlImg) {
                 res.status(404).json({message:'Oops some of the fields are empty'})
             } else {
                 const newAirline = await Airline.create({
                     name:name,
                     infoContact:infoContact,
-                    rating:rating
+                    rating:rating,urlImg
                 })
                 res.json(newAirline)
             }

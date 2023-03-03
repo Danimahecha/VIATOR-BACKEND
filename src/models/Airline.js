@@ -27,6 +27,10 @@ module.exports = (sequelize)=>{
             allowNull:false,
             defaultValue: true
         },
+        urlImg:{
+          type: DataTypes.STRING(10000),
+          allowNull: false 
+        }
           
           },
           {
