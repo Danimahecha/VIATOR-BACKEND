@@ -44,7 +44,7 @@ sequelize.define('Flight',{
         defaultValue: 0,
       },
     ticketPrice:{
-        type:DataTypes.STRING,
+        type:DataTypes.FLOAT,
         defaultValue: 0,
       },
       scale:{
