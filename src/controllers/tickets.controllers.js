@@ -40,15 +40,11 @@ const {Ticket, Flight, User} = require('../db.js');
 
         const { seat, flightId, userId} = req.body;
 
-        const user = await User.findByPk(userId)
-
         const flight = await Flight.findByPk(flightId)
 
         try {
 
             const newTicket = await Ticket.create({
-
-                namePassanger: `${user.givenName} ${user.familyName}`,
                 seat: seat,
                 UserId: userId,
                 FlightId: flightId
@@ -73,23 +69,25 @@ const {Ticket, Flight, User} = require('../db.js');
     const updateTicket = async (req, res ) =>{
 
         const { id } = req.params;
-        const {namePassanger,from,to,boardingTime,seat,gate, aeroLine, clase}= req.body;
+        const {namePassanger,email}= req.body;
         
         try {
-            const ticketnew = await Tickets.findByPk(id)
+            const ticketnew = await Ticket.findByPk(id)
             //Metodo Update?
-            ticketnew.namePassanger = namePassanger,
-            ticketnew.from = from,
-            ticketnew.to= to,
-            ticketnew.boardingTime = boardingTime,
-            ticketnew.seat= seat,
-            ticketnew.gate = gate,
-            ticketnew.aeroLine = aeroLine,
-            ticketnew.clase = clase,
-
-            await ticketnew.save()
-
-            res.status(200).send('successfully modified')
+            if (ticketnew.activatedTicket === false) {
+                ticketnew.namePassanger = namePassanger,
+                ticketnew.email = email,
+                ticketnew.activatedTicket = true
+        
+                await ticketnew.save()
+                const newTicket = await Ticket.findByPk(id)
+                res.status(200).json({
+                    message:'successfully modified',
+                    change:newTicket
+                })
+            }else{
+                res.status(400).send("Este ticket ya esta asignado")
+            }
 
         }catch (error) {
 
