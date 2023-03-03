@@ -1,10 +1,11 @@
 const axios = require("axios")
+const { createTicket } = require('../controllers/tickets.controllers.js');
 
 const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
 
     const createOrder = async (req, res ) =>{
 
-      const {name, quantity, valuePerTicket, description, myRoute, myQuery} = req.body
+      const {userId, flightId, name, quantity, valuePerTicket, description} = req.body
 
       try {
         const order = {
@@ -42,8 +43,8 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
             brand_name: "viator.com",
             landing_page: "NO_PREFERENCE",
             user_action: "PAY_NOW",
-            return_url: `${HOST}/capture-order?myRoute=${myRoute}`,
-            cancel_url: `${HOST}/cancel-payment?myRoute=${myRoute}&myQuery=${myQuery}`,
+            return_url: `${HOST}/capture-order?userId=${userId}&flightId=${flightId}&quantity=${quantity}`,
+            cancel_url: `${HOST}/cancel-payment?flightId=${flightId}`,
           },
         };
     
@@ -90,7 +91,9 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
 
     const captureOrder = async (req, res ) =>{
     
-      const { token } = req.query;
+      const { token, userId, flightId, quantity } = req.query;
+
+      console.log(userId, flightId, quantity )
 
       try {
 
@@ -105,27 +108,27 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
           }
         );
         
-        console.log(response.data);
+        if(response.data.status === 'COMPLETED'){
 
-        res.redirect(`http://localhost:3000/myTickets`);
-        
+          await axios.post("http://localhost:4000/api/tickets", {quantity: quantity, flightId:flightId, userId:userId,})
+
+          return res.redirect(`http://localhost:3000/myTickets`);
+          
+        }else{
+          return res.status(400).send(`PAGO PENDIENTE`);
+        }
       } catch (error) {
 
-        console.log(error.message);
-
-        return res.status(500).json({ message: "Internal Server error" });
+        return res.status(500).json({message: error.message});
       }
 
     };
      
-    
-
     const cancelOrder = async (req, res ) =>{
     
-      const { myRoute , myQuery} = req.query;
-      //window.history.back() ?
-      // history.push('/previous-page') ?
-      res.redirect(`http://localhost:3000/${myRoute}/${myQuery}`);
+      const { flightId } = req.query;
+ 
+      res.redirect(`http://localhost:3000/flights/${flightId}`);
      
     }
 

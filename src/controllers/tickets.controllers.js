@@ -38,35 +38,55 @@ const {Ticket, Flight, User,Airline} = require('../db.js');
         }
     };
 
-    const  createTicket = async (req,res) =>{
+    const createTicket = async (req, res) => {
 
-        const { seat, flightId, userId} = req.body;
+        const { flightId, userId, quantity } = req.body;
+      
+        const flight = await Flight.findByPk(flightId);
 
-        const flight = await Flight.findByPk(flightId)
+        const user = await User.findByPk(userId);
+      
+        const newTickets = [];
 
         try {
 
+          for (let i = 0; i < quantity; i++) {
             const newTicket = await Ticket.create({
-                seat: seat,
-                UserId: userId,
-                FlightId: flightId
+              seat: flight.seatsAvailable,
+              UserId: userId,
+              FlightId: flightId,
             });
 
-            await Flight.update({
-                seatsAvailable:flight.seatsAvailable - seat
-            },{
-                where:{
-                    id:flightId,
-                }
-            })
-            res.status(200).send(newTicket); 
+            await flight.update(
+              {
+                seatsAvailable: flight.seatsAvailable - 1,
+              },
+            );
 
-        }catch(error) {
+            await flight.save()
 
-            return res.status (400).json({message: error.message})
+            newTickets.push(newTicket);
+          }
+      
+            if(newTickets.length >= 1){
+
+                newTickets.map( async (e) => {
+
+                    const ticket = await Ticket.findByPk(e.id)
+                    await user.addTicket(ticket)
+
+                  })
+
+            }
+           
+            return res.status(200).send("Boletos agregados correctamente"); 
+      
+        } catch (error) {
+
+          return res.status(400).send("No se pudo crear los boletos");
 
         }
-    };
+      };
 
     const updateTicket = async (req, res ) =>{
 
