@@ -183,19 +183,23 @@ const emailer = require ("../utils/emailer.js")
 
         const {id} = req.query;
        
+       
         try {
             const user = await User.findByPk(id, {
                 include: [
-                    { model: Ticket ,
-                        include:[Flight,
+                    {
+                        model: Ticket,
+                        include:[
+                            {
+                                model:Flight,
+                                include:[
+                                    {
+                                        model: Airline
+                                    }
+                                ]
+                            }
                         ]
                     },
-                { model: Flight,
-                    include:[{
-                        model: Airline,
-                        }]
-                },
-               
                 ]
               });
               
