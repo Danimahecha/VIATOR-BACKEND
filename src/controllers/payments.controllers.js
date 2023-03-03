@@ -4,7 +4,7 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
 
     const createOrder = async (req, res ) =>{
 
-      const {name, quantity, valuePerTicket, description} = req.body
+      const {name, quantity, valuePerTicket, description, myRoute, myQuery} = req.body
 
       try {
         const order = {
@@ -38,13 +38,12 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
             
           ],
           
-
           application_context: {
             brand_name: "viator.com",
             landing_page: "NO_PREFERENCE",
             user_action: "PAY_NOW",
-            return_url: `${HOST}/capture-order`,
-            cancel_url: `${HOST}/cancel-payment`,
+            return_url: `${HOST}/capture-order?myRoute=${myRoute}`,
+            cancel_url: `${HOST}/cancel-payment?myRoute=${myRoute}&myQuery=${myQuery}`,
           },
         };
     
@@ -106,7 +105,9 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
           }
         );
         
-        res.redirect("http://localhost:3000/myTickets");
+        console.log(response.data);
+
+        res.redirect(`http://localhost:3000/myTickets`);
         
       } catch (error) {
 
@@ -121,7 +122,10 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
 
     const cancelOrder = async (req, res ) =>{
     
-      res.redirect("http://localhost:3000/myTickets");
+      const { myRoute , myQuery} = req.query;
+      //window.history.back() ?
+      // history.push('/previous-page') ?
+      res.redirect(`http://localhost:3000/${myRoute}/${myQuery}`);
      
     }
 
