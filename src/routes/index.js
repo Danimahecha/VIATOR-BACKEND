@@ -11,9 +11,10 @@ const getRecommendedFlights = require('../controllers/flights.recomend.js');
 const {flightSchedule} = require('../controllers/flightSchedule.controllers.js')
 const {getFlightsScale} = require('../controllers/flightScale');
 const {createOrder, captureOrder, cancelOrder} = require('../controllers/payments.controllers.js');
+const { transferTickets } = require('../controllers/transferTicket.controllers.js');
 
 const router = Router();
-
+ 
 //Users
 router.get("/User/getUsers", getUsers);
 router.post("/User/createUser", createUser);
@@ -84,5 +85,6 @@ router.get("/getFlightsByQuery", getFlightsByQuery);
 router.post("/createOrder", createOrder);
 router.get("/capture-order", captureOrder);
 router.get("/cancel-payment", cancelOrder);
-
+// transfer tickets
+router.put('/transferTickets', transferTickets)
 module.exports = router;
