@@ -1,11 +1,12 @@
 const axios = require("axios")
-const { createTicket } = require('../controllers/tickets.controllers.js');
 
 const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
 
     const createOrder = async (req, res ) =>{
 
       const {userId, flightId, name, quantity, valuePerTicket, description} = req.body
+
+      const encodedUserId = encodeURIComponent(userId)
 
       try {
         const order = {
@@ -43,7 +44,7 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
             brand_name: "viator.com",
             landing_page: "NO_PREFERENCE",
             user_action: "PAY_NOW",
-            return_url: `${HOST}/capture-order?userId=${userId}&flightId=${flightId}&quantity=${quantity}`,
+            return_url: `${HOST}/capture-order?userId=${encodedUserId}&flightId=${flightId}&quantity=${quantity}`,
             cancel_url: `${HOST}/cancel-payment?flightId=${flightId}`,
           },
         };
@@ -110,7 +111,7 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
         
         if(response.data.status === 'COMPLETED'){
 
-          await axios.post("http://localhost:4000/api/tickets", {quantity: quantity, flightId:flightId, userId:userId,})
+          await axios.post("http://localhost:4000/api/tickets", {quantity: quantity, flightId:flightId, userId:userId})
 
           return res.redirect(`http://localhost:3000/myTickets`);
           
