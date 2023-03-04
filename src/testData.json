@@ -166,7 +166,7 @@
     "dateTimeReturn":null,
     "dateTimeArrival2":null,
     "seatsAvailable":146,
-    "ticketPrice":"$288",
+    "ticketPrice":288,
     "scale":"1",
     "AirlineId":1
 },
@@ -179,7 +179,7 @@
     "dateTimeReturn":"2023-04-10 13:00",
     "dateTimeArrival2":"2023-04-10 21:20",
     "seatsAvailable":146,
-    "ticketPrice":"$288",
+    "ticketPrice":288,
     "scale":"1",
     "AirlineId":1
 },
@@ -192,7 +192,7 @@
     "dateTimeReturn":null,
     "dateTimeArrival2":null,
     "seatsAvailable":146,
-    "ticketPrice":"$152",
+    "ticketPrice":152,
     "scale":"0",
     "AirlineId":2
 },
@@ -205,7 +205,7 @@
     "dateTimeReturn":"2023-04-5 20:00",
     "dateTimeArrival2":"2023-04-5 23:20",
     "seatsAvailable":146,
-    "ticketPrice":"$152",
+    "ticketPrice":152,
     "scale":"0",
     "AirlineId":2  
 },
@@ -218,7 +218,7 @@
     "dateTimeReturn":null,
     "dateTimeArrival2":null,
     "seatsAvailable":146,
-    "ticketPrice":"$617",
+    "ticketPrice":617,
     "scale":"0",
     "AirlineId": 4  
 },
@@ -231,7 +231,7 @@
     "dateTimeReturn":null,
     "dateTimeArrival2":null,
     "seatsAvailable":146,
-    "ticketPrice":"$556",
+    "ticketPrice":556,
     "scale":"0",
     "AirlineId": 1  
 },
@@ -244,7 +244,7 @@
     "dateTimeReturn":"2023-04-12 05:20",
     "dateTimeArrival2":"2023-04-13 1:10",
     "seatsAvailable":146,
-    "ticketPrice":"$1285",
+    "ticketPrice":1285,
     "scale":"1",
     "AirlineId": 2
 },
@@ -257,7 +257,7 @@
     "dateTimeReturn":null,
     "dateTimeArrival2":null,
     "seatsAvailable":146,
-    "ticketPrice":"$175",
+    "ticketPrice":175,
     "scale":"0",
     "AirlineId": 6 
 },
@@ -270,7 +270,7 @@
     "dateTimeReturn":"2023-04-12 2:00",
     "dateTimeArrival2":"2023-04-14 00:20",
     "seatsAvailable":146,
-    "ticketPrice":"$1418",
+    "ticketPrice":1418,
     "scale":"2",
     "AirlineId": 6 
 }
