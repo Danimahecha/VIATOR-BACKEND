@@ -129,7 +129,7 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
     
       const { flightId } = req.query;
  
-      res.redirect(`http://localhost:3000/flights/${flightId}`);
+      res.redirect(`http://localhost:3000/flight/${flightId}`);
      
     }
 
