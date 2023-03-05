@@ -86,13 +86,15 @@ const {Airline, Airport} = require('../db.js');
 
             const airline = await Airline.findByPk(airlineId)
 
-            if(airportsId.length >= 1){
-                airportsId.map( async (airportId) => {
-                   let airport = await Airport.findByPk(airportId)
-                   await airline.addAirport(airport)
-                  })
+            if (airportsId.length >= 1){
+                await Promise.all(
+                    airportsId.map( async (airportId) => {
+                    let airport = await Airport.findByPk(airportId)
+                    await airline.addAirport(airport)
+                })
+            )
 
-                res.status(200).send("Aeropuertos agregados correctamente"); 
+            res.status(200).send("Aeropuertos agregados correctamente");
             }else{
 
                 const airport = await Airport.findByPk(airportsId)
@@ -116,11 +118,14 @@ const {Airline, Airport} = require('../db.js');
 
             const airline = await Airline.findByPk(airlineId)
 
-            if(airportsId.length >= 1){
-                airportsId.map( async (airportId) => {
-                   let airport = await Airport.findByPk(airportId)
-                   await airline.removeAirport(airport)
-                  })
+            if (airportsId.length >= 1){
+                await Promise.all(
+                    airportsId.map( async (airportId) => {
+                    let airport = await Airport.findByPk(airportId)
+                    await airline.removeAirport(airport)
+                })
+            )
+
 
                 res.status(200).send("Aeropuertos eliminados correctamente"); 
             }else{
