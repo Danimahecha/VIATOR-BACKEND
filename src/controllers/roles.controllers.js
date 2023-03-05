@@ -7,6 +7,9 @@ params.append("grant_type", "client_credentials"); */
 
 const createToken = async (req, res ) =>{
 
+  const {userId} = req.query
+
+  const encodedUserId = encodeURIComponent(userId)
 
     const parm = new URLSearchParams({
         grant_type: 'client_credentials',
@@ -25,10 +28,10 @@ const createToken = async (req, res ) =>{
       }
     );
     
-    res.send(data)
+    
     
     const response = await axios.get(
-        `https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/users/"`,
+        `https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/users/${encodedUserId}`,
         {
             headers: { 
                 Authorization: `Bearer ${JSON.stringify(data.access_token)}`,
@@ -37,6 +40,8 @@ const createToken = async (req, res ) =>{
         }
         ); 
  
+
+        res.send(data)
 }
 
 
