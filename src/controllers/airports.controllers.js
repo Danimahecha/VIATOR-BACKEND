@@ -216,9 +216,9 @@ catch(error){
             if(airlinesId.length >= 1){
                 airlinesId.map( async (airlineId) => {
                    let airLine = await Airline.findByPk(airlineId)
-                   await airport.removeAirline(airLine)
+                   await airport.removeAirline(airline)
                   })
-
+                  
                 res.status(200).send("Aerolineas removidas correctamente"); 
             }else{
 
