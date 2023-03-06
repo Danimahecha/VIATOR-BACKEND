@@ -1,47 +1,86 @@
 const axios = require("axios")
 
-//Obtener token
-/* const params = new URLSearchParams();
-params.append("grant_type", "client_credentials"); */
+//Crear code => verifier y challenge
 
+/* const crypto = require('crypto');
 
-const createToken = async (req, res ) =>{
+function base64URLEncode(str) {
+    return str.toString('base64')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=/g, '');
+}
+var verifier = base64URLEncode(crypto.randomBytes(32));
+console.log("verifier", verifier);
+
+function sha256(buffer) {
+    return crypto.createHash('sha256').update(buffer).digest();
+}
+var challenge = base64URLEncode(sha256(verifier));
+console.log("challenge", challenge);
+ */
+
+//M2M
+
+const getUserRoleById = async (req, res ) =>{
 
   const {userId} = req.query
 
-  const encodedUserId = encodeURIComponent(userId)
-
-    const parm = new URLSearchParams({
-        grant_type: 'client_credentials',
-        client_id: '06CqiXF1Jzlc8B5A6xppXOW5XITqYoe5',
-        client_secret: 'iKfXR4I115Sf8su3727Qe7TdJS0WmzZwF6TTcJ0e4FSvAbgXw1lFVoY7PLHzNkDy',
-        audience: 'this is a unique identifier'
-      })
+  try {
     
-    const { data } = await axios.post(
-      "https://dev-kvjr54lumq4827tu.us.auth0.com/oauth/token",
-      parm,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        }
-      }
-    );
-    
-   console.log(data.access_token)
-   //res.send(data.access_token)
-    
-    const response = await axios.get(
-        `https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/users/${encodedUserId}`,
+    const encodedUserId = encodeURIComponent(userId)
+  
+      const parm = new URLSearchParams({
+          grant_type: 'client_credentials',
+          client_id: 'iqtMhZ0aWiuEJbqKRlME6GBPiDjDEuMG',
+          client_secret: 'pfU0Pl2gyxwNdGjdqsFjNuwbGcl84uyUYbDGb9z7CQTAWsdiqngY5_CO3nEZuvr9',
+          audience: 'https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/' 
+        })
+      
+      const { data } = await axios.post(
+        "https://dev-kvjr54lumq4827tu.us.auth0.com/oauth/token",
+        parm,
         {
-            headers: { 
-                Authorization: `Bearer ${data.access_token}`,
-            },
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          }
         }
-        ); 
- 
-        res.send(response.data)
-        //res.send(response.data)
+      );
+      
+     console.log(data.access_token)
+  
+     //GET USER ID
+     /*  const response = await axios.get(
+          `https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/users/${encodedUserId}`,
+          {
+              headers: { 
+                  Authorization: `Bearer ${data.access_token}`,
+              },
+          }
+          ); 
+          res.send(response.data) */
+  
+    //GET ROLE BY USER ID
+    const response = await axios.get(
+      `https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/users/${encodedUserId}/roles?include_totals=false`,
+      {
+          headers: { 
+              Authorization: `Bearer ${data.access_token}`,
+          },
+      }
+      ); 
+
+      if(Array.isArray(response.data) && response.data.length === 0){
+        return res.send("El usuario no posee ningun rol")
+      }else{
+        res.send(response.data[0].name)
+      }
+
+  } catch (error) {
+
+    res.send(error.message)
+
+  }
         
 }
 
@@ -78,6 +117,7 @@ const createToken = async (req, res ) =>{
     console.error(error);
   });
  */
+
 module.exports = {
-    createToken,
+  getUserRoleById,
   };

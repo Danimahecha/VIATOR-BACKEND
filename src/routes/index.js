@@ -12,12 +12,12 @@ const {flightSchedule} = require('../controllers/flightSchedule.controllers.js')
 const {getFlightsScale} = require('../controllers/flightScale');
 const {createOrder, captureOrder, cancelOrder} = require('../controllers/payments.controllers.js');
 const { transferTickets } = require('../controllers/transferTicket.controllers.js');
-const { createToken } = require('../controllers/roles.controllers.js');
+const { getUserRoleById } = require('../controllers/roles.controllers.js');
 
 const router = Router();
  
-//Token
-router.get("/tokenauth", createToken);
+//Auth0
+router.get("/tokenauth", getUserRoleById);
 
 //Users
 router.get("/User/getUsers", getUsers);
