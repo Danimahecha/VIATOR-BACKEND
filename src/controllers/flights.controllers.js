@@ -1,4 +1,16 @@
 const {Flight, Airline, Airport} = require('../db.js');
+const getFlightsAdmin = async (req, res) => {
+    try {
+
+        const flights = await Flight.findAll()
+        res.json(flights);
+
+    }catch(error){
+
+        return res.status (400).json({message: error.message})
+
+    }
+};
 
     const getFlights = async (req, res) => {
         try {
@@ -84,7 +96,7 @@ const {Flight, Airline, Airport} = require('../db.js');
 
         }
     };
-
+ 
     const updateFlight = async (req, res ) =>{
         
         try {
@@ -180,5 +192,6 @@ module.exports = {
     updateFlight,
     deleteFlight,
     getFlightByAirline,
-    defuseFlights
+    defuseFlights,
+    getFlightsAdmin
   };

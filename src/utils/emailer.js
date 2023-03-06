@@ -33,7 +33,7 @@ const sendMail = async (user) => {
   console.log("message send :%s", info.messageId);
   return;
 };
-const sendMailTransfer= async (userE, userR)=>{
+const sendMailTransferE= async (userE, userR)=>{
   const transporter = createTrans()
   const info= await transporter.sendMail({
     from: '"Viator " <viator.contact@gmail.com>',
@@ -41,8 +41,19 @@ const sendMailTransfer= async (userE, userR)=>{
     subject: `Hola ${userE.givenName}, su transferencia de ticket al usuario "${userR.givenName}"${userR.email} ha sido exitosa`,
     html: htmlTemplate.htmlTemplate1,
   })
+  return;
+}
+const sendMailTransferR= async (userE, userR)=>{
+  const transporter = createTrans()
+  const info= await transporter.sendMail({
+    from: '"Viator " <viator.contact@gmail.com>',
+    to: `${userR.email}`,
+    subject: `Hola ${userE.givenName},el usuario ${userR.givenName} te ha hecho una transferencia de boleto exitosa`,
+    html: htmlTemplate.htmlTemplate1,
+  })
+  return;
 }
 
 module.exports={
-  sendMail, sendMailTransfer
+  sendMail, sendMailTransferR , sendMailTransferE
 }
