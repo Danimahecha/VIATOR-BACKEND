@@ -41,15 +41,16 @@ const {Airline, Airport} = require('../db.js');
     } 
 
      const create_airline = async(req,res) =>{
-        const {name,infoContact,rating, urlImg} = req.body
+        const {name,infoContact,picture, } = req.body
         try {
-            if (!name ||!infoContact ||!rating||!urlImg) {
+            if (!name ||!infoContact ||!picture) {
                 res.status(404).json({message:'Oops some of the fields are empty'})
             } else {
                 const newAirline = await Airline.create({
                     name:name,
                     infoContact:infoContact,
-                    rating:rating,urlImg
+                    picture:picture,
+
                 })
                 res.json(newAirline)
             }
@@ -61,12 +62,12 @@ const {Airline, Airport} = require('../db.js');
     const update_airline = async(req,res) => {
         try {
             const {id} = req.params;
-            const {name,infoContact,rating} = req.body
+            const {name,infoContact,picture} = req.body
 
             await Airline.update({
                 name: name,
                 infoContact:infoContact,
-                rating:rating
+                picture:picture
             },{
                 where:{
                     id:id
