@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
-const {getUser, getUsers, createUser, updateUser, deleteUser, addFlight, getUserFlights, addTicket, getUserTickets} = require('../controllers/users.controllers.js');
+const {getUser, getUsers, createUser, updateUser, deleteUser, addFlight, getUserFlights, addTicket, getUserTickets, isAdmin} = require('../controllers/users.controllers.js');
 const { get_airline, get_id_airline, create_airline, update_airline, addAirportToAirline, deleteAirportToAirline, defuseAirline} = require('../controllers/airlines.controllers.js');
 const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, getAirportBycountry, addAirlineToAirport, deleteAirlineToAirport, defuseAirport} = require('../controllers/airports.controllers.js');
 const {getFlights, getFlight, createFlight, updateFlight, deleteFlight, getFlightByAirline, defuseFlights, getFlightsAdmin} = require('../controllers/flights.controllers.js');
@@ -81,6 +81,9 @@ router.get("/isRegistered", getIsRegistered);
 router.post("/register", jwtCheck, postRegister);
 router.post("/login", postLogin);
 router.put("/setInfo", jwtCheck, putSetInfo);
+
+//Admin
+router.get("/admin", jwtCheck, checkScopes, isAdmin)
 
 //Searchs
 router.get("/getAirportsByInput/:input", getAirportsByInput);

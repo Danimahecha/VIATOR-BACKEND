@@ -216,6 +216,17 @@ const emailer = require ("../utils/emailer.js")
 
         }
     }
+
+    const isAdmin = async (req, res) => {
+
+        try {
+            res.status(200).send(true);
+          } catch (error) {
+            res.status(200).send(false);
+          }
+
+    }
+    
 module.exports = {
     getUser,
     getUsers,
@@ -227,4 +238,5 @@ module.exports = {
     getUserFlights,
     addTicket,
     getUserTickets,
+    isAdmin,
   };
