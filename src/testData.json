@@ -52,6 +52,16 @@
     "name":"Aeropuerto Internacional Malaga-Costa del Sol",
     "country": "España",
     "city": "Malaga" 
+},
+{
+    "name":"Aeropuerto Internacional los Angeles",
+    "country": "Estados Unidos",
+    "city": "Los Angeles" 
+},
+{
+    "name":"Aeropuerto Internacional Miami",
+    "country": "Estados Unidos",
+    "city": "Florida" 
 }
 ],
 
@@ -110,14 +120,14 @@
         {
             "airlineId": 4,
             "airportsId":[1,2,3,4,5,6,7,8,9,10]
-            },
+            }, 
             {
                 "airlineId": 5,
-                "airportsId":[1,2,3,4,5,6,7,8,9,10]
+                "airportsId":[1,3,4,5,6,7,8,9,10]
                 },
                 {
                     "airlineId": 6,
-                    "airportsId":[1,2,3,4,5,6,7,8,9,10]
+                    "airportsId":[1,3,4,5,6,7,8,9,10]
                     }
 ],
 "aereolineas":[
@@ -312,6 +322,58 @@
     "ticketPrice":1426,
     "scale":"1",
     "AirlineId": 5
+},
+{
+    "roundTrip":"true",
+    "airportOriginId":3,
+    "airportDestinyId":10,
+    "dateTimeDeparture":"2023-05-5 12:00",
+    "dateTimeArrival1":"2023-05-6 2:20",
+    "dateTimeReturn":"2023-05-25 2:10",
+    "dateTimeArrival2":"2023-05-5 16:00",
+    "seatsAvailable":146,
+    "ticketPrice":2200,
+    "scale":"0",
+    "AirlineId": 5
+},
+{
+    "roundTrip":"true",
+    "airportOriginId":8,
+    "airportDestinyId":1,
+    "dateTimeDeparture":"2023-04-10 17:35",
+    "dateTimeArrival1":"2023-04-10 22:25",
+    "dateTimeReturn":"2023-04-18 7:10",
+    "dateTimeArrival2":"2023-04-18 11:30",
+    "seatsAvailable":146,
+    "ticketPrice":257.88,
+    "scale":"0",
+    "AirlineId": 4
+},
+{
+    "roundTrip":"false",
+    "airportOriginId":1,
+    "airportDestinyId":10,
+    "dateTimeDeparture":"2023-04-2 17:20",
+    "dateTimeArrival1":"2023-04-3 7:55",
+    "dateTimeReturn":null,
+    "dateTimeArrival2":null,
+    "seatsAvailable":146,
+    "ticketPrice":1931,
+    "scale":"0",
+    "AirlineId": 4
+},
+{
+    "roundTrip":"true",
+    "airportOriginId":11,
+    "airportDestinyId":6,
+    "dateTimeDeparture":"2023-05-15 3:00",
+    "dateTimeArrival1":"2023-05-15 22:55",
+    "dateTimeReturn":"2023-06-10 20:30",
+    "dateTimeArrival2":"2023-06-11 17:35",
+    "seatsAvailable":146,
+    "ticketPrice":535,
+    "scale":"1",
+    "AirlineId": 2
 }
 ]
 }
