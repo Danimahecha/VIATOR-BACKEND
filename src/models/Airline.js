@@ -19,7 +19,7 @@ module.exports = (sequelize)=>{
       
           },
           picture: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             defaultValue: "",
             allowNull: false,
           },
