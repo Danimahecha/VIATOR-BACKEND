@@ -13,9 +13,9 @@ const createToken = async (req, res ) =>{
 
     const parm = new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: 'Wv5XDLGXATepf0hmLhpBbF2PTGCm5jLy',
-        client_secret: 'RlH2SPSKyV1U3O1ClIhXog5wFh27-UyQB5qB1hpXX7v6uvUCkBkmfoG4ewxDj_rw',
-        audience: 'https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/'
+        client_id: '06CqiXF1Jzlc8B5A6xppXOW5XITqYoe5',
+        client_secret: 'iKfXR4I115Sf8su3727Qe7TdJS0WmzZwF6TTcJ0e4FSvAbgXw1lFVoY7PLHzNkDy',
+        audience: 'this is a unique identifier'
       })
     
     const { data } = await axios.post(
@@ -28,20 +28,21 @@ const createToken = async (req, res ) =>{
       }
     );
     
-    
+   console.log(data.access_token)
+   //res.send(data.access_token)
     
     const response = await axios.get(
         `https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/users/${encodedUserId}`,
         {
             headers: { 
-                Authorization: `Bearer ${JSON.stringify(data.access_token)}`,
-                "Content-Type": "application/json"
+                Authorization: `Bearer ${data.access_token}`,
             },
         }
         ); 
  
-
-        res.send(data)
+        res.send(response.data)
+        //res.send(response.data)
+        
 }
 
 
