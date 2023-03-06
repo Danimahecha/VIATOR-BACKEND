@@ -78,7 +78,7 @@ const {Airline, Airport} = require('../db.js');
         }
     }
 
-    const  addAirportToAirline = async (req, res) => {
+    /* const  addAirportToAirline = async (req, res) => {
 
         const {  airlineId , airportsId} = req.body;
 
@@ -108,7 +108,42 @@ const {Airline, Airport} = require('../db.js');
             res.status(400).send({message: error.message})   
 
         }
-    };
+    }; */
+
+    const addAirportToAirline = async (req, res) => {
+        const { airlineId, airportsId } = req.body;
+        try {
+          const airline = await Airline.findByPk(airlineId);
+          if (!airline) {
+            return res.status(404).send({ message: "Airline not found" });
+          }
+          if (airportsId.length >= 1) {
+            await Promise.all(
+              airportsId.map(async (airportId) => {
+                const airport = await Airport.findByPk(airportId);
+                if (!airport) {
+                  return res
+                    .status(404)
+                    .send({ message: `Airport with id ${airportId} not found` });
+                }
+                await airline.addAirport(airport);
+              })
+            );
+            res.status(200).send("Airports added successfully");
+          } else {
+            const airport = await Airport.findByPk(airportsId);
+            if (!airport) {
+              return res
+                .status(404)
+                .send({ message:` Aeropuerto con id ${airportsId} no encontrado `});
+            }
+            await airline.addAirport(airport);
+            res.status(200).send("Aeropuerto añadido con éxito");
+          }
+        } catch (error) {
+          res.status(400).send({ message: error.message });
+        }
+      };
 
     const  deleteAirportToAirline = async (req, res) => {
 
@@ -119,12 +154,12 @@ const {Airline, Airport} = require('../db.js');
             const airline = await Airline.findByPk(airlineId)
 
             if (airportsId.length >= 1){
-                await Promise.all(
+               
                     airportsId.map( async (airportId) => {
                     let airport = await Airport.findByPk(airportId)
                     await airline.removeAirport(airport)
                 })
-            )
+            
 
 
                 res.status(200).send("Aeropuertos eliminados correctamente"); 

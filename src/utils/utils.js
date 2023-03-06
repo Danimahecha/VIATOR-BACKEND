@@ -21,23 +21,28 @@ function FligthRandom(vuelos){
 
 
 const CreateModels=async()=>{
+
+  await Promise.all(
  json.aereopuertos.map(async airP=>{
  await Airport.create(airP)
-});
+}))
+
+await Promise.all(
 json.aereolineas.map(async airL=>{
   await Airline.create(airL)
-});
+}))
 
-
+await Promise.all(
 json.relaciones.aereopuertos.map(async (rel)=>{
 await axios.post(`http://localhost:${port}/api/addAirportToAirline`, rel)
-});
+}))
 
 
-  
+await Promise.all(
 json.vuelos.map(async F=>{
 await axios.post(`http://localhost:${port}/api/flights`,F)
-})
+}))
+
 }
  
 module.exports= {FligthRandom, CreateModels}
