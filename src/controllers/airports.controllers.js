@@ -49,7 +49,7 @@ catch(error){
                 where: {id},
                 include: [{
                     model: Airline,
-                    attributes: ['name','infoContact','rating'],
+                    attributes: ['name','infoContact'],
                     where:{
                     state: true
                     }
