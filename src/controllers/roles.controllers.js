@@ -1,25 +1,6 @@
 const axios = require("axios")
 
-//Crear code => verifier y challenge
-
-/* const crypto = require('crypto');
-
-function base64URLEncode(str) {
-    return str.toString('base64')
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_')
-        .replace(/=/g, '');
-}
-var verifier = base64URLEncode(crypto.randomBytes(32));
-console.log("verifier", verifier);
-
-function sha256(buffer) {
-    return crypto.createHash('sha256').update(buffer).digest();
-}
-var challenge = base64URLEncode(sha256(verifier));
-console.log("challenge", challenge);
- */
-
+const {AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_AUDIENCE} = process.env
 //M2M
 
 const getUserRoleById = async (req, res ) =>{
@@ -32,13 +13,13 @@ const getUserRoleById = async (req, res ) =>{
   
       const parm = new URLSearchParams({
           grant_type: 'client_credentials',
-          client_id: 'JY3rdUyz2Rs2VIFa3LjgTXvAGwGr5Bsm',
-          client_secret: 'qDLgroKiOHJA889MCOG6kmAxp4INurf7qkp7Y9M-VvNwi76EdFroKq5slYRwYrB',
-          audience: 'https://dev-cz6i21an2opri7kv.us.auth0.com/api/v2/' 
+          client_id: `${AUTH0_CLIENT_ID}`,
+          client_secret: `${AUTH0_CLIENT_SECRET}`,
+          audience: `${AUTH0_AUDIENCE}` 
         })
       
       const { data } = await axios.post(
-        "https://dev-cz6i21an2opri7kv.us.auth0.com/oauth/token",
+        `${AUTH0_DOMAIN}/oauth/token`,
         parm,
         {
           headers: {
@@ -62,7 +43,7 @@ const getUserRoleById = async (req, res ) =>{
   
     //GET ROLE BY USER ID
     const response = await axios.get(
-      `https://dev-cz6i21an2opri7kv.us.auth0.com/api/v2/users/${encodedUserId}/roles?include_totals=false`,
+      `${AUTH0_DOMAIN}/api/v2/users/${encodedUserId}/roles?include_totals=false`,
       {
           headers: { 
               Authorization: `Bearer ${data.access_token}`,

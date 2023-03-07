@@ -54,7 +54,7 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST, HOST_FRONT} = process.
           params.append("grant_type", "client_credentials");
       
           const { data: { access_token },} = await axios.post(
-            "https://api-m.sandbox.paypal.com/v1/oauth2/token",
+            `${PAYPAL_API}/v1/oauth2/token`,
             params,
             {
               headers: {
