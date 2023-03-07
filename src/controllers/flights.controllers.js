@@ -125,7 +125,7 @@ const getFlightsAdmin = async (req, res) => {
             const flight = await Flight.findOne({
                 where: {
                     id:id,
-                           state: false   },
+               },
                 include: [{
                     model: Airline,
                     attributes: ['name','infoContact'],
