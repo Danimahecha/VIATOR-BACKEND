@@ -53,12 +53,12 @@ router.put("/Api/setStateAirline", defuseAirline);
 
 //Flights
 router.get("/api/flightsAdmin", getFlightsAdmin);
-router.get("/api/getFlights", getFlights);
+router.get("/api/flights", getFlights);
 router.get("/api/getFlighstWithStateFalse", getFlighstWithStateFalse);
 router.post("/api/flights", createFlight);
 router.put("/api/flights/:id", updateFlight);
 router.delete("/api/flights/:id", deleteFlight);
-router.get("/api/getFlightById/:id", getFlightById);
+router.get("/api/flights/:id", getFlightById);
 router.get("/api/getFlightByIdWithFalse/:id", getFlightByIdWithFalse);
 router.get("/api/getFlightByAirline", getFlightByAirline);
 router.put("/api/setStateFlights", defuseFlights);
