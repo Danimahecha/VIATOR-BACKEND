@@ -7,7 +7,7 @@ const jwtCheck = auth({
   tokenSigningAlg: "HS256",
 });
 
-const checkScopes = requiredScopes("read:users");
+const checkScopes = requiredScopes("admin");
 
 module.exports = {
   jwtCheck,

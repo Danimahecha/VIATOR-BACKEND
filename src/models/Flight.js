@@ -21,21 +21,42 @@ sequelize.define('Flight',{
         allowNull: false,
         },
 
-    dateTimeArrival:{
+    dateTimeArrival1:{
         type:DataTypes.DATE,
         allowNull: false,
       },
+    dateTimeReturn:{
+      type:DataTypes.DATE,
+      allowNull: true,
+      },
 
+    dateTimeArrival2:{
+      type:DataTypes.DATE,
+      allowNull: true,
+    },
+    roundTrip:{
+      type:DataTypes.BOOLEAN,
+      defaultValue:false
+    },
 
     seatsAvailable:{
         type:DataTypes.INTEGER,
         defaultValue: 0,
-
       },
     ticketPrice:{
-        type:DataTypes.STRING,
-        defaultValue: "",
+        type:DataTypes.FLOAT,
+        defaultValue: 0,
       },
+      scale:{
+      
+        type:DataTypes.ENUM("0","1","2"),
+        allowNull: false,
+      },
+      state:{
+        type: DataTypes.BOOLEAN,
+        allowNull:false,
+        defaultValue: true
+    },
 
     }, {
     timestamps: false,

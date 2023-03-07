@@ -9,24 +9,20 @@ module.exports = (sequelize)=>{
             },
             namePassanger:{
                 type: DataTypes.STRING,
-                allowNull: false,
-            },
-            from: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            to:{
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            boardingTime:{
-                type: DataTypes.DATE,
-                allowNull: false,
+                defaultValue:null
             },
             seat: {
-                type: DataTypes.STRING,
+                type:DataTypes.INTEGER,
                 allowNull: false
             },
+            email:{
+                type:DataTypes.STRING,
+                defaultValue:null
+            },
+            activatedTicket:{
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            }
             },{
                 timestamps: false,
             });

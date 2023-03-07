@@ -18,10 +18,24 @@ module.exports = (sequelize)=>{
               defaultValue: ""
       
           },
-          rating: {
+          picture: {
+            type: DataTypes.TEXT,
+            defaultValue: "",
+            allowNull: false,
+          },
+          /*rating: {
             type: DataTypes.ENUM("1", "2", "3", "4", "5"),
             defaultValue: "1",
-          },
+          },*/
+          state:{
+            type: DataTypes.BOOLEAN,
+            allowNull:false,
+            defaultValue: true
+        },
+       /* urlImg:{
+          type: DataTypes.STRING(10000),
+          allowNull: false 
+        }*/
           
           },
           {
