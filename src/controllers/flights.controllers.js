@@ -41,16 +41,16 @@ const getFlightsAdmin = async (req, res) => {
                            state: true   },
                 include: [{
                     model: Airline,
-                    attributes: ['name','infoContact','rating'],
-                    where:{
+                    attributes: ['name','infoContact'],
+                    /* where:{
                     state:true
-                    },
+                    }, */
                     include: [{
 
                          model: Airport, attributes: ['name'],
-                         where:{
+                        /*  where:{
                         state:true
-                         }
+                         } */
                         }]
                 }]
             })

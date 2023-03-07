@@ -32,13 +32,13 @@ const getUserRoleById = async (req, res ) =>{
   
       const parm = new URLSearchParams({
           grant_type: 'client_credentials',
-          client_id: 'iqtMhZ0aWiuEJbqKRlME6GBPiDjDEuMG',
-          client_secret: 'pfU0Pl2gyxwNdGjdqsFjNuwbGcl84uyUYbDGb9z7CQTAWsdiqngY5_CO3nEZuvr9',
-          audience: 'https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/' 
+          client_id: 'JY3rdUyz2Rs2VIFa3LjgTXvAGwGr5Bsm',
+          client_secret: 'qDLgroKiOHJA889MCOG6kmAxp4INurf7qkp7Y9M-VvNwi76EdFroKq5slYRwYrB',
+          audience: 'https://dev-cz6i21an2opri7kv.us.auth0.com/api/v2/' 
         })
       
       const { data } = await axios.post(
-        "https://dev-kvjr54lumq4827tu.us.auth0.com/oauth/token",
+        "https://dev-cz6i21an2opri7kv.us.auth0.com/oauth/token",
         parm,
         {
           headers: {
@@ -62,7 +62,7 @@ const getUserRoleById = async (req, res ) =>{
   
     //GET ROLE BY USER ID
     const response = await axios.get(
-      `https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/users/${encodedUserId}/roles?include_totals=false`,
+      `https://dev-cz6i21an2opri7kv.us.auth0.com/api/v2/users/${encodedUserId}/roles?include_totals=false`,
       {
           headers: { 
               Authorization: `Bearer ${data.access_token}`,
