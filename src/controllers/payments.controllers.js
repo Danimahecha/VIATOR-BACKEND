@@ -1,6 +1,6 @@
 const axios = require("axios")
 
-const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
+const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST, HOST_FRONT} = process.env
 
     const createOrder = async (req, res ) =>{
 
@@ -111,9 +111,9 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
         
         if(response.data.status === 'COMPLETED'){
 
-          await axios.post("http://localhost:4000/api/tickets", {quantity: quantity, flightId:flightId, userId:userId})
+          await axios.post(`${HOST}/api/tickets`, {quantity: quantity, flightId:flightId, userId:userId})
 
-          return res.redirect(`http://localhost:3000/myTickets`);
+          return res.redirect(`${HOST_FRONT}/myTickets`);
           
         }else{
           return res.status(400).send(`PAGO PENDIENTE`);
@@ -129,7 +129,7 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
     
       const { flightId } = req.query;
  
-      res.redirect(`http://localhost:3000/flight/${flightId}`);
+      res.redirect(`${HOST_FRONT}/flight/${flightId}`);
      
     }
 

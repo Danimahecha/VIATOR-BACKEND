@@ -4,6 +4,7 @@ const { createAirport, addAirlineToAirport } = require('../controllers/airports.
 const{Airport, Airline, Flight}= require('../db')
 const json = require('../testData.json')
 const port = process.env.PORT || 4000
+const {HOST} = process.env
 function FligthRandom(vuelos){
     let arrFlights=[]
     let recomend=[]
@@ -34,13 +35,13 @@ json.aereolineas.map(async airL=>{
 
 await Promise.all(
 json.relaciones.aereopuertos.map(async (rel)=>{
-await axios.post(`http://localhost:${port}/api/addAirportToAirline`, rel)
+await axios.post(`${HOST}/api/addAirportToAirline`, rel)
 }))
 
 
 await Promise.all(
 json.vuelos.map(async F=>{
-await axios.post(`http://localhost:${port}/api/flights`,F)
+await axios.post(`${HOST}/api/flights`,F)
 }))
 
 }

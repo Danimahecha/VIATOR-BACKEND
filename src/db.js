@@ -46,10 +46,6 @@ Airport.belongsToMany(Airline,{through:'AirlineAirport',  timestamps: false } )
 User.belongsToMany(Flight,{through:'UserFlight',  timestamps: false } )
 Flight.belongsToMany(User,{through:'UserFlight',  timestamps: false } )
 
-//La relacion esta bien?
-/* Airline.hasOne(Flight);
-Flight.belongsTo(Airline); */
-
 Airline.hasMany(Flight);
 Flight.belongsTo(Airline);
 
