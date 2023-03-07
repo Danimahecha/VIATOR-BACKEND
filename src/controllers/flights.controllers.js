@@ -1,4 +1,5 @@
 const {Flight, Airline, Airport} = require('../db.js');
+
 const getFlightsAdmin = async (req, res) => {
     try {
 
@@ -29,38 +30,20 @@ const getFlightsAdmin = async (req, res) => {
         }
     };
 
-    const getFlight = async (req, res) => {
+    const getFlighstWithStateFalse = async (req, res) => {
 
         try {
 
-            const {id} = req.params;
-
-            const flight = await Flight.findOne({
-                where: {
-                    id:id,
-                           state: true   },
-                include: [{
-                    model: Airline,
-                    attributes: ['name','infoContact'],
-                    /* where:{
-                    state:true
-                    }, */
-                    include: [{
-
-                         model: Airport, attributes: ['name'],
-                        /*  where:{
-                        state:true
-                         } */
-                        }]
-                }]
+            const flights = await Flight.findAll({
+                where:{
+                    state:false
+                }
             })
-
-            if(!flight)return res.status(404).json({massage:'flight not exist'})
-            res.json(flight);
+            res.json(flights);
 
         }catch(error){
 
-            return res.status(400).json({message: error.message});
+            return res.status (400).json({message: error.message})
 
         }
     };
@@ -97,22 +80,101 @@ const getFlightsAdmin = async (req, res) => {
         }
     };
  
+    const getFlightById = async (req, res) => {
+
+        try {
+
+            const {id} = req.params;
+
+            const flight = await Flight.findOne({
+                where: {
+                    id:id,
+                           state: true   },
+                include: [{
+                    model: Airline,
+                    attributes: ['name','infoContact'],
+                     where:{
+                    state:true
+                    }, 
+                    include: [{
+
+                         model: Airport, attributes: ['name'],
+                          where:{
+                        state:true
+                         } 
+                        }]
+                }]
+            })
+
+            if(!flight)return res.status(404).json({massage:'flight not exist'})
+            res.json(flight);
+
+        }catch(error){
+
+            return res.status(400).json({message: error.message});
+
+        }
+    };
+
+    const getFlightByIdWithFalse = async (req, res) => {
+
+        try {
+
+            const {id} = req.params;
+
+            const flight = await Flight.findOne({
+                where: {
+                    id:id,
+                           state: false   },
+                include: [{
+                    model: Airline,
+                    attributes: ['name','infoContact'],
+                     where:{
+                    state:true
+                    }, 
+                    include: [{
+
+                         model: Airport, attributes: ['name'],
+                          where:{
+                        state:true
+                         } 
+                        }]
+                }]
+            })
+
+            if(!flight)return res.status(404).json({massage:'flight not exist'})
+            res.json(flight);
+
+        }catch(error){
+
+            return res.status(400).json({message: error.message});
+
+        }
+    };
+
+    
     const updateFlight = async (req, res ) =>{
         
         try {
             const { id } = req.params;
-            const {origin,destiny,dateTimeDeparture,dateTimeArrival,seatsAvailable,ticketPrice,scale}= req.body;
+            const {roundTrip,origin,destiny,dateTimeDeparture,dateTimeArrival1,dateTimeReturn,dateTimeArrival2,seatsAvailable,ticketPrice,scale,state}= req.body;
 
             const flight = await Flight.findByPk(id)
-            //Metodo Update?
-            flight.origin = origin,
-            flight.destiny = destiny,
-            flight.dateTimeArrival= dateTimeArrival,
-            flight.dateTimeDeparture = dateTimeDeparture,
-            flight.seatsAvailable= seatsAvailable,
-            flight.ticketPrice = ticketPrice,
-            flight.scale=scale,
 
+            await flight.update({
+                roundTrip:roundTrip,
+                origin: origin,
+                destiny: destiny,
+                dateTimeDeparture: dateTimeDeparture,
+                dateTimeArrival1: dateTimeArrival1,
+                dateTimeReturn: dateTimeReturn,
+                dateTimeArrival2: dateTimeArrival2,
+                seatsAvailable: seatsAvailable,
+                ticketPrice: ticketPrice,
+                state:state,
+                scale:scale,
+            })
+               
             await flight.save()
 
             res.status(200).send('successfully modified')
@@ -187,7 +249,9 @@ const getFlightsAdmin = async (req, res) => {
 
 module.exports = {
     getFlights,
-    getFlight,
+    getFlighstWithStateFalse,
+    getFlightById,
+    getFlightByIdWithFalse,
     createFlight,
     updateFlight,
     deleteFlight,

@@ -3,7 +3,7 @@ const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
 const {getUser, getUsers, createUser, updateUser, deleteUser, addFlight, getUserFlights, addTicket, getUserTickets, isAdmin} = require('../controllers/users.controllers.js');
 const { get_airline, get_id_airline, create_airline, update_airline, addAirportToAirline, deleteAirportToAirline, defuseAirline} = require('../controllers/airlines.controllers.js');
 const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, getAirportBycountry, addAirlineToAirport, deleteAirlineToAirport, defuseAirport} = require('../controllers/airports.controllers.js');
-const {getFlights, getFlight, createFlight, updateFlight, deleteFlight, getFlightByAirline, defuseFlights, getFlightsAdmin} = require('../controllers/flights.controllers.js');
+const {getFlights, getFlighstWithStateFalse, getFlightById, getFlightByIdWithFalse, createFlight, updateFlight, deleteFlight, getFlightByAirline, defuseFlights, getFlightsAdmin} = require('../controllers/flights.controllers.js');
 const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
 const {postLogin, postRegister, getIsRegistered, putSetInfo} = require('../controllers/login.controllers.js');
 const {getAirportsByInput, getFlightsByQuery} = require('../controllers/searchs.controllers.js');
@@ -53,11 +53,13 @@ router.put("/Api/setStateAirline", defuseAirline);
 
 //Flights
 router.get("/api/flightsAdmin", getFlightsAdmin);
-router.get("/api/flights", getFlights);
+router.get("/api/getFlights", getFlights);
+router.get("/api/getFlighstWithStateFalse", getFlighstWithStateFalse);
 router.post("/api/flights", createFlight);
 router.put("/api/flights/:id", updateFlight);
 router.delete("/api/flights/:id", deleteFlight);
-router.get("/api/flights/:id", getFlight);
+router.get("/api/getFlightById/:id", getFlightById);
+router.get("/api/getFlightByIdWithFalse/:id", getFlightByIdWithFalse);
 router.get("/api/getFlightByAirline", getFlightByAirline);
 router.put("/api/setStateFlights", defuseFlights);
 
