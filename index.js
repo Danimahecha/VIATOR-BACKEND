@@ -3,12 +3,12 @@ const { conn } = require('./src/db.js');
 const { CreateModels } = require('./src/utils/utils.js');
 
 
-const port = process.env.PORT || 4000
+const {PORT} = process.env
 
 // Syncing all the models at once.
 conn.sync({ force: true}).then(() => {
-  server.listen(port, () => {
+  server.listen(PORT, () => {
     CreateModels()
-    console.log(`%s listening at port ${port}`); // eslint-disable-line no-console
+    console.log(`%s listening at port ${PORT}`); // eslint-disable-line no-console
   });
 });
