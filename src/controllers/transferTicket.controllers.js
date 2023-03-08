@@ -15,9 +15,9 @@ const transferTickets=async(req, res)=>{
       }
     })
     if (!UserR) {
-      res.status(400).json({error:"No existe un usuario con ese email"})
+      return res.status(400).json({error:"No existe un usuario con ese email"})
     }else if (!ticket) {
-      res.status(400).json({error:"No existe un ticket con ese ID"})
+      return res.status(400).json({error:"No existe un ticket con ese ID"})
     } else {
 
       const UserE = await User.findOne({
@@ -34,7 +34,7 @@ const transferTickets=async(req, res)=>{
       } else if (UserE.id === UserR.id) {
         res.send("No te puedes enviar a ti mismo")
       }else{
-        res.status(400).json({error:`El Ticket con Id:${ticket.id} ya se relleno los datos`})
+        return res.status(400).json({error:`El Ticket con Id:${ticket.id} ya se relleno los datos`})
       }
       
     }
