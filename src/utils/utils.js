@@ -3,6 +3,7 @@ const { addAirportToAirline } = require('../controllers/airlines.controllers')
 const { createAirport, addAirlineToAirport } = require('../controllers/airports.controllers')
 const{Airport, Airline, Flight}= require('../db')
 const json = require('../testData.json')
+const fetch = require('node-fetch');
 const port = process.env.PORT || 4000
 const {DB_HOST} = process.env
 function FligthRandom(vuelos){
