@@ -4,7 +4,7 @@ const { createAirport, addAirlineToAirport } = require('../controllers/airports.
 const{Airport, Airline, Flight}= require('../db')
 const json = require('../testData.json')
 const port = process.env.PORT || 4000
-const {HOST} = process.env
+const {DB_HOST, HOST} = process.env
 function FligthRandom(vuelos){
     let arrFlights=[]
     let recomend=[]
