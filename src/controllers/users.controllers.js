@@ -14,11 +14,16 @@ const emailer = require ("../utils/emailer.js")
     const getUser = async (req, res) => {
         try {
             const {id} = req.params;
+            if (!id) {
+                return res.status(400).send({message: 'no hay id'})
+            }else{
+    
             const user = await User.findOne({
                 where: { id }
             })
             if(!user)return res.status(404).json({message:'Users not exist'})
             res.json(user);
+        }
         } catch (error) {
             return res.status(400).json({message: error.message});
         }
@@ -29,6 +34,11 @@ const emailer = require ("../utils/emailer.js")
      
 
         try {
+            if (!id&& !givenName&& !familyName&& !email) {
+                return res.status(404).json({message:'faltan datos'})
+            } else {
+                
+            
             const newUser = await User.create({
                
                 id: id,
@@ -40,7 +50,7 @@ const emailer = require ("../utils/emailer.js")
      //     emailer.sendMail(newUser);
 
         res.status(200).send(newUser);  
-        
+        } 
     } catch (error) {
             return res.status (400).json({message: error.message})   
         
@@ -53,7 +63,14 @@ const emailer = require ("../utils/emailer.js")
         const { names, lastNames, nickname, phoneNumber, email, country, city, DateOfBirth, picture }= req.body
         
         try {
-
+            
+            if (!id) {
+                return res.status(400).send({message: 'no hay id'})
+            }else if (!names&& !lastNames&& !nickname&&!phoneNumber&& !email&& !country&&!city&& !DateOfBirth&& !picture) {
+                return res.status(404).json({message:'faltan datos'})
+            } else {
+                
+            
             const user = await User.findByPk(id)
             await user.update({
                 givenName: names,
@@ -69,6 +86,7 @@ const emailer = require ("../utils/emailer.js")
             await user.save()
 
             res.status(200).send('successfully modified')
+        }
         } catch (error) {
 
             return res.status (400).json({message: error.message})
@@ -80,6 +98,9 @@ const emailer = require ("../utils/emailer.js")
 
     const deleteUser = async (req, res ) =>{
         try {
+            if (!id) {
+                return res.status(400).send({message: 'no hay id'})
+            }else{
             const { id } = req.params
         await User.destroy({
             where:{
@@ -87,7 +108,7 @@ const emailer = require ("../utils/emailer.js")
             }
         })
         res.status(200).send('deleted successfully')
-
+    }
         } catch (error) {
             return res.status (400).json({message: error.message})
         }
@@ -98,6 +119,11 @@ const emailer = require ("../utils/emailer.js")
         const {  userId , flightId} = req.body;
 
         try {
+            if (!userId&& !flightId) {
+                return res.status(400).send({message: 'faltan datos'})
+            } else {
+                
+            
             const user = await User.findByPk(userId)
 
             const flight = await Flight.findByPk(flightId)
@@ -105,7 +131,7 @@ const emailer = require ("../utils/emailer.js")
             await user.addFlight(flight)
 
             res.status(200).send("Vuelo agregado correctamente"); 
-
+            }
         }catch(error) {
 
             return res.status(400).send({message: error.message})   
@@ -118,7 +144,11 @@ const emailer = require ("../utils/emailer.js")
         const {  userId } = req.body;
 
         try {
-
+           if (!userId) {
+            return res.status(400).send({message: 'no hay id'})
+           } else {
+            
+           
             await Flight.destroy({
                 where: {
                   UserId: userId
@@ -126,7 +156,7 @@ const emailer = require ("../utils/emailer.js")
               });
 
             res.status(200).send("Vuelo desagregado correctamente"); 
-
+            }
         }catch(error) {
 
             return res.status(400).send({message: error.message})   
@@ -138,7 +168,11 @@ const emailer = require ("../utils/emailer.js")
 
         const {id} = req.query
 
-        try {
+    
+
+        try {if (!id) {
+            return res.status(400).send({message: 'no hay id'})
+        } else {
             const user = await User.findByPk(id, {
                 include: [
                   { model: Flight }
@@ -152,6 +186,7 @@ const emailer = require ("../utils/emailer.js")
                 res.status(200).send(favoriteFlights)
 
               }
+            }   
         } catch (error) {
 
             res.status(404).send({message: error.message})
@@ -163,7 +198,14 @@ const emailer = require ("../utils/emailer.js")
 
         const {  userId , ticketId} = req.body;
 
+    
+
         try {
+            if (!userId, !ticketId) {
+    
+                return res.status(400).send({message: 'faltan datos'})
+            
+        } else {
             const user = await User.findByPk(userId)
 
             const ticket = await Ticket.findByPk(ticketId)
@@ -171,7 +213,7 @@ const emailer = require ("../utils/emailer.js")
             await user.addTicket(ticket)
 
             res.status(200).send("Boleto agregado correctamente"); 
-
+        }
         }catch(error) {
 
             return res.status(400).send({message: error.message})   
@@ -185,6 +227,9 @@ const emailer = require ("../utils/emailer.js")
        
        
         try {
+            if (!id) {
+                return res.status(400).send({message: 'no hay id'})
+            }else{
             const user = await User.findByPk(id, {
                 include: [
                     {
@@ -210,6 +255,7 @@ const emailer = require ("../utils/emailer.js")
                 res.status(200).send(tickets)
 
               }
+            }
         } catch (error) {
 
             res.status(404).send({message: error.message})

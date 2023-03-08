@@ -18,7 +18,12 @@ const {Op}= require('sequelize')
         }
     };
     const getAirportBycountry=async(req, res)=>{
-try{const {airLine, country}= req.query;
+try{
+    
+    const {airLine, country}= req.query;
+    if(!airLine&&!country){
+        return res.status(400).send({message: 'faltan datos'})
+    }else{
 const aereoLinea=await Airline.findOne({
     include:[{model: Airport}],
     where:{
@@ -34,6 +39,7 @@ if(aereoLinea){
 else{
 res.status(400).json('no se encontraron resultados')
 }}
+}
 catch(error){
     res.status(400).json({message: error.message })  
 }
@@ -43,7 +49,9 @@ catch(error){
 
         const {id} = req.params;
 
-        try {
+        try {if (!id) {
+            return res.status(400).send({message: 'no hay id'})
+        }else{
 
             const airport = await Airport.findOne({
                 where: {id},
@@ -60,6 +68,7 @@ catch(error){
             if(!airport) return res.status(404).send({massage:'The airport does not exist'})
 
             res.status(200).send(airport);
+        }
 
         }catch(error){
 
@@ -73,6 +82,11 @@ catch(error){
         const { name, country, city} = req.body;
 
         try {
+            if (!name&&!country&&!city) {
+              
+                    return res.status(400).send({message: 'faltan datos'})
+                
+            }else{
             const newAirport = await Airport.create({
             
                 name:name,
@@ -82,7 +96,7 @@ catch(error){
             });
 
             res.status(200).send(newAirport); 
-
+        }
         }catch(error) {
 
             return res.status(400).send({error})   
@@ -98,7 +112,16 @@ catch(error){
         const airport = await Airport.findByPk(id)
 
         try {
-
+            if (!id) {
+   
+                return res.status(400).send({message: 'no hay id'})
+            
+        }
+        else if (!name &&!country) {
+            return res.status(400).send({message: 'faltan datos'})
+        } else {
+            
+        
             await airport.update({
                 name: name, 
                 country: country,
@@ -107,7 +130,7 @@ catch(error){
 
             res.status(200).send("Actualizado correctamente")
 
-        } catch (error) {
+        } }catch (error) {
 
             return res.status(400).send({message: error.message})
 
@@ -119,6 +142,10 @@ catch(error){
         const { id } = req.params
 
         try {
+if (!id) {
+    return res.status(400).send({message: 'no hay id'})
+} else {
+    
 
             await Airport.destroy({
                 where:{
@@ -128,7 +155,7 @@ catch(error){
 
             res.status(200).send('deleted successfully')
 
-        }catch(error) {
+       } }catch(error) {
 
             return res.status(400).send({message: error.message})
 
@@ -140,6 +167,10 @@ catch(error){
         const {airlineName, country} = req.query;
 
         try {
+if (!airlineName&&! country ) {
+    return res.status(400).send({message: 'faltan datos'})
+} else {
+    
 
             const airline = await Airline.findOne({
                 where: {name: airlineName},
@@ -154,7 +185,7 @@ catch(error){
             const airports = await airline.getAirports({where:{ country : country}})
 
             res.status(200).send(airports);
-
+        }
         }catch(error){
 
             return res.status(400).send({message: error.message});
@@ -180,6 +211,10 @@ catch(error){
         const {  airportId , airlinesId} = req.body;
 
         try {
+if (!airportId&&!airlinesId) {
+    return res.status(400).send({message: 'faltan datos'})
+} else {
+    
 
             const airport = await Airport.findByPk(airportId)
 
@@ -197,7 +232,7 @@ catch(error){
 
                 res.status(200).send("Aerolinea agregada correctamente"); 
             }
-           
+        }
         }catch(error) {
 
             return res.status(400).send({message: error.message})   
@@ -210,6 +245,10 @@ catch(error){
         const {  airportId , airlinesId} = req.body;
 
         try {
+if (!airportId&&!airlinesId) {
+    return res.status(400).send({message: 'faltan datos'})
+} else {
+    
 
             const airport = await Airport.findByPk(airportId)
 
@@ -227,7 +266,7 @@ catch(error){
 
                 res.status(200).send("Aerolinea removida correctamente"); 
             }
-           
+        } 
         }catch(error) {
 
             return res.status(400).send({message: error.message})   
