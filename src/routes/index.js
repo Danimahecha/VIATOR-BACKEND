@@ -85,7 +85,8 @@ router.post("/login", postLogin);
 router.put("/setInfo", jwtCheck, putSetInfo);
 
 //Admin
-router.get("/admin", jwtCheck, checkScopes, isAdmin)
+//No se usa
+//router.get("/admin", jwtCheck, checkScopes, isAdmin)
 
 //Searchs
 router.get("/getAirportsByInput/:input", getAirportsByInput);
