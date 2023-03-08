@@ -3,7 +3,6 @@ const { addAirportToAirline } = require('../controllers/airlines.controllers')
 const { createAirport, addAirlineToAirport } = require('../controllers/airports.controllers')
 const{Airport, Airline, Flight}= require('../db')
 const json = require('../testData.json')
-const fetch = require('node-fetch');
 const port = process.env.PORT || 4000
 const {DB_HOST} = process.env
 function FligthRandom(vuelos){
@@ -22,42 +21,29 @@ function FligthRandom(vuelos){
 }
 
 
-const CreateModels = async () => {
-  await Promise.all(
-    json.aereopuertos.map(async (airP) => {
-      await Airport.create(airP);
-    })
-  );
+const CreateModels=async()=>{
 
   await Promise.all(
-    json.aereolineas.map(async (airL) => {
-      await Airline.create(airL);
-    })
-  );
+ json.aereopuertos.map(async airP=>{
+ await Airport.create(airP)
+}))
 
-  await Promise.all(
-    json.relaciones.aereopuertos.map(async (rel) => {
-      await fetch(`${DB_HOST}/api/addAirportToAirline`, {
-        method: "POST",
-        body: JSON.stringify(rel),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    })
-  );
+await Promise.all(
+json.aereolineas.map(async airL=>{
+  await Airline.create(airL)
+}))
 
-  await Promise.all(
-    json.vuelos.map(async (F) => {
-      await fetch(`${DB_HOST}/api/flights`, {
-        method: "POST",
-        body: JSON.stringify(F),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    })
-  );
-};
+await Promise.all(
+json.relaciones.aereopuertos.map(async (rel)=>{
+await axios.post(`https://viator-backend-production.up.railway.app/api/addAirportToAirline`, rel)
+}))
+
+
+await Promise.all(
+json.vuelos.map(async F=>{
+await axios.post(`https://viator-backend-production.up.railway.app/api/flights`,F)
+}))
+
+}
  
 module.exports= {FligthRandom, CreateModels}
