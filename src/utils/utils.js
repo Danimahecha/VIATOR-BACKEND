@@ -21,29 +21,42 @@ function FligthRandom(vuelos){
 }
 
 
-const CreateModels=async()=>{
+const CreateModels = async () => {
+  await Promise.all(
+    json.aereopuertos.map(async (airP) => {
+      await Airport.create(airP);
+    })
+  );
 
   await Promise.all(
- json.aereopuertos.map(async airP=>{
- await Airport.create(airP)
-}))
+    json.aereolineas.map(async (airL) => {
+      await Airline.create(airL);
+    })
+  );
 
-await Promise.all(
-json.aereolineas.map(async airL=>{
-  await Airline.create(airL)
-}))
+  await Promise.all(
+    json.relaciones.aereopuertos.map(async (rel) => {
+      await fetch(`${DB_HOST}/api/addAirportToAirline`, {
+        method: "POST",
+        body: JSON.stringify(rel),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    })
+  );
 
-await Promise.all(
-json.relaciones.aereopuertos.map(async (rel)=>{
-await axios.post(`${DB_HOST}/api/addAirportToAirline`, rel)
-}))
-
-
-await Promise.all(
-json.vuelos.map(async F=>{
-await axios.post(`${DB_HOST}/api/flights`,F)
-}))
-
-}
+  await Promise.all(
+    json.vuelos.map(async (F) => {
+      await fetch(`${DB_HOST}/api/flights`, {
+        method: "POST",
+        body: JSON.stringify(F),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    })
+  );
+};
  
 module.exports= {FligthRandom, CreateModels}
