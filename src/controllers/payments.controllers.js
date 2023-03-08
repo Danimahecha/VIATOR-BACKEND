@@ -113,7 +113,7 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST, HOST_FRONT} = process.
 
           await axios.post(`${HOST}/api/tickets`, {quantity: quantity, flightId:flightId, userId:userId})
 
-          return res.redirect(`${HOST_FRONT}/myTickets`);
+          return res.redirect(`${HOST_FRONT}/home`);
           
         }else{
           return res.status(400).send(`PAGO PENDIENTE`);

@@ -35,13 +35,13 @@ json.aereolineas.map(async airL=>{
 
 await Promise.all(
 json.relaciones.aereopuertos.map(async (rel)=>{
-await axios.post(`https://viator-backend-production.up.railway.app/api/addAirportToAirline`, rel)
+await axios.post(`${HOST}/api/addAirportToAirline`, rel)
 }))
 
 
 await Promise.all(
 json.vuelos.map(async F=>{
-await axios.post(`https://viator-backend-production.up.railway.app/api/flights`,F)
+await axios.post(`${HOST}/api/flights`,F)
 }))
 
 }
