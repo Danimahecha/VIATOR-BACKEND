@@ -44,8 +44,8 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST, HOST_FRONT} = process.
             brand_name: "viator.com",
             landing_page: "NO_PREFERENCE",
             user_action: "PAY_NOW",
-            return_url: `${HOST}/capture-order?userId=${encodedUserId}&flightId=${flightId}&quantity=${quantity}`,
-            cancel_url: `${HOST}/cancel-payment?flightId=${flightId}`,
+            return_url: `https://viator-backend-production.up.railway.app/capture-order?userId=${encodedUserId}&flightId=${flightId}&quantity=${quantity}`,
+            cancel_url: `https://viator-backend-production.up.railway.app/cancel-payment?flightId=${flightId}`,
           },
         };
     
