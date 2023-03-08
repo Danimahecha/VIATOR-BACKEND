@@ -95,6 +95,12 @@ const {Ticket, Flight, User,Airline} = require('../db.js');
         
         try {
             const ticketnew = await Ticket.findByPk(id)
+            if (!ticketnew) {
+                return res.status(400).json({error:`No existe un id:${id} Ticket`})
+            }
+            if (!namePassanger || !email) {
+                return res.status(400).json({error:`Oops falto rellenar uno de los dos campos`})
+            }
             //Metodo Update?
             if (ticketnew.activatedTicket === false) {
                 ticketnew.namePassanger = namePassanger,

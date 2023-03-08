@@ -8,7 +8,11 @@ const {Airline, Airport} = require('../db.js');
                     state:true
                 }
             })
-            res.json(airlineBD)
+            if (airlineBD.length < 1) {
+                res.status(400).json({error:"No existe Aerolineas"})
+            } else {
+                res.json(airlineBD)
+            }
         } catch (error) {
             res.status(400).json({message:error.message})
         }
@@ -50,7 +54,6 @@ const {Airline, Airport} = require('../db.js');
                     name:name,
                     infoContact:infoContact,
                     picture:picture,
-
                 })
                 res.json(newAirline)
             }
@@ -153,11 +156,17 @@ const {Airline, Airport} = require('../db.js');
         try {
 
             const airline = await Airline.findByPk(airlineId)
+            if (!airline) {
+                return res.status(400).json({error:"No existe un id con esa Aerolinea"})
+            }
 
             if (airportsId.length >= 1){
                
                     airportsId.map( async (airportId) => {
                     let airport = await Airport.findByPk(airportId)
+                    if (!airport) {
+                        return res.status(400).json({error:`No existe un id:${airportId} con ese Aeropuerto`})
+                    }
                     await airline.removeAirport(airport)
                 })
             
@@ -167,6 +176,9 @@ const {Airline, Airport} = require('../db.js');
             }else{
 
                 const airport = await Airport.findByPk(airportsId)
+                if (!airport) {
+                    return res.status(400).json({error:`No existe un id:${airportsId} con ese Aeropuerto`})
+                }
                 await airline.removeAirport(airport)
 
                 res.status(200).send("Aeropuerto eliminado correctamente"); 
