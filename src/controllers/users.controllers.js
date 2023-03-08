@@ -12,6 +12,7 @@ const emailer = require ("../utils/emailer.js")
     };
 
     const getUser = async (req, res) => {
+        
         try {
             const {id} = req.params;
             if (!id) {
@@ -34,7 +35,7 @@ const emailer = require ("../utils/emailer.js")
      
 
         try {
-            if (!id&& !givenName&& !familyName&& !email) {
+            if (!id || !givenName || !familyName || !email) {
                 return res.status(404).json({message:'faltan datos'})
             } else {
                 

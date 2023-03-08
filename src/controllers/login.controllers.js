@@ -21,7 +21,7 @@ const postLogin = async (req, res) => {
 
       } else {
 
-        res.status(200).send("False");
+        return res.status(200).send("False");
 
       }
     
@@ -116,8 +116,8 @@ const putSetInfo = async (req, res) => {
   if(
     !names || typeof names !== 'string' || names.length < 2 ||
     !lastNames || typeof lastNames !== 'string' || lastNames.length < 2 ||
-    !picture || typeof picture !== 'string'|| picture.length < 2 ||
-    !DateOfBirth || !(DateOfBirth instanceof Date)||
+    !nickname || typeof nickname !== 'string'|| nickname.length < 2 ||
+    !DateOfBirth ||
     !phoneNumber || typeof phoneNumber !== 'number' || 
     !country || typeof country !== 'string'|| country.length < 2 ||
     !city || typeof city !== 'string' || city.length < 2 ||
@@ -132,33 +132,42 @@ const putSetInfo = async (req, res) => {
 
     const user = await User.findByPk(idSubAuth0);
 
-    try {
+    if(!user){
 
-      await user.update({
-        givenName: names,
-        familyName: lastNames,
-        nickName: nickname,
-        phone: phoneNumber,
-        email: email,
-        country: country,
-        city: city,
-        birthdate: DateOfBirth,
-        picture: picture,
-      });
+      return res.status(404).send("El usuario no existe")
 
-      await user.save();
+    }else{
 
-      const userRegistered = await User.findByPk(idSubAuth0);
+      try {
+
+        await user.update({
+          givenName: names,
+          familyName: lastNames,
+          nickName: nickname,
+          phone: phoneNumber,
+          email: email,
+          country: country,
+          city: city,
+          birthdate: DateOfBirth,
+          picture: picture,
+        });
   
-      emailer.sendMail(userRegistered);
+        await user.save();
+  
+        const userRegistered = await User.findByPk(idSubAuth0);
+    
+        emailer.sendMail(userRegistered);
+  
+        return res.status(200).send("Actualizado correctamente");
 
-      return res.status(200).send("Actualizado correctamente");
-    } catch (error) {
-      return res.status(500).send(error);
+      } catch (error) {
+
+        return res.status(500).send(error);
+
+      }
     }
+    
   }
-  
-
   
 };
 
