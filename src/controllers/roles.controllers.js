@@ -5,11 +5,17 @@ const {AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_AUDIENCE} = pro
 
 const getUserRoleById = async (req, res ) =>{
 
-  const {userId} = req.query
-
+  
   try {
-    
-    const encodedUserId = encodeURIComponent(userId)
+    const {userId} = req.query
+
+    if(!userId){
+
+      return res.status(400).send({message: 'El usuario se necesita pasar por query'})
+
+    }else{
+
+      const encodedUserId = encodeURIComponent(userId)
   
       const parm = new URLSearchParams({
           grant_type: 'client_credentials',
@@ -27,8 +33,6 @@ const getUserRoleById = async (req, res ) =>{
           }
         }
       );
-      
-     console.log(data.access_token)
   
      //GET USER ID
      /*  const response = await axios.get(
@@ -52,14 +56,31 @@ const getUserRoleById = async (req, res ) =>{
       ); 
 
       if(Array.isArray(response.data) && response.data.length === 0){
+
         return res.send("El usuario no posee ningun rol")
+
       }else{
+        
         res.send(response.data[0].name)
+
       }
-
+    }
+    
   } catch (error) {
+  
+    if(error.response.status === 404){
 
-    res.send(error.message)
+      return res.status(404).send("Usuario no encontrado")
+
+    }if(error.response.status === 500){
+
+      return res.status(500).send("Error del servidor")
+
+    }else{
+
+      return res.status(400).send("Error")
+
+    }
 
   }
         
