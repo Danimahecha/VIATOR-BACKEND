@@ -35,13 +35,13 @@ json.aereolineas.map(async airL=>{
 
 await Promise.all(
 json.relaciones.aereopuertos.map(async (rel)=>{
-await axios.post(`${DB_HOST}/api/addAirportToAirline`, rel)
+await axios.post(`${URL_DEPLOY}/api/addAirportToAirline`, rel)
 }))
 
 
 await Promise.all(
 json.vuelos.map(async F=>{
-await axios.post(`${DB_HOST}/api/flights`,F)
+await axios.post(`${URL_DEPLOY}/api/flights`,F)
 }))
 
 }
