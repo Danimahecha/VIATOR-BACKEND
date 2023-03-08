@@ -1,4 +1,4 @@
-const {User, Flight, Ticket} = require('../db.js');
+const {User, Flight, Ticket,Airline} = require('../db.js');
 const emailer = require ("../utils/emailer.js")
 
     const getUsers =async(req, res) => {
@@ -181,12 +181,25 @@ const emailer = require ("../utils/emailer.js")
 
     const getUserTickets = async (req, res) => {
 
-        const {id} = req.query
-
+        const {id} = req.query;
+       
+       
         try {
             const user = await User.findByPk(id, {
                 include: [
-                  { model: Ticket }
+                    {
+                        model: Ticket,
+                        include:[
+                            {
+                                model:Flight,
+                                include:[
+                                    {
+                                        model: Airline
+                                    }
+                                ]
+                            }
+                        ]
+                    },
                 ]
               });
               
@@ -203,6 +216,17 @@ const emailer = require ("../utils/emailer.js")
 
         }
     }
+
+    const isAdmin = async (req, res) => {
+
+        try {
+            res.status(200).send(true);
+          } catch (error) {
+            res.status(200).send(false);
+          }
+
+    }
+    
 module.exports = {
     getUser,
     getUsers,
@@ -214,4 +238,5 @@ module.exports = {
     getUserFlights,
     addTicket,
     getUserTickets,
+    isAdmin,
   };

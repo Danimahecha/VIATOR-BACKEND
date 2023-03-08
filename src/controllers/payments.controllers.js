@@ -1,10 +1,12 @@
 const axios = require("axios")
 
-const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
+const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST, HOST_FRONT} = process.env
 
     const createOrder = async (req, res ) =>{
 
-      const {name, quantity, valuePerTicket, description} = req.body
+      const {userId, flightId, name, quantity, valuePerTicket, description} = req.body
+
+      const encodedUserId = encodeURIComponent(userId)
 
       try {
         const order = {
@@ -38,13 +40,12 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
             
           ],
           
-
           application_context: {
             brand_name: "viator.com",
             landing_page: "NO_PREFERENCE",
             user_action: "PAY_NOW",
-            return_url: `${HOST}/capture-order`,
-            cancel_url: `${HOST}/cancel-payment`,
+            return_url: `${HOST}/capture-order?userId=${encodedUserId}&flightId=${flightId}&quantity=${quantity}`,
+            cancel_url: `${HOST}/cancel-payment?flightId=${flightId}`,
           },
         };
     
@@ -53,7 +54,7 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
           params.append("grant_type", "client_credentials");
       
           const { data: { access_token },} = await axios.post(
-            "https://api-m.sandbox.paypal.com/v1/oauth2/token",
+            `${PAYPAL_API}/v1/oauth2/token`,
             params,
             {
               headers: {
@@ -91,7 +92,9 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
 
     const captureOrder = async (req, res ) =>{
     
-      const { token } = req.query;
+      const { token, userId, flightId, quantity } = req.query;
+
+      console.log(userId, flightId, quantity )
 
       try {
 
@@ -106,22 +109,27 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST} = process.env
           }
         );
         
-        res.redirect("http://localhost:3000/myTickets");
-        
+        if(response.data.status === 'COMPLETED'){
+
+          await axios.post(`${HOST}/api/tickets`, {quantity: quantity, flightId:flightId, userId:userId})
+
+          return res.redirect(`${HOST_FRONT}/myTickets`);
+          
+        }else{
+          return res.status(400).send(`PAGO PENDIENTE`);
+        }
       } catch (error) {
 
-        console.log(error.message);
-
-        return res.status(500).json({ message: "Internal Server error" });
+        return res.status(500).json({message: error.message});
       }
 
     };
      
-    
-
     const cancelOrder = async (req, res ) =>{
     
-      res.redirect("http://localhost:3000/myTickets");
+      const { flightId } = req.query;
+ 
+      res.redirect(`${HOST_FRONT}/flight/${flightId}`);
      
     }
 

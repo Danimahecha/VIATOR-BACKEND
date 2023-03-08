@@ -1,9 +1,9 @@
 const { Router } = require('express');
 const { jwtCheck , checkScopes} = require("../middlewares/jwtCheck.js");
-const {getUser, getUsers, createUser, updateUser, deleteUser, addFlight, getUserFlights, addTicket, getUserTickets} = require('../controllers/users.controllers.js');
+const {getUser, getUsers, createUser, updateUser, deleteUser, addFlight, getUserFlights, addTicket, getUserTickets, isAdmin} = require('../controllers/users.controllers.js');
 const { get_airline, get_id_airline, create_airline, update_airline, addAirportToAirline, deleteAirportToAirline, defuseAirline} = require('../controllers/airlines.controllers.js');
 const {getAirports, createAirport, updateAirport, deleteAirport, getAirport, getAirportBycountry, addAirlineToAirport, deleteAirlineToAirport, defuseAirport} = require('../controllers/airports.controllers.js');
-const {getFlights, getFlight, createFlight, updateFlight, deleteFlight, getFlightByAirline, defuseFlights} = require('../controllers/flights.controllers.js');
+const {getFlights, getFlighstWithStateFalse, getFlightById, getFlightByIdWithFalse, createFlight, updateFlight, deleteFlight, getFlightByAirline, defuseFlights, getFlightsAdmin} = require('../controllers/flights.controllers.js');
 const {getTickets, getTicket, createTicket, updateTicket, deleteTicket} = require('../controllers/tickets.controllers.js');
 const {postLogin, postRegister, getIsRegistered, putSetInfo} = require('../controllers/login.controllers.js');
 const {getAirportsByInput, getFlightsByQuery} = require('../controllers/searchs.controllers.js');
@@ -11,8 +11,13 @@ const getRecommendedFlights = require('../controllers/flights.recomend.js');
 const {flightSchedule} = require('../controllers/flightSchedule.controllers.js')
 const {getFlightsScale} = require('../controllers/flightScale');
 const {createOrder, captureOrder, cancelOrder} = require('../controllers/payments.controllers.js');
+const { transferTickets } = require('../controllers/transferTicket.controllers.js');
+const { getUserRoleById } = require('../controllers/roles.controllers.js');
 
 const router = Router();
+ 
+//Auth0
+router.get("/tokenauth", getUserRoleById);
 
 //Users
 router.get("/User/getUsers", getUsers);
@@ -47,11 +52,14 @@ router.post("/api/deleteAirportToAirline", deleteAirportToAirline);
 router.put("/Api/setStateAirline", defuseAirline);
 
 //Flights
+router.get("/api/flightsAdmin", getFlightsAdmin);
 router.get("/api/flights", getFlights);
+router.get("/api/getFlighstWithStateFalse", getFlighstWithStateFalse);
 router.post("/api/flights", createFlight);
 router.put("/api/flights/:id", updateFlight);
 router.delete("/api/flights/:id", deleteFlight);
-router.get("/api/flights/:id", getFlight);
+router.get("/api/flights/:id", getFlightById);
+router.get("/api/getFlightByIdWithFalse/:id", getFlightByIdWithFalse);
 router.get("/api/getFlightByAirline", getFlightByAirline);
 router.put("/api/setStateFlights", defuseFlights);
 
@@ -76,6 +84,9 @@ router.post("/register", jwtCheck, postRegister);
 router.post("/login", postLogin);
 router.put("/setInfo", jwtCheck, putSetInfo);
 
+//Admin
+router.get("/admin", jwtCheck, checkScopes, isAdmin)
+
 //Searchs
 router.get("/getAirportsByInput/:input", getAirportsByInput);
 router.get("/getFlightsByQuery", getFlightsByQuery);
@@ -84,5 +95,6 @@ router.get("/getFlightsByQuery", getFlightsByQuery);
 router.post("/createOrder", createOrder);
 router.get("/capture-order", captureOrder);
 router.get("/cancel-payment", cancelOrder);
-
+// transfer tickets
+router.put('/transferTickets', transferTickets)
 module.exports = router;

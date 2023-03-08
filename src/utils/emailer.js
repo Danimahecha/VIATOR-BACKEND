@@ -28,10 +28,32 @@ const sendMail = async (user) => {
     from: '"Viator " <viator.contact@gmail.com>',
     to: `${user.email}`,
     subject: `Hola ${user.givenName}, bienvenido a VIATOR`,
-    html: htmlTemplate,
+    html: htmlTemplate.htmlTemplate,
   });
   console.log("message send :%s", info.messageId);
   return;
 };
+const sendMailTransferE= async (userE, userR)=>{
+  const transporter = createTrans()
+  const info= await transporter.sendMail({
+    from: '"Viator " <viator.contact@gmail.com>',
+    to: `${userE.email}`,
+    subject: `Hola ${userE.givenName}, su transferencia de ticket al usuario "${userR.givenName}"${userR.email} ha sido exitosa`,
+    html: htmlTemplate.htmlTemplate1,
+  })
+  return;
+}
+const sendMailTransferR= async (userE, userR)=>{
+  const transporter = createTrans()
+  const info= await transporter.sendMail({
+    from: '"Viator " <viator.contact@gmail.com>',
+    to: `${userR.email}`,
+    subject: `Hola ${userE.givenName},el usuario ${userR.givenName} te ha hecho una transferencia de boleto exitosa`,
+    html: htmlTemplate.htmlTemplate1,
+  })
+  return;
+}
 
-exports.sendMail = (user) => sendMail(user);
+module.exports={
+  sendMail, sendMailTransferR , sendMailTransferE
+}

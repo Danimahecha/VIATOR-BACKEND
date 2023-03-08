@@ -39,7 +39,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         defaultValue: 0,
         allowNull: true,
       },
