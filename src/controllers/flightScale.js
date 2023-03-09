@@ -1,9 +1,13 @@
 const {Flight}= require('../db')
 
 const getFlightsScale = async (req, res,) => {
-    const {scale} = req.query;
-    try {
+    const { scale } = req.query;
+    if (!scale ) {
+        return res.status(400).json({ message: "scale no existe " });
+      }
 
+    try {
+       
         const flightScale = await Flight.findAll({where:{scale}});
 
         const scaleFlight = flightScale.filter(value => value.scale === scale);
@@ -12,9 +16,11 @@ const getFlightsScale = async (req, res,) => {
         return res.status(200).send(scaleFlight )
        
     } catch (error) {
-        return res.status (400).json({message: error.message})
-    }
+        return res.status (404).json({message: error.message})
+    
+ }
 };
+
 
 
 
