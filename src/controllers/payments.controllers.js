@@ -111,9 +111,9 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST, HOST_FRONT} = process.
         
         if(response.data.status === 'COMPLETED'){
 
-          await axios.post(`${HOST}/api/tickets`, {quantity: quantity, flightId:flightId, userId:userId})
+          await axios.post(`https://viator-backend-production.up.railway.app/capture-order/api/tickets`, {quantity: quantity, flightId:flightId, userId:userId})
 
-          return res.redirect(`${HOST_FRONT}/home`);
+          return res.redirect(`https://viator-frontend-git-deploy-code-zeal.vercel.app/home`);
           
         }else{
           return res.status(400).send(`PAGO PENDIENTE`);
@@ -129,7 +129,7 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST, HOST_FRONT} = process.
     
       const { flightId } = req.query;
  
-      res.redirect(`${HOST_FRONT}/flight/${flightId}`);
+      res.redirect(`https://viator-frontend-git-deploy-code-zeal.vercel.app/flight/${flightId}`);
      
     }
 
