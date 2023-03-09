@@ -33,7 +33,9 @@ const getFlightsAdmin = async (req, res) => {
     const getFlighstWithStateFalse = async (req, res) => {
 
         try {
-
+            if(!Flight){
+                throw new Error ("El vuelo no esta definido");
+            }
             const flights = await Flight.findAll({
                 where:{
                     state:false
@@ -50,11 +52,14 @@ const getFlightsAdmin = async (req, res) => {
 
     const  createFlight = async(req,res) =>{
 
-       const { roundTrip,airportOriginId,airportDestinyId,dateTimeDeparture,dateTimeArrival1,dateTimeReturn,dateTimeArrival2,seatsAvailable,ticketPrice,scale,AirlineId } = req.body;
-       const airportOrigin = await Airport.findByPk(airportOriginId)
-       const airportDestiny = await Airport.findByPk(airportDestinyId)
-
         try {
+            const { roundTrip,airportOriginId,airportDestinyId,dateTimeDeparture,dateTimeArrival1,dateTimeReturn,dateTimeArrival2,seatsAvailable,ticketPrice,scale,AirlineId } = req.body;
+            const airportOrigin = await Airport.findByPk(airportOriginId)
+            const airportDestiny = await Airport.findByPk(airportDestinyId)
+     
+            if (!airportOriginId || !airportDestinyId || !dateTimeDeparture || !dateTimeArrival1 || !seatsAvailable || !ticketPrice || !AirlineId) {
+             return res.status(400).json({message: "Faltan campos Obligatorio"});
+           }else {
             const newFlight = await Flight.create({
             
                 roundTrip:roundTrip,
@@ -72,7 +77,7 @@ const getFlightsAdmin = async (req, res) => {
             });
 
             res.json (newFlight); 
-
+        }
         }catch(error) {
 
             return res.status (400).json({message: error.message})   
@@ -160,6 +165,7 @@ const getFlightsAdmin = async (req, res) => {
             const {roundTrip,origin,destiny,dateTimeDeparture,dateTimeArrival1,dateTimeReturn,dateTimeArrival2,seatsAvailable,ticketPrice,scale,state}= req.body;
 
             const flight = await Flight.findByPk(id)
+            
 
             await flight.update({
                 roundTrip:roundTrip,
@@ -187,10 +193,11 @@ const getFlightsAdmin = async (req, res) => {
     };
 
     const deleteFlight = async (req, res ) =>{
-
+        const { id } = req.params
         try {
-
-            const { id } = req.params
+            if (!id) {
+                return res.status(400).send({message: ' Id no existe'})
+            } else {
             await Flight.destroy({
                 where:{
                     id,
@@ -198,7 +205,7 @@ const getFlightsAdmin = async (req, res) => {
             })
 
             res.status(200).send('deleted successfully')
-
+        }
         }catch(error) {
 
             return res.status (400).json({message: error.message})
@@ -211,7 +218,9 @@ const getFlightsAdmin = async (req, res) => {
         const {airlineName} = req.query;
 
         try {
-
+            if(!airlineName){
+                return res.status(400).send({message: 'faltan datos'})
+            }else{
             const flights = await Flight.findAll({
                 include: [{
                     model: Airline,
@@ -225,7 +234,7 @@ const getFlightsAdmin = async (req, res) => {
             const flightsByAirlines = flights.filter((flight) => flight.Airline.name === airlineName);
 
             res.status(200).send(flightsByAirlines);
-
+        }
         }catch(error){
 
             return res.status(400).send({message: error.message});
