@@ -178,6 +178,8 @@ catch(error){
     const  addAirlineToAirport = async (req, res) => {
 
         const {  airportId , airlinesId} = req.body;
+    
+        console.log( airportId, airlinesId)
 
         try {
 
