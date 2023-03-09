@@ -28,8 +28,6 @@ const getUserRoleById = async (req, res ) =>{
         }
       );
       
-     console.log(data.access_token)
-  
      //GET USER ID
      /*  const response = await axios.get(
           `https://dev-kvjr54lumq4827tu.us.auth0.com/api/v2/users/${encodedUserId}`,

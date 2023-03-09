@@ -6,6 +6,8 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST, HOST_FRONT} = process.
 
       const {userId, flightId, name, quantity, valuePerTicket, description} = req.body
 
+      console.log(userId, flightId, name, quantity, valuePerTicket, description)
+
       const encodedUserId = encodeURIComponent(userId)
 
       try {
@@ -111,7 +113,7 @@ const {PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API, HOST, HOST_FRONT} = process.
         
         if(response.data.status === 'COMPLETED'){
 
-          await axios.post(`https://viator-backend-production.up.railway.app/capture-order/api/tickets`, {quantity: quantity, flightId:flightId, userId:userId})
+          await axios.post(`https://viator-backend-production.up.railway.app/api/tickets`, {quantity: quantity, flightId:flightId, userId:userId})
 
           return res.redirect(`https://viator-frontend-git-deploy-code-zeal.vercel.app/home`);
           
